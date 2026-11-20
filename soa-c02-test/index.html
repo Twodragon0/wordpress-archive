@@ -1,0 +1,361 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/soa-c02-test/"><link rel="stylesheet" href="/archive.css"><title>AWS Certified SysOps Administrator – Associate (SOA-C02) 시험 대비 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>AWS Certified SysOps Administrator – Associate (SOA-C02) 시험 대비</h1><p><time>2024-12-21</time></p><div>
+<figure class="wp-block-image aligncenter size-full is-resized"><img data-recalc-dims="1" loading="lazy" decoding="async" width="225" height="225" data-attachment-id="1537" data-permalink="https://2twodragon.com/img_6836-1/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6836-1.png?fit=225%2C225&amp;ssl=1" data-orig-size="225,225" data-comments-opened="1" data-image-title="img_6836-1" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6836-1.png?fit=225%2C225&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6836-1.png?resize=225%2C225&#038;ssl=1" alt="" class="wp-image-1537" style="width:225px;height:auto" srcset="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6836-1.png?w=225&amp;ssl=1 225w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6836-1.png?resize=150%2C150&amp;ssl=1 150w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6836-1.png?resize=100%2C100&amp;ssl=1 100w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6836-1.png?resize=50%2C50&amp;ssl=1 50w" sizes="auto, (max-width: 225px) 100vw, 225px" /></figure>
+
+
+
+<p class="wp-block-paragraph">AWS Certified SysOps Administrator – Associate (SOA-C02) 시험 대비를 위해 1번부터 20번까지의 샘플 문제와 답변을 아래에 제공해드립니다. 각 문제는 다양한 도메인을 다루고 있으며, 답변과 해설도 함께 포함되어 있습니다. 이 문제들을 통해 시험 준비에 많은 도움이 되시길 바랍니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading"><strong>도메인 1: 모니터링, 로깅 및 문제 해결</strong></h3>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 1:</strong><br>Amazon EC2 인스턴스에서 웹 애플리케이션을 호스트하는 회사가 있습니다. 사용자들은 이 웹 애플리케이션이 가끔 응답하지 않는다고 보고합니다. Amazon CloudWatch 지표에는 이 시간 동안 CPU 사용률이 100%라고 나타납니다. SysOps 관리자는 이 문제를 모니터링하기 위한 솔루션을 구현해야 합니다.<br>이 요구 사항을 충족하는 솔루션은 무엇입니까?</p>
+
+
+
+<p class="wp-block-paragraph">A. EC2 인스턴스에 대한 AWS CloudTrail 이벤트를 모니터링하는 CloudWatch 경보를 만든다.<br>B. EC2 인스턴스 CPU 사용률에 대한 CloudWatch 지표를 모니터링하는 CloudWatch 경보를 만든다.<br>C. Amazon Simple Notification Service (Amazon SNS) 주제를 만들어 EC2 인스턴스 CPU 사용률에 대한 CloudWatch 지표를 모니터링한다.<br>D. Amazon Inspector를 사용해 CPU 사용률의 편차를 감지하여 EC2 인스턴스에 대해 반복적인 평가 확인을 만든다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> B<br><strong>해설:</strong> Amazon CloudWatch는 EC2 인스턴스의 CPU 사용률과 같은 지표를 모니터링할 수 있습니다. CPU 사용률에 대한 CloudWatch 경보를 생성하면 특정 임계값을 초과할 때 알림을 받을 수 있어 문제를 신속하게 인지하고 대응할 수 있습니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 2:</strong><br>회사에 Amazon ElastiCache for Memcached를 사용해 쿼리 응답을 캐시하여 지연 시간을 개선하는 애플리케이션이 있습니다. 그러나 이 애플리케이션의 사용자들은 응답 시간이 느리다고 보고합니다. SysOps 관리자는 Memcached 제거에 대한 Amazon CloudWatch 지표가 높다는 것을 알았습니다. 이 문제를 해결하려면 SysOps 관리자가 취해야 하는 조치는 무엇입니까? (2개 선택)</p>
+
+
+
+<p class="wp-block-paragraph">A. ElastiCache for Memcached의 내용을 비운다.<br>B. ConnectionOverhead 파라미터 값을 높인다.<br>C. 클러스터 내 노드 수를 늘린다.<br>D. 클러스터 내 노드 크기를 늘린다.<br>E. 클러스터 내 노드 수를 줄인다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> C, D<br><strong>해설:</strong> Memcached 제거 지표가 높다는 것은 캐시에서 항목을 제거하는 빈도가 증가했음을 의미하며, 이는 메모리 부족을 시사할 수 있습니다. 이를 해결하기 위해 클러스터 내 노드 수를 늘리거나 각 노드의 크기를 늘려 캐시 용량을 확장해야 합니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 3:</strong><br>회사에서 AWS Lambda 함수가 회사 계정의 VPC 내 리소스에 액세스할 수 있도록 해야 합니다. Lambda 함수는 인터넷을 통해서만 액세스할 수 있는 서드 파티 API에 액세스해야 합니다. 이러한 요구 사항을 충족하려면 SysOps 관리자가 수행해야 하는 작업은 무엇입니까?</p>
+
+
+
+<p class="wp-block-paragraph">A. Lambda 함수에 탄력적 IP 주소를 연결하고 VPC의 인터넷 게이트웨이에 대한 경로를 구성한다.<br>B. VPC의 가상 프라이빗 게이트웨이에 대한 경로가 있는 프라이빗 서브넷에 Lambda 함수를 연결한다.<br>C. VPC의 인터넷 게이트웨이에 대한 경로가 있는 퍼블릭 서브넷에 Lambda 함수를 연결한다.<br>D. VPC의 퍼블릭 서브넷에 배포된 NAT 게이트웨이에 대한 경로가 있는 프라이빗 서브넷에 Lambda 함수를 연결한다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> D<br><strong>해설:</strong> Lambda 함수를 VPC 내의 프라이빗 서브넷에 배포하고, 인터넷 접근을 위해 NAT 게이트웨이를 설정하면 Lambda 함수가 VPC 내 리소스와 인터넷에 동시에 접근할 수 있습니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 4:</strong><br>회사에서 대규모 Amazon EC2 인스턴스 집합에서 애플리케이션을 실행하여 금융 거래를 처리합니다. EC2 인스턴스는 Amazon Elastic File System (Amazon EFS) 파일 시스템을 사용하여 데이터를 공유합니다. 이 회사는 애플리케이션을 새 가용 영역에 배포하고자 하며 새 가용 영역에 새 서브넷과 탑재 대상을 만들었습니다. SysOps 관리자가 새 서브넷에 있는 새 EC2 인스턴스를 시작하지만 이 EC2 인스턴스는 파일 시스템을 탑재할 수 없습니다. 이 문제의 원인은 무엇입니까?</p>
+
+
+
+<p class="wp-block-paragraph">A. EFS 탑재 대상이 프라이빗 서브넷에 생성되었다.<br>B. EC2 인스턴스와 연결된 IAM 역할이 efs:MountFileSystem 작업을 허용하지 않는다.<br>C. 라우팅 테이블이 새 가용 영역의 Amazon EFS 용 VPC 엔드포인트로 트래픽을 라우팅하도록 구성되어 있지 않다.<br>D. 탑재 대상의 보안 그룹이 EC2 인스턴스에서 사용하는 보안 그룹에서의 인바운드 NFS 연결을 허용하지 않는다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> D<br><strong>해설:</strong> EFS 파일 시스템을 탑재하려면 보안 그룹이 NFS 포트(기본적으로 TCP 포트 2049)에 대한 인바운드 연결을 허용해야 합니다. 보안 그룹 설정이 올바르지 않으면 파일 시스템을 탑재할 수 없습니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 5:</strong><br>AWS Organizations를 사용하여 많은 AWS 계정을 생성 및 관리하는 회사가 있습니다. 이 회사는 각 계정에 새 IAM 역할을 배포하고자 합니다. 각 조직의 계정에 새 역할을 배포하려면 SysOps 관리자는 어떤 조치를 취해야 합니까?</p>
+
+
+
+<p class="wp-block-paragraph">A. 조직에 서비스 제어 정책(SCP)을 만들어 각 계정에 새 IAM 역할을 추가한다.<br>B. 새 IAM 역할을 만드는 템플릿을 사용해 AWS CloudFormation 변경 세트를 조직에 배포한다.<br>C. AWS CloudFormation StackSets를 사용해 템플릿을 각 계정에 배포하여 새 IAM 역할을 만든다.<br>D. AWS Config를 사용해 조직 규칙을 만들어 각 계정에 새 IAM 역할을 추가한다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> C<br><strong>해설:</strong> AWS CloudFormation StackSets를 사용하면 여러 AWS 계정과 리전에 걸쳐 일관된 리소스를 자동으로 배포하고 관리할 수 있습니다. 이를 통해 중앙에서 IAM 역할을 효율적으로 배포할 수 있습니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading"><strong>도메인 2: 안정성 및 비즈니스 연속성</strong></h3>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 6:</strong><br>Amazon EC2 인스턴스에서 여러 프로덕션 워크로드를 실행하는 회사가 있습니다. SysOps 관리자는 한 프로덕션 EC2 인스턴스가 시스템 상태 확인에 실패했다는 것을 알았습니다. SysOps 관리자는 이 인스턴스를 수동으로 복구했습니다. SysOps 관리자는 EC2 인스턴스의 복구 작업을 자동화하고 시스템 상태 확인이 실패할 때마다 알림을 받고자 합니다. 회사의 프로덕션 EC2 인스턴스 모두에서 세부 모니터링이 활성화되어 있습니다. 다음 중 이러한 요구 사항을 충족하는 가장 운영 효율적인 솔루션은 무엇입니까?</p>
+
+
+
+<p class="wp-block-paragraph">A. 각 프로덕션 EC2 인스턴스에 대해 상태 확인 실패: 시스템에 대한 Amazon CloudWatch 경보를 만든다. EC2 인스턴스를 복구하도록 경보 작업을 설정한다. Amazon Simple Notification Service (Amazon SNS) 주제에 게시되도록 경보 알림을 구성한다.<br>B. 각 프로덕션 EC2 인스턴스에서 1분마다 하트비트 알림을 중앙 모니터링 서버로 보내 시스템 상태를 모니터링하는 스크립트를 만든다. EC2 인스턴스가 하트비트를 보내지 못할 경우 모니터링 서버에서 스크립트를 실행해 EC2 인스턴스를 중지했다가 시작하고 알림을 Amazon SNS 주제에 게시한다.<br>C. 각 프로덕션 EC2 인스턴스에서 cron 작업을 통해 네트워크 ping을 고가용성 엔드포인트로 보내는 스크립트를 만든다. 스크립트에서 네트워크 응답 시간 초과를 감지하면 명령을 호출하여 해당 EC2 인스턴스를 재부팅한다.<br>D. 각 프로덕션 EC2 인스턴스에서 로그를 수집하여 Amazon CloudWatch Logs의 로그 그룹으로 로그를 보내도록 Amazon CloudWatch 에이전트를 구성한다. 오류를 추적하는 지표 필터를 기반으로 하는 CloudWatch 경보를 만든다. AWS Lambda 함수를 호출하여 해당 EC2 인스턴스를 재부팅하고 알림 이메일을 보내도록 경보를 구성한다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> A<br><strong>해설:</strong> Amazon CloudWatch 경보를 사용하여 EC2 인스턴스의 상태를 모니터링하고, 상태 확인 실패 시 자동으로 복구 작업을 트리거하며, Amazon SNS를 통해 알림을 받을 수 있습니다. 이는 자동화된 대응과 알림을 통해 운영 효율성을 극대화합니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 7:</strong><br>AWS Organizations를 사용하여 계정을 관리하는 회사가 있습니다. 프로덕션 계정에 대해 SysOps 관리자는 현재 및 향후 Amazon EC2 인스턴스와 Amazon Elastic File System (Amazon EFS) 파일 시스템에 대해 모든 데이터가 매일 백업되도록 해야 합니다. 백업은 30일간 보존해야 합니다. 최소의 노력으로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?</p>
+
+
+
+<p class="wp-block-paragraph">A. AWS Backup에 백업 계획을 만든다. 해당 계정에서 실행 중인 모든 기존 EC2 및 EFS 리소스를 선택하여 리소스 ID 별로 리소스를 할당한다. 새 리소스를 포함하도록 매일 백업 계획을 편집한다. 30일 후 백업을 만료하는 수명 주기 정책을 사용해 매일 실행되도록 백업 계획을 예약한다.<br>B. AWS Backup에 백업 계획을 만든다. 태그별로 리소스를 할당한다. 모든 기존 EC2 및 EFS 리소스가 올바르게 태그 지정되어 있는지 확인한다. 올바른 태그가 적용되어 있지 않으면 인스턴스 및 파일 시스템 생성을 방지하는 서비스 제어 정책(SCP)을 프로덕션 계정 OU에 적용한다. 30일 후 백업을 만료하는 수명 주기 정책을 사용해 매일 실행되도록 백업 계획을 예약한다.<br>C. Amazon Data Lifecycle Manager (Amazon DLM)에 수명 주기 정책을 만든다. 해당 계정에서 실행 중인 모든 기존 EC2 및 EFS 리소스를 선택하여 리소스 ID 별로 모든 리소스를 할당한다. 새 리소스를 포함하도록 매일 수명 주기 정책을 편집한다. 보존 기간을 30일로 하여 매일 스냅샷을 생성하도록 수명 주기 정책을 예약한다.<br>D. Amazon Data Lifecycle Manager (Amazon DLM)에 수명 주기 정책을 만든다. 태그별로 모든 리소스를 할당한다. 모든 기존 EC2 및 EFS 리소스가 올바르게 태그 지정되어 있는지 확인한다. 올바른 태그가 적용되어 있지 않으면 리소스 생성을 방지하는 서비스 제어 정책(SCP)을 적용한다. 보존 기간을 30일로 하여 매일 스냅샷을 생성하도록 수명 주기 정책을 예약한다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> B<br><strong>해설:</strong> AWS Backup을 사용하면 태그 기반으로 리소스를 할당하여 백업을 중앙에서 관리할 수 있습니다. 서비스 제어 정책(SCP)을 통해 올바른 태그가 적용되지 않은 리소스 생성을 방지하고, 백업 계획을 통해 매일 백업을 실행하며 30일간 보존할 수 있습니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading"><strong>도메인 3: 배포, 프로비저닝 및 자동화</strong></h3>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 8:</strong><br>AWS CloudTrail을 사용하는 회사가 있습니다. 이 회사는 시스템 운영 관리자가 로그 파일이 삭제 또는 변경되지 않았는지 손쉽게 확인할 수 있도록 하고자 합니다. 이 요구 사항을 충족하려면 SysOps 관리자가 수행해야 하는 작업은 무엇입니까?</p>
+
+
+
+<p class="wp-block-paragraph">A. 로그 파일을 암호화할 때 사용되는 AWS Key Management Service (AWS KMS) 키에 대한 액세스 권한을 관리자에게 부여한다.<br>B. 추적이 생성되거나 업데이트될 때 CloudTrail 로그 파일 무결성 검증을 활성화한다.<br>C. 로그 파일을 저장하는 버킷에 대해 Amazon S3 서버 액세스 로깅을 켠다.<br>D. 로그 파일을 다른 버킷에 복제하도록 S3 버킷을 구성한다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> B<br><strong>해설:</strong> CloudTrail 로그 파일 무결성 검증을 활성화하면 로그 파일이 변경되거나 삭제되지 않았음을 확인할 수 있습니다. 이를 통해 로그 파일의 무결성을 보장하고 보안성을 강화할 수 있습니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 9:</strong><br>Amazon EC2 인스턴스에서 사용자 지정 데이터베이스를 실행하는 회사가 있습니다. 이 데이터베이스는 데이터를 Amazon Elastic Block Store (Amazon EBS) 볼륨에 저장합니다. SysOps 관리자는 EBS 볼륨에 대해 백업 전략을 설정해야 합니다. 이 요구 사항을 충족하려면 SysOps 관리자가 수행해야 하는 작업은 무엇입니까?</p>
+
+
+
+<p class="wp-block-paragraph">A. EBS 볼륨의 스냅샷을 생성하는 작업으로 VolumeIdleTime 지표에 대한 Amazon CloudWatch 경보를 만든다.<br>B. AWS Data Pipeline에 파이프라인을 만들어 반복되는 일정으로 EBS 볼륨의 스냅샷을 생성한다.<br>C. Amazon Data Lifecycle Manager (Amazon DLM) 정책을 만들어 반복되는 일정으로 EBS 볼륨의 스냅샷을 생성한다.<br>D. AWS DataSync 작업을 만들어 반복되는 일정으로 EBS 볼륨의 스냅샷을 생성한다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> C<br><strong>해설:</strong> Amazon Data Lifecycle Manager (DLM)를 사용하면 EBS 볼륨의 스냅샷 생성을 자동화할 수 있습니다. 반복적인 일정과 보존 기간을 설정하여 효율적인 백업 전략을 구현할 수 있습니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 10:</strong><br>회사에서 내부 부서에 대해 많은 Amazon EC2 인스턴스를 실행합니다. 이 회사는 부서별로 기존 AWS 리소스 비용을 추적해야 합니다. 이 요구 사항을 충족하려면 SysOps 관리자가 수행해야 하는 작업은 무엇입니까?</p>
+
+
+
+<p class="wp-block-paragraph">A. 계정에 대해 AWS에서 생성되는 비용 할당 태그를 모두 활성화한다.<br>B. Tag Editor를 통해 인스턴스에 사용자 정의 태그를 적용한다. 비용 할당을 위해 이러한 태그를 활성화한다.<br>C. 반복되는 일정으로 EC2 사용량에 대해 AWS 요금 계산기를 실행하도록 AWS Lambda 함수를 예약한다.<br>D. AWS Trusted Advisor 대시보드를 사용하여 EC2 비용 보고서를 내보낸다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> B<br><strong>해설:</strong> Tag Editor를 사용하여 EC2 인스턴스에 사용자 정의 태그를 적용하고, 비용 할당 태그를 활성화하면 부서별로 비용을 추적할 수 있습니다. 이를 통해 비용 관리와 분석이 용이해집니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading"><strong>도메인 4: 보안 및 규정 준수</strong></h3>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 11:</strong><br>회사에서 AWS Lambda 함수를 사용하여 S3 버킷에 업로드된 파일을 처리하고 있습니다. 함수가 S3 버킷에 접근할 수 있도록 하려면 어떤 설정을 추가로 해야 합니까?</p>
+
+
+
+<p class="wp-block-paragraph">A. Lambda 함수에 공인 IP 주소를 할당한다.<br>B. Lambda 함수를 VPC에 연결하고 필요한 보안 그룹과 서브넷을 설정한다.<br>C. Lambda 함수의 실행 역할에 S3에 대한 전체 액세스 권한을 부여한다.<br>D. Lambda 함수에 대한 인터넷 액세스를 비활성화한다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> B<br><strong>해설:</strong> Lambda 함수를 VPC에 연결하고 적절한 보안 그룹과 서브넷을 설정하면 Lambda 함수가 VPC 내의 리소스와 안전하게 통신할 수 있습니다. 이는 보안성을 높이고 필요한 리소스에 접근할 수 있도록 합니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 12:</strong><br>회사에서 새로운 웹 애플리케이션을 배포하려고 합니다. 다음을 사용하여 고가용성 MySQL 8.0 데이터베이스를 구성합니다.</p>
+
+
+
+<ol class="wp-block-list">
+<li>모든 리소스에 대해 us-east-2 리전을 사용합니다.</li>
+
+
+
+<li>아래에 지정하지 않는 한 기본 구성 설정을 사용합니다.</li>
+
+
+
+<li>사용자 지정 DB 파라미터 그룹을 생성하고 event_scheduler 파라미터를 true로 설정하고 DB 인스턴스 생성 중에 이 파라미터 그룹을 사용합니다.</li>
+
+
+
+<li>사용자 지정 AWS Key Management Service (AWS KMS) 키를 생성하고 DB 인스턴스 생성 중에 이 키를 사용합니다.</li>
+
+
+
+<li>CIDR 블록 192.168.1.0/24에서 TCP 포트 3306을 허용하는 VPC 보안 그룹을 생성합니다. DB 인스턴스 생성 중에 이 보안 그룹을 사용합니다.</li>
+
+
+
+<li>Amazon RDS DB 인스턴스를 시작합니다.</li>
+
+
+
+<li>시작 후 수동 RDS DB 스냅샷을 생성합니다.<br>스냅샷 Amazon 리소스 이름(ARN)을 입력합니다. <strong><em><strong><em>_____</em></strong></em></strong></li>
+</ol>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> 스냅샷 Amazon 리소스 이름(ARN)을 입력합니다.<br><strong>해설:</strong> 문제의 마지막 단계에서는 생성된 DB 스냅샷의 ARN을 입력해야 합니다. 이는 스냅샷을 식별하고 추후 복구 시 사용할 수 있도록 하기 위함입니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading"><strong>도메인 5: 네트워킹 및 콘텐츠 전송</strong></h3>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 13:</strong><br>회사는 Amazon CloudFront를 사용하여 정적 웹 사이트 콘텐츠를 전 세계 사용자에게 빠르게 제공하고자 합니다. 다음 중 CloudFront 배포의 성능을 최적화하기 위한 가장 적절한 설정은 무엇입니까?</p>
+
+
+
+<p class="wp-block-paragraph">A. 모든 CloudFront 엣지 로케이션을 비활성화한다.<br>B. S3 오리진에 대한 오리진 액세스 아이덴티티(OAI)를 설정한다.<br>C. CloudFront 배포에서 HTTP 대신 FTP 프로토콜을 사용한다.<br>D. 모든 캐시 동작에 대해 캐시 무효화를 비활성화한다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> B<br><strong>해설:</strong> S3 오리진에 대한 오리진 액세스 아이덴티티(OAI)를 설정하면 CloudFront가 S3 버킷의 콘텐츠에 안전하게 접근할 수 있으며, 성능과 보안을 동시에 향상시킬 수 있습니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading"><strong>도메인 6: 비용 및 성능 최적화</strong></h3>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 14:</strong><br>회사에서 AWS Cost Explorer를 사용하여 EC2 인스턴스의 비용을 분석하고 있습니다. 비용을 최적화하기 위해 어떤 조치를 취하는 것이 가장 적절합니까?</p>
+
+
+
+<p class="wp-block-paragraph">A. 모든 EC2 인스턴스를 중지한다.<br>B. 사용되지 않는 EC2 인스턴스를 식별하고 종료한다.<br>C. EC2 인스턴스의 보안 그룹을 삭제한다.<br>D. 모든 EC2 인스턴스를 동일한 크기로 변경한다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> B<br><strong>해설:</strong> Cost Explorer를 사용하여 사용되지 않거나 저활용 중인 EC2 인스턴스를 식별하고 종료함으로써 비용을 절감할 수 있습니다. 불필요한 리소스를 제거하는 것이 비용 최적화의 핵심입니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 15:</strong><br>회사에서 Amazon RDS for MySQL 데이터베이스를 사용하고 있습니다. 데이터베이스의 성능을 향상시키기 위해 어떤 조치를 취할 수 있습니까?</p>
+
+
+
+<p class="wp-block-paragraph">A. 데이터베이스 인스턴스 유형을 변경하여 더 높은 사양의 인스턴스로 업그레이드한다.<br>B. 데이터베이스의 스토리지 타입을 변경하여 저성능 스토리지로 전환한다.<br>C. 데이터베이스의 보안 그룹을 비활성화한다.<br>D. 데이터베이스의 자동 백업 기능을 비활성화한다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> A<br><strong>해설:</strong> 데이터베이스 인스턴스 유형을 더 높은 사양으로 업그레이드하면 CPU, 메모리 및 네트워크 성능이 향상되어 데이터베이스 성능을 개선할 수 있습니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 16:</strong><br>회사는 AWS Systems Manager를 사용하여 여러 EC2 인스턴스에 패치를 자동으로 배포하고자 합니다. 이를 위해 어떤 기능을 사용해야 합니까?</p>
+
+
+
+<p class="wp-block-paragraph">A. Systems Manager Session Manager<br>B. Systems Manager Patch Manager<br>C. Systems Manager Parameter Store<br>D. Systems Manager Automation</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> B<br><strong>해설:</strong> Systems Manager Patch Manager는 여러 EC2 인스턴스에 대해 자동으로 패치를 배포하고 관리할 수 있는 기능을 제공합니다. 이를 통해 시스템의 보안과 최신 상태를 유지할 수 있습니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 17:</strong><br>회사에서 AWS Lambda 함수를 사용하여 S3 버킷에 업로드된 파일을 처리하고 있습니다. 함수가 S3 버킷에 접근할 수 있도록 하려면 어떤 설정을 추가로 해야 합니까?</p>
+
+
+
+<p class="wp-block-paragraph">A. Lambda 함수에 공인 IP 주소를 할당한다.<br>B. Lambda 함수를 VPC에 연결하고 필요한 보안 그룹과 서브넷을 설정한다.<br>C. Lambda 함수의 실행 역할에 S3에 대한 전체 액세스 권한을 부여한다.<br>D. Lambda 함수에 대한 인터넷 액세스를 비활성화한다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> B<br><strong>해설:</strong> Lambda 함수를 VPC에 연결하고 필요한 보안 그룹과 서브넷을 설정하면 S3 버킷과 같은 VPC 내부 리소스에 안전하게 접근할 수 있습니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>문제 18:</strong><br>회사는 AWS Organizations를 사용하여 계정을 관리하고 있습니다. 프로덕션 계정에 대해 SysOps 관리자는 현재 및 향후 Amazon EC2 인스턴스와 Amazon Elastic File System (Amazon EFS) 파일 시스템에 대해 모든 데이터가 매일 백업되도록 해야 합니다. 백업은 30일간 보존해야 합니다. 최소의 노력으로 이러한 요구 사항을 충족하는 솔루션은 무엇입니까?</p>
+
+
+
+<p class="wp-block-paragraph">A. AWS Backup에 백업 계획을 만든다. 해당 계정에서 실행 중인 모든 기존 EC2 및 EFS 리소스를 선택하여 리소스 ID 별로 리소스를 할당한다. 새 리소스를 포함하도록 매일 백업 계획을 편집한다. 30일 후 백업을 만료하는 수명 주기 정책을 사용해 매일 실행되도록 백업 계획을 예약한다.<br>B. AWS Backup에 백업 계획을 만든다. 태그별로 리소스를 할당한다. 모든 기존 EC2 및 EFS 리소스가 올바르게 태그 지정되어 있는지 확인한다. 올바른 태그가 적용되어 있지 않으면 인스턴스 및 파일 시스템 생성을 방지하는 서비스 제어 정책(SCP)을 프로덕션 계정 OU에 적용한다. 30일 후 백업을 만료하는 수명 주기 정책을 사용해 매일 실행되도록 백업 계획을 예약한다.<br>C. Amazon Data Lifecycle Manager (Amazon DLM)에 수명 주기 정책을 만든다. 해당 계정에서 실행 중인 모든 기존 EC2 및 EFS 리소스를 선택하여 리소스 ID 별로 모든 리소스를 할당한다. 새 리소스를 포함하도록 매일 수명 주기 정책을 편집한다. 보존 기간을 30일로 하여 매일 스냅샷을 생성하도록 수명 주기 정책을 예약한다.<br>D. Amazon Data Lifecycle Manager (Amazon DLM)에 수명 주기 정책을 만든다. 태그별로 모든 리소스를 할당한다. 모든 기존 EC2 및 EFS 리소스가 올바르게 태그 지정되어 있는지 확인한다. 올바른 태그가 적용되어 있지 않으면 리소스 생성을 방지하는 서비스 제어 정책(SCP)을 적용한다. 보존 기간을 30일로 하여 매일 스냅샷을 생성하도록 수명 주기 정책을 예약한다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>정답:</strong> B<br><strong>해설:</strong> AWS Backup을 사용하여 태그 기반으로 리소스를 할당하고, 서비스 제어 정책(SCP)을 통해 올바른 태그가 적용되지 않은 리소스 생성을 방지할 수 있습니다. 백업 계획을 통해 매일 백업을 실행하고 30일간 보존하도록 설정하여 요구 사항을 충족할 수 있습니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph">이와 같은 샘플 문제를 통해 AWS Certified SysOps Administrator – Associate (SOA-C02) 시험 준비에 도움이 되시길 바랍니다. 추가적인 질문이나 도움이 필요하시면 언제든지 문의해주세요!</p>
+
+
+
+<p class="wp-block-paragraph">참고자료 : <a href="https://d1.awsstatic.com/ko_KR/training-and-certification/docs-sysops-associate/AWS-Certified-SysOps-Administrator-Associate_Sample-Questions.pdf">https://d1.awsstatic.com/ko_KR/training-and-certification/docs-sysops-associate/AWS-Certified-SysOps-Administrator-Associate_Sample-Questions.pdf</a></p>
+
+
+
+<p class="wp-block-paragraph"></p>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

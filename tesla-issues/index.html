@@ -1,0 +1,191 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/tesla-issues/"><link rel="stylesheet" href="/archive.css"><title>테슬라 자율주행 &amp; 보안 이슈 총정리 🚗🔒 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>테슬라 자율주행 &amp; 보안 이슈 총정리 🚗🔒</h1><p><time>2024-12-20</time></p><div>
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="1024" data-attachment-id="1628" data-permalink="https://2twodragon.com/c88b48da-4d69-4e9c-905c-e9fb0c964d8b-1/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/c88b48da-4d69-4e9c-905c-e9fb0c964d8b-1.png?fit=1024%2C1024&amp;ssl=1" data-orig-size="1024,1024" data-comments-opened="1" data-image-title="c88b48da-4d69-4e9c-905c-e9fb0c964d8b-1" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/c88b48da-4d69-4e9c-905c-e9fb0c964d8b-1.png?fit=1024%2C1024&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2024/12/c88b48da-4d69-4e9c-905c-e9fb0c964d8b-1.png?resize=1024%2C1024&#038;ssl=1" alt="" class="wp-image-1628" srcset="https://legacy.2twodragon.com/wp-content/uploads/2024/12/c88b48da-4d69-4e9c-905c-e9fb0c964d8b-1.png?w=1024&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/c88b48da-4d69-4e9c-905c-e9fb0c964d8b-1.png?resize=300%2C300&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/c88b48da-4d69-4e9c-905c-e9fb0c964d8b-1.png?resize=150%2C150&amp;ssl=1 150w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/c88b48da-4d69-4e9c-905c-e9fb0c964d8b-1.png?resize=768%2C768&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/c88b48da-4d69-4e9c-905c-e9fb0c964d8b-1.png?resize=600%2C600&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/c88b48da-4d69-4e9c-905c-e9fb0c964d8b-1.png?resize=100%2C100&amp;ssl=1 100w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/c88b48da-4d69-4e9c-905c-e9fb0c964d8b-1.png?resize=50%2C50&amp;ssl=1 50w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<p class="p3 wp-block-paragraph">⚠️ 자율주행 컴퓨터 문제</p>
+
+
+
+<p class="p1 wp-block-paragraph">테슬라의 최신 자율주행 컴퓨터(HW4, AI4.1)가 일부 신차에서 단락 현상을 일으키고 있어요. 이로 인해 다음 주요 기능들이 제대로 작동하지 않는 사례가 증가하고 있습니다:</p>
+
+
+
+<p class="p5 wp-block-paragraph">• 카메라 시스템</p>
+
+
+
+<p class="p5 wp-block-paragraph">• 능동 안전 시스템</p>
+
+
+
+<p class="p5 wp-block-paragraph">• GPS 및 내비게이션</p>
+
+
+
+<p class="p5 wp-block-paragraph">• 주행거리 추정</p>
+
+
+
+<p class="p1 wp-block-paragraph">특히, 저전압 배터리 문제가 카메라 보정 과정에서 오류를 유발할 가능성이 커지고 있어요. 🛑</p>
+
+
+
+<p class="p3 wp-block-paragraph">🔧 현재 상황</p>
+
+
+
+<p class="p5 wp-block-paragraph">• 주행 시작 후 수십~수백 킬로미터 내에 시스템 고장 발생</p>
+
+
+
+<p class="p5 wp-block-paragraph">• 테슬라는 아직 공식 서비스 공지나 리콜을 발표하지 않았어요</p>
+
+
+
+<p class="p5 wp-block-paragraph">• 임시 해결책으로 소프트웨어 패치나 컴퓨터 교체를 검토 중</p>
+
+
+
+<p class="p5 wp-block-paragraph">• 서비스 센터 예약이 내년까지 지연되고 있는 상황</p>
+
+
+
+<p class="p3 wp-block-paragraph">🖥️ 테슬라의 컴퓨터 하드웨어</p>
+
+
+
+<p class="p1 wp-block-paragraph">테슬라의 컴퓨터 시스템은 다음과 같이 구성되어 있어요:</p>
+
+
+
+<p class="p6 wp-block-paragraph">1. 중앙 정보 디스플레이(CID)</p>
+
+
+
+<p class="p7 wp-block-paragraph">• 대시보드 중앙의 대형 콘솔</p>
+
+
+
+<p class="p7 wp-block-paragraph">• 리눅스 기반 운영체제와 Nvidia Tegra 기반 VCM 탑재</p>
+
+
+
+<p class="p6 wp-block-paragraph">2. 계기판 클러스터(IC)</p>
+
+
+
+<p class="p7 wp-block-paragraph">• 기본적인 차량 정보 표시</p>
+
+
+
+<p class="p7 wp-block-paragraph">• Nvidia VCM 사용</p>
+
+
+
+<p class="p6 wp-block-paragraph">3. 자율주행 컴퓨터(FSD 컴퓨터)</p>
+
+
+
+<p class="p7 wp-block-paragraph">• 2개의 Tesla 설계 프로세서와 20개의 CPU 코어</p>
+
+
+
+<p class="p7 wp-block-paragraph">• HW4.0 기준 더 큰 보드와 향상된 메모리</p>
+
+
+
+<p class="p6 wp-block-paragraph">4. AI 트레이닝용 슈퍼컴퓨터(도조 시스템)</p>
+
+
+
+<p class="p7 wp-block-paragraph">• 자체 설계한 D1 칩으로 구성</p>
+
+
+
+<p class="p7 wp-block-paragraph">• 높은 성능과 전력 효율로 자율주행 기능 개발 및 AI 학습 지원</p>
+
+
+
+<p class="p3 wp-block-paragraph">📡 OTA 업데이트의 보안 영향</p>
+
+
+
+<p class="p1 wp-block-paragraph">테슬라의 OTA(Over-The-Air) 업데이트는 차량의 소프트웨어를 무선으로 업데이트할 수 있게 해주지만, 몇 가지 보안 위험도 동반하고 있어요:</p>
+
+
+
+<p class="p5 wp-block-paragraph">• ⚠️ 잠재적 취약점: 무선 네트워크를 통한 해킹 위험 존재</p>
+
+
+
+<p class="p5 wp-block-paragraph">• 🔐 보안 대책: 소프트웨어 업데이트는 암호화와 디지털 서명 인증서를 사용해 안전하게 진행</p>
+
+
+
+<p class="p5 wp-block-paragraph">• 🔧 안전성 강화: 보안 취약점 발견 시 즉각적인 패치 배포 및 정기적인 보안 업데이트</p>
+
+
+
+<p class="p5 wp-block-paragraph">• ☁️ 서버 &amp; 클라우드: 테슬라는 자체 클라우드 인프라와 고성능 서버를 통해 OTA 업데이트를 관리하며, 데이터 전송의 안정성과 보안을 유지하고 있어요. 이를 통해 실시간 모니터링과 빠른 대응이 가능해집니다.</p>
+
+
+
+<p class="p3 wp-block-paragraph">🔒 차량 보안 기능</p>
+
+
+
+<p class="p1 wp-block-paragraph">테슬라는 다양한 보안 기능으로 차량을 보호하고 있어요:</p>
+
+
+
+<p class="p5 wp-block-paragraph">• 센트리 모드: 차량 주변을 감시하고 위협 감지 시 경보음 및 녹화 시작</p>
+
+
+
+<p class="p5 wp-block-paragraph">• PIN 인증: 4자리 PIN으로 차량 도난 방지</p>
+
+
+
+<p class="p5 wp-block-paragraph">• 암호화 및 통신 보안: 데이터 전송 보호 및 실시간 모니터링</p>
+
+
+
+<p class="p3 wp-block-paragraph">🤫 엘론 모드(Elon Mode)</p>
+
+
+
+<p class="p1 wp-block-paragraph">비공식 기능인 엘론 모드는 오토파일럿 사용 시 핸들 조작 경고를 무시할 수 있는 모드입니다. 이로 인해 다음과 같은 우려가 제기되고 있어요:</p>
+
+
+
+<p class="p5 wp-block-paragraph">• 🚨 규제 당국의 우려: NHTSA의 조사 대상, 운전자의 부주의 및 감독 실패 위험 증가</p>
+
+
+
+<p class="p5 wp-block-paragraph">• 🔒 접근 제한: 일반 사용자는 접근 불가, 개발자 모드 접근 권한 필요</p>
+
+
+
+<p class="p1 wp-block-paragraph">🚗 종합적으로, 테슬라는 최첨단 자율주행 기술과 강력한 보안 기능을 갖추고 있지만, 최근 HW4 컴퓨터 문제와 엘론 모드 관련 안전 우려, OTA 업데이트의 보안 위험 등 해결해야 할 과제들이 남아 있습니다. 테슬라의 지속적인 업데이트와 보안 강화 노력이 중요한 시점이에요! 🚀🔧</p>
+
+
+
+<p class="p1 wp-block-paragraph">출처</p>
+
+
+
+<p class="p6 wp-block-paragraph">1. <a href="https://electrek.co/2024/12/16/tesla-major-issue-self-driving-computer-inside-new-cars/">Electrek</a></p>
+
+
+
+<p class="p6 wp-block-paragraph">2. <a href="https://www.newsbytesapp.com/news/auto/tesla-s-self-driving-computers-in-new-cars-are-failing/story">Newsbytesapp</a></p>
+
+
+
+<p class="p6 wp-block-paragraph">3. <a href="https://futurism.com/the-byte/computer-brand-new-tesla-failing">Futurism</a></p>
+
+
+
+<p class="p1 wp-block-paragraph"></p>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

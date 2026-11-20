@@ -1,0 +1,315 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/aws-ec2-network-abstract/"><link rel="stylesheet" href="/archive.css"><title>🌐 AWS 클라우드 핵심 요약: 알아두면 쓸모 있는 EC2와 네트워크 아키텍처 이야기 🌐 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>🌐 AWS 클라우드 핵심 요약: 알아두면 쓸모 있는 EC2와 네트워크 아키텍처 이야기 🌐</h1><p><time>2024-10-26</time></p><div>
+<figure class="wp-block-image size-large is-resized"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="1012" data-attachment-id="1136" data-permalink="https://2twodragon.com/aws-ec2-network-abstract/image-10/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2024/10/image-3.png?fit=1370%2C1354&amp;ssl=1" data-orig-size="1370,1354" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2024/10/image-3.png?fit=1024%2C1012&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2024/10/image-3.png?resize=1024%2C1012&#038;ssl=1" alt="" class="wp-image-1136" style="width:685px;height:auto" srcset="https://legacy.2twodragon.com/wp-content/uploads/2024/10/image-3.png?resize=1024%2C1012&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2024/10/image-3.png?resize=300%2C296&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2024/10/image-3.png?resize=768%2C759&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2024/10/image-3.png?resize=600%2C593&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2024/10/image-3.png?resize=100%2C100&amp;ssl=1 100w, https://legacy.2twodragon.com/wp-content/uploads/2024/10/image-3.png?resize=50%2C50&amp;ssl=1 50w, https://legacy.2twodragon.com/wp-content/uploads/2024/10/image-3.png?w=1370&amp;ssl=1 1370w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<p class="wp-block-paragraph">안전하고 효율적인 클라우드 환경 구축의 모든 것! ☁️</p>
+
+
+
+<p class="wp-block-paragraph">1. <strong>Amazon EC2의 기본 개념과 중요성</strong> 🖥️</p>
+
+
+
+<ul class="wp-block-list">
+<li>AWS에서 가장 기본적이고 범용적으로 사용되는 서비스인 <strong>EC2</strong>로 다양한 워크로드를 효율적으로 처리하세요.</li>
+
+
+
+<li>지속적인 혁신과 기능 향상으로 모든 비즈니스 요구사항을 지원합니다.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">2. <strong>적합한 EC2 인스턴스 유형 선택 방법</strong> 🔍</p>
+
+
+
+<ul class="wp-block-list">
+<li>워크로드 특성에 따라 <strong>인스턴스 패밀리</strong>, <strong>세대</strong>, <strong>크기</strong>를 고려하여 최적의 인스턴스를 선택하세요.</li>
+
+
+
+<li>지속적인 모니터링과 <strong>AWS Compute Optimizer</strong>를 활용한 최적화가 필요합니다.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">3. <strong>EC2 인스턴스의 최적화와 비용 효율적 확장</strong> 💡</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Auto Scaling</strong>과 <strong>스팟 인스턴스</strong>를 사용하여 유연하고 비용 효율적인 확장이 가능합니다.</li>
+
+
+
+<li>트래픽 패턴에 따라 인스턴스 수를 자동으로 조절하고, 비용을 절감하세요.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">4. <strong>EC2 데이터 보호 및 관리</strong> 🔒</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>EBS 스냅샷</strong>과 <strong>AWS Data Lifecycle Manager</strong>로 데이터 백업과 관리를 자동화하세요.</li>
+
+
+
+<li>데이터 보호와 스토리지 비용 절감이 가능합니다.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">5. <strong>AWS 네트워크 아키텍처의 핵심 요소</strong> 🌐</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>VPC 구조</strong>로 리전, 가용 영역(AZ), 서브넷을 분리 및 관리하여 안전한 네트워크를 구축하세요.</li>
+
+
+
+<li><strong>IGW</strong>, <strong>NAT 게이트웨이</strong>로 내부 및 외부 트래픽을 제어하고, <strong>Direct Connect</strong>와 <strong>VPN</strong>으로 온프레미스와 안전한 연결을 구축하세요.</li>
+
+
+
+<li><strong>AWS Network Firewall</strong>과 <strong>VPC Flow Logs</strong>로 고급 보안 설정과 트래픽 모니터링을 강화하세요.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">6. <strong>글로벌 연결과 확장</strong> 🌍</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>AWS Transit Gateway</strong>로 여러 VPC와 온프레미스 간 연결을 손쉽게 관리하세요.</li>
+
+
+
+<li><strong>AWS Outposts</strong>로 온프레미스 환경에서도 AWS 서비스를 사용하여 하이브리드 클라우드를 구현하세요.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">7. <strong>지속적인 개선을 위한 AWS 도구 활용</strong> 🔧</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>AWS Compute Optimizer</strong>, <strong>Auto Scaling</strong>, <strong>Data Lifecycle Manager</strong> 등 다양한 도구를 활용하여 아키텍처를 지속적으로 개선하세요.</li>
+
+
+
+<li><strong>Amazon CloudWatch</strong>로 전반적인 모니터링을 수행하여 성능과 비용을 최적화하세요.</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph">🔍&nbsp;<strong>규모별 아키텍처 구성도 및 정의</strong>&nbsp;🗺️</p>
+
+
+
+<p class="wp-block-paragraph"><strong>소규모 구성:</strong>&nbsp;🏠</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>정의:</strong>
+<ul class="wp-block-list">
+<li>직원 수 <strong>1~50명</strong> 규모의 스타트업이나 소기업</li>
+
+
+
+<li>일일 사용자 수가 <strong>수백 명 이하</strong>인 서비스</li>
+</ul>
+</li>
+
+
+
+<li><strong>구성 요소:</strong>
+<ul class="wp-block-list">
+<li><strong>EC2 인스턴스</strong> 1~2개 🖥️</li>
+
+
+
+<li><strong>VPC</strong> 내에 <strong>퍼블릭 서브넷</strong></li>
+
+
+
+<li>인터넷 게이트웨이(IGW)를 통해 인터넷과 연결 🌐</li>
+
+
+
+<li><strong>EBS 볼륨</strong>을 사용한 데이터 저장 💾</li>
+</ul>
+</li>
+
+
+
+<li><strong>특징:</strong>
+<ul class="wp-block-list">
+<li>간단하고 빠른 배포 가능 🚀</li>
+
+
+
+<li>초기 비용 절감에 초점 💰</li>
+</ul>
+</li>
+
+
+
+<li><strong>주요 사용 기업:</strong>
+<ul class="wp-block-list">
+<li>스타트업, 소규모 온라인 쇼핑몰, 개인 블로그 운영자 등</li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>중규모 구성:</strong>&nbsp;🏢</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>정의:</strong>
+<ul class="wp-block-list">
+<li>직원 수 <strong>50~500명</strong> 규모의 중견 기업</li>
+
+
+
+<li>일일 사용자 수가 <strong>수천에서 수만 명</strong>인 서비스</li>
+</ul>
+</li>
+
+
+
+<li><strong>구성 요소:</strong>
+<ul class="wp-block-list">
+<li><strong>Auto Scaling 그룹</strong>으로 관리되는 다수의 EC2 인스턴스 🖥️🖥️🖥️</li>
+</ul>
+</li>
+
+
+
+<li>*로드 밸런서(ELB)를 통한 트래픽 분산 ⚖️
+<ul class="wp-block-list">
+<li><strong>퍼블릭 서브넷</strong>과 <strong>프라이빗 서브넷</strong> 분리 🔒</li>
+
+
+
+<li><strong>NAT 게이트웨이</strong>를 통해 프라이빗 서브넷의 인터넷 액세스 지원 🌐</li>
+
+
+
+<li><strong>RDS</strong>와 같은 관리형 데이터베이스 서비스 사용 📚</li>
+</ul>
+</li>
+
+
+
+<li><strong>특징:</strong>
+<ul class="wp-block-list">
+<li>트래픽 변화에 따른 자동 확장 📈</li>
+
+
+
+<li>보안과 성능의 균형 유지 ⚖️</li>
+</ul>
+</li>
+
+
+
+<li><strong>주요 사용 기업:</strong>
+<ul class="wp-block-list">
+<li>온라인 교육 플랫폼, 중견 전자상거래 사이트, 모바일 앱 서비스 제공 기업 등</li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>대규모 구성:</strong>&nbsp;🏭</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>정의:</strong>
+<ul class="wp-block-list">
+<li>직원 수 <strong>500명 이상</strong>인 대기업</li>
+
+
+
+<li>일일 사용자 수가 <strong>수십만에서 수백만 명</strong>인 글로벌 서비스</li>
+</ul>
+</li>
+
+
+
+<li><strong>구성 요소:</strong>
+<ul class="wp-block-list">
+<li>여러 <strong>VPC</strong>를 <strong>AWS Transit Gateway</strong>로 연결 🔄</li>
+
+
+
+<li><strong>Direct Connect</strong>를 통한 온프레미스 데이터 센터와의 전용 연결 🔗</li>
+
+
+
+<li><strong>AWS Outposts</strong>로 온프레미스에서도 AWS 서비스 사용 🖥️</li>
+
+
+
+<li><strong>AWS Network Firewall</strong>과 <strong>VPC Flow Logs</strong>로 강화된 보안 및 모니터링 🛡️</li>
+
+
+
+<li><strong>컨테이너 오케스트레이션(EKS, ECS)</strong> 및 <strong>마이크로서비스 아키텍처</strong> 사용 🛠️</li>
+</ul>
+</li>
+
+
+
+<li><strong>특징:</strong>
+<ul class="wp-block-list">
+<li>높은 가용성과 확장성 제공 🌐</li>
+
+
+
+<li>복잡한 네트워크 토폴로지 관리 🗺️</li>
+</ul>
+</li>
+
+
+
+<li><strong>주요 사용 기업:</strong>
+<ul class="wp-block-list">
+<li>글로벌 소셜 미디어 플랫폼, 대형 금융 기관, 국제적인 전자상거래 기업 등</li>
+</ul>
+</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph">💡&nbsp;<strong>더 알아보기</strong>: AWS EC2와 네트워크 아키텍처로 효율적이고 안전한 클라우드 환경을 구축하세요! ☁️</p>
+
+
+
+<p class="wp-block-paragraph">궁금한 점이 있으신가요? 댓글로 남겨주세요! 😊</p>
+
+
+
+<p class="wp-block-paragraph"></p>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

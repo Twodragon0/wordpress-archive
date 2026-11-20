@@ -1,0 +1,557 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/datadog-aiops/"><link rel="stylesheet" href="/archive.css"><title>Datadog Watchdog,로그 관리, Contents Pack으로 완성하는 AIOps 🐶  | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>Datadog Watchdog,로그 관리, Contents Pack으로 완성하는 AIOps 🐶 </h1><p><time>2025-04-14</time></p><div>
+<p class="wp-block-paragraph">효과적인 IT 운영 관리에서 핵심은 이상 징후를 빠르게 탐지하고 신속하게 대응하는 것입니다. 🚨<br><strong>Datadog</strong>은 이를 위한 강력한 AI 엔진인&nbsp;<strong>Watchdog</strong>과 효율적인 로그 관리 기능을 제공하여 AIOps를 실현할 수 있도록 지원합니다.</p>
+
+
+
+<p class="wp-block-paragraph">이 포스팅에서는 Datadog의&nbsp;<strong>Watchdog 주요 기능</strong>과&nbsp;<strong>로그 관리 효율화 방법</strong>&nbsp;그리고&nbsp;<strong>Flex Logs</strong>를 활용한 로그 관리 전략까지 종합적으로 정리해 드립니다. ✨</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">📌&nbsp;<strong>1. Datadog Watchdog란?</strong></h2>
+
+
+
+<p class="wp-block-paragraph"><strong>Watchdog</strong>는 Datadog의 AI 기반 이상 탐지 엔진으로, 메트릭, 로그, APM 데이터를 지속적으로 분석하여 이상 현상을 자동으로 탐지하고 알려줍니다.</p>
+
+
+
+<p class="wp-block-paragraph">Watchdog의 대표적인 기능은 다음과 같습니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li>🚩&nbsp;<strong>경고 자동 감지 및 모니터링</strong></li>
+
+
+
+<li>📉&nbsp;<strong>Impact Analysis (영향 분석)</strong></li>
+
+
+
+<li>🔎&nbsp;<strong>Insights (통찰력 제공)</strong></li>
+
+
+
+<li>🌳&nbsp;<strong>RCA (근본 원인 분석)</strong></li>
+
+
+
+<li>📦&nbsp;<strong>자동 배포 오류 감지</strong></li>
+
+
+
+<li>🌩️&nbsp;<strong>클라우드 및 SaaS API 이상 자동 감지</strong></li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">📌&nbsp;<strong>2. Datadog Watchdog의 핵심 기능 소개</strong></h2>
+
+
+
+<h3 class="wp-block-heading">🟢&nbsp;<strong>① Watchdog 경고 자동 감지</strong></h3>
+
+
+
+<p class="wp-block-paragraph">Watchdog는 다음 영역에서 비정상적인 활동을 탐지합니다.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="584" data-attachment-id="2447" data-permalink="https://2twodragon.com/datadog-aiops/image-106/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-12.png?fit=3050%2C1740&amp;ssl=1" data-orig-size="3050,1740" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-12.png?fit=1024%2C584&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-12.png?resize=1024%2C584&#038;ssl=1" alt="" class="wp-image-2447" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-12.png?resize=1024%2C584&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-12.png?resize=300%2C171&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-12.png?resize=768%2C438&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-12.png?resize=1536%2C876&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-12.png?resize=2048%2C1168&amp;ssl=1 2048w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-12.png?resize=600%2C342&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-12.png?w=3000&amp;ssl=1 3000w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<ul class="wp-block-list">
+<li>📋&nbsp;<strong>로그:</strong>&nbsp;오류 로그의 급격한 증가 탐지</li>
+
+
+
+<li>📌&nbsp;<strong>APM &amp; USM:</strong>&nbsp;오류율(Error Rate), 지연시간(Latency), 요청 빈도(Hits) 이상 탐지</li>
+
+
+
+<li>🖥️&nbsp;<strong>Infra:</strong>&nbsp;인프라 메트릭 이상 탐지(CPU, Memory 등)</li>
+</ul>
+
+
+
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph">📌&nbsp;<strong>데이터 최소 요구사항</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>로그: 24시간 이상</li>
+
+
+
+<li>메트릭: 최소 2주 이상의 데이터가 축적되어야 효과적으로 이상징후 탐지 가능</li>
+</ul>
+</blockquote>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading">🟠&nbsp;<strong>② Watchdog Impact Analysis (영향 분석)</strong></h3>
+
+
+
+<p class="wp-block-paragraph">Watchdog는 APM, RUM 데이터를 기반으로 이상 이벤트가 미치는&nbsp;<strong>서비스, 사용자, 화면(View)</strong>&nbsp;등의 영향을 자동으로 분석해 제공합니다.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="567" data-attachment-id="2446" data-permalink="https://2twodragon.com/datadog-aiops/image-105/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-11.png?fit=3044%2C1686&amp;ssl=1" data-orig-size="3044,1686" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-11.png?fit=1024%2C567&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-11.png?resize=1024%2C567&#038;ssl=1" alt="" class="wp-image-2446" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-11.png?resize=1024%2C567&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-11.png?resize=300%2C166&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-11.png?resize=768%2C425&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-11.png?resize=1536%2C851&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-11.png?resize=2048%2C1134&amp;ssl=1 2048w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-11.png?resize=600%2C332&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-11.png?w=3000&amp;ssl=1 3000w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<p class="wp-block-paragraph">✔️&nbsp;<strong>영향 분석 카드에서 확인 가능한 정보:</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>상태 (진행 중, 해결됨, 만료됨)</li>
+
+
+
+<li>현상 발생 타임라인 및 메시지</li>
+
+
+
+<li>영향 범위 요약</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading">🔵&nbsp;<strong>③ Watchdog Insights (통찰력 제공)</strong></h3>
+
+
+
+<p class="wp-block-paragraph">Watchdog Insights는 인프라, APM, 로그 화면에서 추가적인 분석을 제공합니다.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="593" data-attachment-id="2445" data-permalink="https://2twodragon.com/datadog-aiops/image-104/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?fit=3036%2C1758&amp;ssl=1" data-orig-size="3036,1758" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?fit=1024%2C593&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?resize=1024%2C593&#038;ssl=1" alt="" class="wp-image-2445" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?resize=1024%2C593&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?resize=300%2C174&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?resize=768%2C445&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?resize=1536%2C889&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?resize=2048%2C1186&amp;ssl=1 2048w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?resize=600%2C347&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?w=3000&amp;ssl=1 3000w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<p class="wp-block-paragraph">✔️&nbsp;<strong>Insights 주요 분석 내용:</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>오류 로그의 시간대별 분석</li>
+
+
+
+<li>오류 로그와 자주 연관되는 태그</li>
+
+
+
+<li>로그 패턴 종합 분석</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading">🔴&nbsp;<strong>④ Watchdog RCA (근본 원인 분석)</strong></h3>
+
+
+
+<p class="wp-block-paragraph">Watchdog의 RCA는 이상 현상 간의 인과 관계를 자동 분석하여, 장애 복구 시간(MTTR)을 크게 단축시켜줍니다.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="593" data-attachment-id="2445" data-permalink="https://2twodragon.com/datadog-aiops/image-104/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?fit=3036%2C1758&amp;ssl=1" data-orig-size="3036,1758" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?fit=1024%2C593&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?resize=1024%2C593&#038;ssl=1" alt="" class="wp-image-2445" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?resize=1024%2C593&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?resize=300%2C174&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?resize=768%2C445&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?resize=1536%2C889&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?resize=2048%2C1186&amp;ssl=1 2048w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?resize=600%2C347&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-10.png?w=3000&amp;ssl=1 3000w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<p class="wp-block-paragraph">✔️&nbsp;<strong>RCA 분석 데이터 소스 예시:</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>APM 지표 (오류율, 지연시간, 요청 수)</li>
+
+
+
+<li>APM 추적 데이터</li>
+
+
+
+<li>인프라 메트릭 (CPU, 메모리, 디스크 사용량)</li>
+
+
+
+<li>AWS 인스턴스 상태 체크 결과</li>
+
+
+
+<li>로그 패턴 이상 감지</li>
+</ul>
+
+
+
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph">📌&nbsp;<strong>활용 조건:</strong><br>APM 사용 및&nbsp;<code>env</code>,&nbsp;<code>service</code>,&nbsp;<code>version</code>&nbsp;등 Unified Service Tagging 필수 설정</p>
+</blockquote>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading">🟣&nbsp;<strong>⑤ 자동 배포 오류 감지 (Faulty Deployment Detection)</strong></h3>
+
+
+
+<p class="wp-block-paragraph">새로운 코드 배포 직후 Watchdog는 이전 버전과 비교하여 오류 증가나 새로운 오류 유형을 감지합니다.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="504" data-attachment-id="2444" data-permalink="https://2twodragon.com/datadog-aiops/image-103/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?fit=3050%2C1500&amp;ssl=1" data-orig-size="3050,1500" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?fit=1024%2C504&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?resize=1024%2C504&#038;ssl=1" alt="" class="wp-image-2444" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?resize=1024%2C504&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?resize=300%2C148&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?resize=768%2C378&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?resize=1536%2C755&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?resize=2048%2C1007&amp;ssl=1 2048w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?resize=600%2C295&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?w=3000&amp;ssl=1 3000w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<p class="wp-block-paragraph">✔️&nbsp;<strong>제공 정보:</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>오류율 변화 그래프 📈</li>
+
+
+
+<li>신규 감지된 오류 타입</li>
+
+
+
+<li>영향받는 엔드포인트 및 HTTP 상태 코드</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading">🌐&nbsp;<strong>⑥ 클라우드 &amp; SaaS API 자동 오류 감지</strong></h3>
+
+
+
+<p class="wp-block-paragraph">AWS, Slack, OpenAI, Stripe 등 외부 API의 장애나 오류를 신속히 탐지하여 알려줍니다.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="504" data-attachment-id="2444" data-permalink="https://2twodragon.com/datadog-aiops/image-103/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?fit=3050%2C1500&amp;ssl=1" data-orig-size="3050,1500" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?fit=1024%2C504&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?resize=1024%2C504&#038;ssl=1" alt="" class="wp-image-2444" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?resize=1024%2C504&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?resize=300%2C148&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?resize=768%2C378&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?resize=1536%2C755&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?resize=2048%2C1007&amp;ssl=1 2048w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?resize=600%2C295&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-9.png?w=3000&amp;ssl=1 3000w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<p class="wp-block-paragraph">✔️&nbsp;<strong>주요 기능:</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>외부 서비스 장애 즉각 감지 ⚡️</li>
+
+
+
+<li>내부 서비스 장애와 명확히 구분 제공</li>
+
+
+
+<li>외부 서비스 상태 페이지 및 지원 채널로의 빠른 연결 제공</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">📌&nbsp;<strong>3. Datadog 로그 관리 효율화 방법</strong></h2>
+
+
+
+<p class="wp-block-paragraph">Datadog의 로그 관리 기능을 통해 비용 효율성과 성능 최적화를 동시에 이루는 전략입니다.</p>
+
+
+
+<h3 class="wp-block-heading">📂&nbsp;<strong>① 로그 인덱싱 최적화</strong></h3>
+
+
+
+<p class="wp-block-paragraph">✔️&nbsp;<strong>로그 Retention 기간 조정</strong></p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="488" data-attachment-id="2443" data-permalink="https://2twodragon.com/datadog-aiops/image-102/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-8.png?fit=1638%2C780&amp;ssl=1" data-orig-size="1638,780" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-8.png?fit=1024%2C488&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-8.png?resize=1024%2C488&#038;ssl=1" alt="" class="wp-image-2443" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-8.png?resize=1024%2C488&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-8.png?resize=300%2C143&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-8.png?resize=768%2C366&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-8.png?resize=1536%2C731&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-8.png?resize=600%2C286&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-8.png?w=1638&amp;ssl=1 1638w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="611" data-attachment-id="2442" data-permalink="https://2twodragon.com/datadog-aiops/image-101/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-7.png?fit=1880%2C1122&amp;ssl=1" data-orig-size="1880,1122" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-7.png?fit=1024%2C611&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-7.png?resize=1024%2C611&#038;ssl=1" alt="" class="wp-image-2442" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-7.png?resize=1024%2C611&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-7.png?resize=300%2C179&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-7.png?resize=768%2C458&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-7.png?resize=1536%2C917&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-7.png?resize=600%2C358&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-7.png?w=1880&amp;ssl=1 1880w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th>보관 기간</th><th>비용 (백만 로그 기준, 온디맨드)</th></tr></thead><tbody><tr><td>3일</td><td>$1.59 💰</td></tr><tr><td>7일</td><td>$1.91 💰</td></tr><tr><td>15일</td><td>$2.55 💰&nbsp;<em>(표준)</em></td></tr><tr><td>30일</td><td>$3.75 💰</td></tr></tbody></table></figure>
+
+
+
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph">⚠️&nbsp;<strong>팁:</strong>&nbsp;보관 기간이 길수록 비용 증가. 필요에 따라 적절히 조정!</p>
+</blockquote>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading">🗑️&nbsp;<strong>② Exclusion Filter 활용하기</strong></h3>
+
+
+
+<p class="wp-block-paragraph">불필요한 로그(디버그 등)를 Exclusion Filter를 통해 제거하여 로그 볼륨을 감소시키고 비용 절감!</p>
+
+
+
+<p class="wp-block-paragraph">✔️&nbsp;<strong>설정 방법:</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>제외 쿼리 정의</li>
+
+
+
+<li>제외 비율 (%) 지정 가능</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading">📦&nbsp;<strong>③ 로그 아카이빙(AWS S3 활용)</strong></h3>
+
+
+
+<p class="wp-block-paragraph">장기 보관 목적의 로그는 별도의 아카이브 스토리지로 관리하여 비용 효율화!</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="412" data-attachment-id="2441" data-permalink="https://2twodragon.com/datadog-aiops/image-100/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-6.png?fit=2916%2C1174&amp;ssl=1" data-orig-size="2916,1174" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-6.png?fit=1024%2C412&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-6.png?resize=1024%2C412&#038;ssl=1" alt="" class="wp-image-2441" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-6.png?resize=1024%2C412&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-6.png?resize=300%2C121&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-6.png?resize=768%2C309&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-6.png?resize=1536%2C618&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-6.png?resize=2048%2C825&amp;ssl=1 2048w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-6.png?resize=600%2C242&amp;ssl=1 600w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<p class="wp-block-paragraph">✔️&nbsp;<strong>주요 단계:</strong></p>
+
+
+
+<ol class="wp-block-list">
+<li>아카이빙할 로그 필터 설정</li>
+
+
+
+<li>AWS S3와 같은 외부 스토리지 선택</li>
+
+
+
+<li>S3 버킷 및 저장 경로 설정</li>
+
+
+
+<li>아카이브 관리 및 유지</li>
+</ol>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">📌&nbsp;<strong>4. Flex Logs로 장기 보관 최적화</strong></h2>
+
+
+
+<p class="wp-block-paragraph">Datadog의&nbsp;<strong>Flex Logs</strong>&nbsp;기능은 로그 장기 보관과 즉각적인 쿼리를 위한 효율적인 솔루션입니다. 🗃️✨</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="526" data-attachment-id="2440" data-permalink="https://2twodragon.com/datadog-aiops/image-99/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-5.png?fit=3260%2C1676&amp;ssl=1" data-orig-size="3260,1676" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-5.png?fit=1024%2C526&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-5.png?resize=1024%2C526&#038;ssl=1" alt="" class="wp-image-2440" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-5.png?resize=1024%2C526&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-5.png?resize=300%2C154&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-5.png?resize=768%2C395&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-5.png?resize=1536%2C790&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-5.png?resize=2048%2C1053&amp;ssl=1 2048w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-5.png?resize=600%2C308&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-5.png?w=3000&amp;ssl=1 3000w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<p class="wp-block-paragraph">✔️&nbsp;<strong>특징:</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>스토리지와 컴퓨트 비용 분리 🛠️</li>
+
+
+
+<li>최대 15개월 장기 보관 📅</li>
+
+
+
+<li>별도 처리 없이 즉시 쿼리 가능 ⚡️</li>
+
+
+
+<li>컴퓨트 티어 선택으로 성능 및 비용 최적화 📊</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">✔️&nbsp;<strong>주의점:</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>Watchdog 및 실시간 모니터링 미지원 ⚠️</li>
+
+
+
+<li>쿼리 성능과 비용 간 균형 주의 ⚖️</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">📌&nbsp;<strong>5. Datadog Blueprint와 Contents Pack으로 운영 효율 극대화 🗺️🎁</strong></h2>
+
+
+
+<p class="wp-block-paragraph">Datadog은 Watchdog과 로그 관리 기능 외에도,&nbsp;<strong>Blueprint</strong>와&nbsp;<strong>Contents Pack (Integration Assets)</strong>을 통해 사용자가 더욱 빠르고 효과적으로 Datadog 환경을 구축하고 활용할 수 있도록 지원합니다.</p>
+
+
+
+<h4 class="wp-block-heading">🏛️&nbsp;<strong>① Datadog Blueprint: 모범 사례 기반의 환경 구성 가이드</strong></h4>
+
+
+
+<p class="wp-block-paragraph">Datadog Blueprint는 특정 기술 스택이나 사용 사례에 대해 Datadog가 권장하는 설정 및 아키텍처를 제공하는 일종의&nbsp;<strong>청사진 또는 템플릿 모음</strong>입니다. 이를 통해 사용자는 다음과 같은 이점을 얻을 수 있습니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>빠른 시작 ⏱️:</strong>&nbsp;복잡한 설정 없이도 검증된 모범 사례를 기반으로 모니터링 환경을 신속하게 구축할 수 있습니다. 예를 들어, &#8220;Kubernetes 모니터링 Blueprint&#8221;는 쿠버네티스 환경에서 필요한 핵심 메트릭, 로그 수집, APM 설정 등을 안내합니다.</li>
+
+
+
+<li><strong>표준화된 구성 📐:</strong>&nbsp;팀이나 조직 전체에 일관된 모니터링 표준을 적용하여 운영 효율성을 높일 수 있습니다.</li>
+
+
+
+<li><strong>최적화된 설정 ✨:</strong>&nbsp;특정 기술에 최적화된 대시보드, 모니터, 로그 파서 등을 추천받아 시행착오를 줄이고, 리소스 낭비를 방지할 수 있습니다.</li>
+
+
+
+<li><strong>학습 자료 📚:</strong>&nbsp;Datadog의 다양한 기능을 효과적으로 활용하는 방법을 배우는 데 도움이 됩니다.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">Blueprint는 주로 Datadog 공식 문서, 블로그, 솔루션 가이드 등을 통해 제공되며, 사용자는 자신의 환경에 맞게 이를 참조하고 적용할 수 있습니다.</p>
+
+
+
+<figure class="wp-block-image"><img data-recalc-dims="1" decoding="async" src="https://i0.wp.com/blog.kakaocdn.net/dn/bqd6G9/btsOaNFmQMq/SbBkkXq0ksrC2d1Z2pjoI0/img.png?ssl=1" alt=""/></figure>
+
+
+
+<h4 class="wp-block-heading">🧩&nbsp;<strong>② Datadog Contents Pack (Integration Assets): 즉시 사용 가능한 리소스 모음</strong></h4>
+
+
+
+<p class="wp-block-paragraph">Contents Pack은 Datadog의 다양한 통합(Integration) 기능과 함께 제공되는&nbsp;<strong>사전 구성된 자산 모음</strong>입니다. 특정 서비스나 기술(예: AWS RDS, Nginx, Redis 등)을 Datadog과 연동할 때, 해당 서비스의 모니터링을 즉시 시작할 수 있도록 도와주는 대시보드, 모니터, 로그 파서, 노트북 등이 포함됩니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>즉시 활용 가능한 대시보드 📊:</strong>&nbsp;연동하는 기술에 대한 핵심 지표를 바로 시각화하여 보여주는 기본 대시보드가 제공되어, 별도의 대시보드 구성 시간을 절약할 수 있습니다.</li>
+
+
+
+<li><strong>권장 모니터 설정 🚨:</strong>&nbsp;해당 기술에서 주로 발생하는 문제나 주요 성능 지표에 대한 권장 모니터가 포함되어 있어, 이상 상황 발생 시 신속하게 알림을 받을 수 있습니다.</li>
+
+
+
+<li><strong>자동 로그 파싱 📜:</strong>&nbsp;특정 기술의 로그 형식을 자동으로 파싱하여 유의미한 정보를 추출하고 검색 가능하도록 설정해 줍니다.</li>
+
+
+
+<li><strong>문제 해결 가이드라인 (경우에 따라) 📖:</strong>&nbsp;특정 알림이나 문제 상황에 대한 일반적인 해결 단계를 안내하기도 합니다.</li>
+
+
+
+<li>Bedrock으로 Slack 기반 AIOps 챗봇 활용 사례 :&nbsp;<a href="https://twodragon.tistory.com/673" target="_blank" rel="noreferrer noopener">https://twodragon.tistory.com/673</a></li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">Contents Pack은 Datadog의 &#8220;Integrations&#8221; 섹션에서 각 기술 항목을 선택하면 해당 기술에 맞는 에셋들을 확인하고 설치할 수 있습니다. 이를 통해 사용자는 수동 설정의 부담을 줄이고, 보다 빠르게 모니터링 환경을 구축하여 핵심 업무에 집중할 수 있습니다.</p>
+
+
+
+<figure class="wp-block-image"><img data-recalc-dims="1" decoding="async" src="https://i0.wp.com/blog.kakaocdn.net/dn/VwgKC/btsObGZM33i/9gZLwTQCmGFKdjWKEm1vJ1/img.png?ssl=1" alt=""/></figure>
+
+
+
+<h2 class="wp-block-heading">🎯&nbsp;<strong>요약 및 결론</strong></h2>
+
+
+
+<p class="wp-block-paragraph">Datadog의 Watchdog는 이상 징후의 자동 탐지와 분석으로 AIOps를 효과적으로 구현합니다.&nbsp;🚀 또한, 효율적인 로그 관리 전략과 Flex Logs, 그리고 Blueprint와 Contents Pack을 함께 활용하면&nbsp;<strong>비용 절감</strong>과&nbsp;<strong>운영 효율성</strong>까지 챙길 수 있습니다.</p>
+
+
+
+<p class="wp-block-paragraph">💡 본 포스팅에서 소개한 전략들을 적극적으로 활용하여 IT 운영을 보다 스마트하고 효율적으로 관리해 보세요! 🎉</p>
+
+
+
+<h4 class="wp-block-heading"><strong>참고자료</strong></h4>
+
+
+
+<p class="wp-block-paragraph">Datadog에 Indexing 되는 로그에 대한 비용 최적화 하는 방법:&nbsp;<a href="https://tech.cloudmt.co.kr/2020/12/10/datadog-log-indexing">https://tech.cloudmt.co.kr/2020/12/10/datadog-log-indexing</a></p>
+
+
+
+<p class="wp-block-paragraph">Datadog flex logs :&nbsp;<a href="https://www.datadoghq.com/blog/flex-logs/">https://www.datadoghq.com/blog/flex-logs/</a></p>
+
+
+
+<p class="wp-block-paragraph">Datadog Content Packs :&nbsp;<a href="https://www.datadoghq.com/blog/content-packs/" target="_blank" rel="noreferrer noopener">https://www.datadoghq.com/blog/content-packs/</a></p>
+
+
+
+<p class="wp-block-paragraph">Datadog Blueprint, Workflow :&nbsp;<a href="https://docs.cloudz.co.kr/ko/support/solutions/articles/42000112284--datadog-datadog%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%9E%90%EB%8F%99%ED%99%94-1-workflow-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0" target="_blank" rel="noreferrer noopener">https://docs.cloudz.co.kr/ko/support/solutions/articles/42000112284&#8211;datadog-datadog를-활용한-자동화-1-workflow-시작하기</a></p>
+
+
+
+<p class="wp-block-paragraph">Datadog를 활용한 AIOps #1 &#8211; Watchdog 주요기능 :&nbsp;<a href="https://docs.cloudz.co.kr/ko/support/solutions/articles/42000111656--datadog-datadog%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-aiops-1-watchdog-%EC%A3%BC%EC%9A%94%EA%B8%B0%EB%8A%A5">https://docs.cloudz.co.kr/ko/support/solutions/articles/42000111656&#8211;datadog-datadog%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-aiops-1-watchdog-%EC%A3%BC%EC%9A%94%EA%B8%B0%EB%8A%A5</a></p>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

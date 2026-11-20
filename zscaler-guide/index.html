@@ -1,0 +1,239 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/zscaler-guide/"><link rel="stylesheet" href="/archive.css"><title>💻 Zscaler 완벽 가이드: SSL 검사, 샌드박스, AI, 광고, 유해 사이트 완벽 차단 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>💻 Zscaler 완벽 가이드: SSL 검사, 샌드박스, AI, 광고, 유해 사이트 완벽 차단</h1><p><time>2025-11-04</time></p><div>
+<p class="wp-block-paragraph">하이브리드 근무가 보편화되면서, 사용자는 사무실, 집, 카페 등 다양한 장소에서 기업 리소스에 접근합니다. Zscaler는 이러한 분산된 환경에서도 일관된 보안과 생산성을 보장하는 강력한 클라우드 보안 솔루션입니다.</p>
+
+
+
+<p class="wp-block-paragraph">이 가이드에서는 Zscaler 클라이언트 설정(ZCC)부터&nbsp;<strong>트래픽 전달, SSL 검사, 필수 앱 예외 처리(카카오톡), 샌드박스(ATP), 브라우저 제어, 그리고 AI, 광고, 유해 사이트 차단</strong>에 이르는 Zscaler의 핵심 정책을 총정리합니다.</p>
+
+
+
+<figure class="wp-block-image size-full"><img data-recalc-dims="1" loading="lazy" decoding="async" width="921" height="483" data-attachment-id="2704" data-permalink="https://2twodragon.com/zscaler-guide/image-121/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/11/image.png?fit=921%2C483&amp;ssl=1" data-orig-size="921,483" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/11/image.png?fit=921%2C483&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/11/image.png?resize=921%2C483&#038;ssl=1" alt="" class="wp-image-2704" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/11/image.png?w=921&amp;ssl=1 921w, https://legacy.2twodragon.com/wp-content/uploads/2025/11/image.png?resize=300%2C157&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/11/image.png?resize=768%2C403&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/11/image.png?resize=600%2C315&amp;ssl=1 600w" sizes="auto, (max-width: 921px) 100vw, 921px" /></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading">1. 기본 다지기: 클라이언트 설정 (ZCC App Profile)</h3>
+
+
+
+<p class="wp-block-paragraph">모든 정책의 시작은 사용자 PC에 설치된 Zscaler Client Connector(ZCC) 앱의 설정입니다. 이 프로필은 ZCC가 어떻게 동작해야 하는지 정의합니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Zscaler SSL 인증서 설치 (Install Zscaler SSL Certificate):</strong>
+<ul class="wp-block-list">
+<li><strong>가장 중요한 첫걸음입니다.</strong> Zscaler가 https:// 암호화 트래픽을 검사(SSL Inspection)하기 위해 필요한 <strong>루트 인증서(Root CA)</strong>를 사용자 PC에 자동으로 설치합니다. 이 설정이 없다면 SSL 검사 시 모든 브라우저에서 인증서 오류가 발생합니다.</li>
+</ul>
+</li>
+
+
+
+<li><strong>ZIA Posture Profile (디바이스 신뢰):</strong>
+<ul class="wp-block-list">
+<li>Zscaler가 PC의 보안 상태(예: 백신 실행 여부)를 확인하는 &#8216;제로 트러스트&#8217;의 기본입니다. MAC,Windows &#8211; Anti-Virus와 같은 프로필은 백신이 활성화된 디바이스만 접속을 허용하도록 강제할 수 있습니다.</li>
+</ul>
+</li>
+
+
+
+<li><strong>프록시 구성 (Proxy Configuration):</strong>
+<ul class="wp-block-list">
+<li><strong>V8 JavaScript-based PAC Parser:</strong> ZCC가 PAC 파일을 해석하는 엔진을 최신 V8 엔진으로 사용합니다. 이는 복잡한 PAC 파일의 호환성과 처리 성능을 향상시킵니다.</li>
+
+
+
+<li><strong>Set proxies on VPN adapters:</strong> 활성화 시, 사용자가 서드파티(Third-party) VPN(예: Cisco AnyConnect)에 연결된 상태에서도 Zscaler 프록시 설정을 강제로 적용합니다. 이는 VPN 트래픽이 Zscaler를 우회하지 않고 보안 검사를 받도록 보장합니다.</li>
+
+
+
+<li><strong>Cache System Proxy:</strong> 활성화 시, ZCC가 OS의 시스템 프록시 설정을 캐시하여 반복적인 조회로 인한 성능 저하를 방지합니다.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<figure class="wp-block-image"><img data-recalc-dims="1" decoding="async" src="https://i0.wp.com/blog.kakaocdn.net/dna/blzeVI/dJMcabbqQtE/AAAAAAAAAAAAAAAAAAAAAD9uNksyRNyT2LzAxqF6ZXY1EOmgWH6p3SSoWutIoSIt/img.png?ssl=1" alt=""/></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading">2. 모든 트래픽을 Zscaler로: 트래픽 전달 (Forwarding Profile)</h3>
+
+
+
+<figure class="wp-block-image"><img data-recalc-dims="1" decoding="async" src="https://i0.wp.com/blog.kakaocdn.net/dna/d5Zyzq/dJMcake8Mxu/AAAAAAAAAAAAAAAAAAAAAM9TzEHb8BEDzyrXvdnD18ICBxW-a0H1IQ10RY8jG7ii/img.png?ssl=1" alt=""/></figure>
+
+
+
+<p class="wp-block-paragraph">ZCC는 사용자 PC의 모든 트래픽을 Zscaler 클라우드로 안전하게 보내야 합니다.&nbsp;Corporate_Tunnel_Profile&nbsp;(회사 표준 전달 프로필)과 같은 &#8216;전달 프로필&#8217;은 이 방식을 결정합니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>핵심 동작: Tunnel (On-Trusted Network)</strong>
+<ul class="wp-block-list">
+<li>이 설정은 사용자가 <strong>사무실(&#8216;신뢰할 수 있는 네트워크&#8217;)에 있더라도</strong> 트래픽을 로컬에서 처리하지 않고 Zscaler 클라우드로 터널링합니다.</li>
+
+
+
+<li><strong>의미:</strong> 사무실이든, 집이든, 카페든 <strong>&#8216;Always-On&#8217; 보안</strong>을 의미합니다. 모든 트래픽은 예외 없이 Zscaler를 통과하게 됩니다.</li>
+</ul>
+</li>
+
+
+
+<li><strong>터널 버전: Z-Tunnel 2.0 </strong>Z-Tunnel 1.0이 웹 트래픽(HTTP/HTTPS) 위주로 처리했다면, <strong>Z-Tunnel 2.0</strong>은 Packet Filter 기반으로 동작하여 <strong>모든 포트와 프로토콜</strong>의 트래픽을 Zscaler로 터널링합니다. 이는 비웹 기반 애플리케이션 보안에 필수적입니다.</li>
+
+
+
+<li><strong>IPv6 트래픽 차단 (Drop IPv6): </strong>IPv4 환경이 표준인 많은 기업에서, IPv6 트래픽이 터널을 우회하여 보안 정책을 회피하는 것을 방지하기 위해 Drop IPv6 옵션을 활성화하여 보안 공백을 제거합니다.</li>
+</ul>
+
+
+
+<figure class="wp-block-image"><img data-recalc-dims="1" decoding="async" src="https://i0.wp.com/blog.kakaocdn.net/dna/d5Zyzq/dJMcake8Mxu/AAAAAAAAAAAAAAAAAAAAAM9TzEHb8BEDzyrXvdnD18ICBxW-a0H1IQ10RY8jG7ii/img.png?ssl=1" alt=""/></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading">3. 핵심 보안: SSL 검사 (SSL Inspection)</h3>
+
+
+
+<p class="wp-block-paragraph">이제 모든 트래픽이 ZCC를 통해 Zscaler 클라우드로 전달됩니다. 다음 단계는 암호화된&nbsp;https://&nbsp;트래픽을 검사하는 것입니다.</p>
+
+
+
+<h4 class="wp-block-heading">⛔ &#8220;보이지 않으면, 막을 수 없다&#8221;</h4>
+
+
+
+<p class="wp-block-paragraph">SSL 검사 없이는 Zscaler의 URL 필터링, 위협 차단, DLP(데이터 유출 방지) 기능이 대부분의 트래픽(구글 광고, 유해 사이트 포함)에 대해 작동하지 않습니다.</p>
+
+
+
+<h4 class="wp-block-heading">🌐 SSL 검사 전역 설정 (Global Policy)</h4>
+
+
+
+<p class="wp-block-paragraph">개별 규칙을 적용하기 전에, Zscaler가 모든 SSL 트래픽을 처리하는 기본 방식을 설정해야 합니다. (<strong>Policy &gt; SSL Inspection</strong>의 상단 설정)</p>
+
+
+
+<figure class="wp-block-image"><img data-recalc-dims="1" decoding="async" src="https://i0.wp.com/blog.kakaocdn.net/dna/biPtj8/dJMcaiBCVkH/AAAAAAAAAAAAAAAAAAAAAOv9guW-zMXSFbafv9BWcsxX8jqvCQQPNi-om4yyV8Bx/img.png?ssl=1" alt=""/></figure>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td><strong>설정 항목</strong></td><td><strong>권장 설정</strong></td><td><strong>설명 및 주요 사유</strong></td></tr><tr><td><strong>중간 CA 인증서</strong>&nbsp;(Intermediate CA Certificate)</td><td>Zscaler Intermediate CA Certificate</td><td>ZCC가 클라이언트에 배포한 Zscaler의 기본 서명 인증서를 사용합니다.</td></tr><tr><td><strong>신뢰할 수 없는 서버 인증서</strong>(Untrusted Server Certificates)</td><td>Block</td><td>만료, 자체 서명, 신뢰할 수 없는 기관(CA)의 인증서를 사용하는 사이트를 차단하여 즉각적인 보안을 확보합니다.</td></tr><tr><td><strong>SNI 없는 트래픽 차단</strong>&nbsp;(Block No SNI)</td><td>Enabled</td><td>목적지 도메인(SNI) 정보가 없는 암호화 트래픽을 차단합니다. 이는 일부 우회 시도를 막는 데 필수적입니다.</td></tr><tr><td><strong>OCSP 폐지 확인</strong>&nbsp;(OCSP Revocation Check)</td><td>Enabled</td><td>인증서가 발급자에 의해 폐지되었는지 실시간으로 확인하여 탈취된 인증서의 사용을 방지합니다.</td></tr><tr><td><strong>해독 불가능한 트래픽 차단</strong>(Block Undecryptable Traffic)</td><td>Enabled</td><td>인증서 피닝(Pinning) 등으로 복호화가 불가능한 트래픽을 차단하여 보안 공백을 제거합니다. (앱 충돌 시 조정 필요)</td></tr><tr><td><strong>최소 TLS 버전</strong>&nbsp;(Minimum TLS Version)</td><td>TLS 1.2(Client/Server)</td><td><strong>(보안 강화)</strong>&nbsp;구형&nbsp;TLS 1.0/1.1은 취약점이 많으므로, 보안을 위해&nbsp;TLS 1.2&nbsp;이상을 강제합니다.</td></tr><tr><td><strong>HTTP/2 활성화</strong>&nbsp;(Enable HTTP/2)</td><td>Enabled</td><td>최신 웹 프로토콜을 지원하여 웹 성능을 최적화합니다.</td></tr></tbody></table></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading">4. 필수 앱 호환성: SSL 검사 예외 (Bypass)</h3>
+
+
+
+<p class="wp-block-paragraph">전역으로 SSL 검사를 활성화하면 일부 애플리케이션(예: 카카오톡)이 &#8216;Bad SSL Record&#8217;와 같은 오류를 일으키며 작동하지 않을 수 있습니다. 이는 앱이 Zscaler의 중간자 인증서를 신뢰하지 않기 때문입니다.</p>
+
+
+
+<p class="wp-block-paragraph">이 경우, 해당 앱의 FQDN(도메인) 그룹을 만들어 SSL 검사에서 제외(Do Not Inspect)해야 합니다.</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td><strong>정책 목적</strong></td><td><strong>정책 예시 (Criteria)</strong></td><td><strong>동작</strong></td></tr><tr><td><strong>카카오톡 호환성 확보</strong></td><td><strong>Destination Groups (FQDN 그룹):</strong><br><br>Kakao FQDNs&nbsp;(사용자 정의 그룹)</td><td><strong>Do Not Inspect</strong><br><br>(검사 안 함)</td></tr></tbody></table></figure>
+
+
+
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph">Kakao FQDNs 그룹 예시:</p>
+
+
+
+<p class="wp-block-paragraph">.kakao.com, .kakao.co.kr, www.kakaocorp.com, .kakaomobility.com, .kakaowork.com, .kakaocdn.net, kgslb.com, .kgns1.com</p>
+</blockquote>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading">5. 필수 보안 정책: URL 및 애플리케이션 차단</h3>
+
+
+
+<p class="wp-block-paragraph">SSL 검사로 가시성을 확보했다면, 이제 기업의 보안 및 생산성 정책을 강제합니다. 다음은 기업 환경에서 필수적으로 고려해야 할 차단 정책의 예시입니다.</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td><strong>정책 목적</strong></td><td><strong>관련 정책 / 카테고리 예시</strong></td><td><strong>동작</strong></td><td><strong>주요 사유 (보안 및 생산성)</strong></td></tr><tr><td><strong>기업 정보 유출 방지</strong></td><td>Block ALL<br><br>(AI/ML Tools)</td><td><strong>Block</strong></td><td>ChatGPT 등 생성형 AI에 기업 민감 정보 및 소스 코드를 입력하여 발생하는 정보 유출 원천 차단.</td></tr><tr><td><strong>섀도우 IT 차단</strong></td><td>Block Telegram<br><br>(Telegram Messenger)</td><td><strong>Block</strong></td><td>통제되지 않는 개인 메신저를 통한 파일 공유 및 내부 정보 유출 경로(섀도우 IT) 차단.</td></tr><tr><td><strong>법적/보안 위협 차단</strong></td><td>URL BlackList<br><br>(Pornography, Gambling, Computer Hacking, Anonymizer, FileHost 등)</td><td><strong>Block</strong></td><td>악성코드 유입, 법적 리스크, 보안 위협(해킹, P2P)이 높은 카테고리에 대한 접근을 원천 차단.</td></tr><tr><td><strong>생산성 향상 / 악성광고 차단</strong></td><td>Block ALL<br><br>(Advertising)</td><td><strong>Block</strong></td><td>업무와 무관한 광고 노출을 제거하여 집중도를 높이고, &#8216;Malvertising(악성 광고)&#8217;을 통한 악성코드 감염 경로 예방.</td></tr></tbody></table></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading">6. 고급 보안 설정 (Advanced Security)</h3>
+
+
+
+<p class="wp-block-paragraph">기본 차단 외에도, Zscaler를 통해 잠재적인 위협을 사전에 차단하는 고급 정책을 수립해야 합니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>샌드박스 (Advanced Threat Protection):</strong>
+<ul class="wp-block-list">
+<li><strong>동작:</strong> Allow and scan (첫 번째 다운로드) → 악성으로 판별 시 → Block (이후 모든 동일 파일 차단)</li>
+</ul>
+</li>
+
+
+
+<li>Default Block ALL Rule과 같은 정책은 제로데이(Zero-day) 위협을 방어합니다. exe, dll, zip과 같은 위험 파일이나 Miscellaneous or Unknown (알 수 없음), FileHost 등 의심스러운 카테고리에서 다운로드되는 파일은 Zscaler 샌드박스로 보내져 가상 환경에서 실행됩니다.</li>
+
+
+
+<li><strong>알 수 없는 사이트 격리 (RBI): </strong>Miscellaneous or Unknown 카테고리의 신생 도메인이나 피싱 의심 사이트 접속 시, 실제 PC가 아닌 Zscaler의 격리된 가상 브라우저에서 사이트를 실행(Isolate)합니다. 만약 사이트에 악성 코드가 있더라도 사용자 PC는 안전하게 보호됩니다.</li>
+
+
+
+<li><strong>위험 파일 유형 차단 (File Type Control):</strong> Unscannable File_Caution 정책은 샌드박스 검사와 별개로, PowerShell(.ps1), JavaScript(.js) 등 명백히 위험한 스크립트 파일의 다운로드를 즉시 차단(Block)하거나 사용자에게 강력한 경고(Caution)를 표시합니다.</li>
+
+
+
+<li><strong>브라우저 제어 (Browser Control):</strong> Browser Vulnerability Protection 설정은 사용자의 브라우저나 플러그인(Java, Flash 등)이 오래된 버전일 경우 이를 탐지합니다. Enable Checks &amp; User Notification (월 1회 Monthly 검사)를 통해 사용자에게 업데이트를 권고하여 브라우저 취약점을 통한 공격을 예방합니다.</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading">요약</h3>
+
+
+
+<p class="wp-block-paragraph">성공적인 Zscaler 정책은<strong>&nbsp;ZCC(클라이언트)</strong>가 모든 트래픽을&nbsp;<strong>(Forwarding Profile)</strong>&nbsp;Zscaler 클라우드로 빠짐없이 전달하는 것에서 시작합니다. 이후&nbsp;<strong>(SSL Inspection)</strong>&nbsp;암호화된 트래픽을 투명하게 검사하고, 카카오톡 같은&nbsp;<strong>(SSL Bypass)</strong>&nbsp;필수 앱의 호환성을 보장하며,&nbsp;<strong>(URL Filtering)</strong>&nbsp;AI, 광고, 유해 사이트를 차단합니다. 마지막으로&nbsp;<strong>(Sandbox, RBI, Browser Control)</strong>&nbsp;고급 보안 기능을 통해 제로데이 위협과 취약점까지 방어하여 완벽한 보안과 생산성 향상을 동시에 달성합니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

@@ -1,0 +1,289 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/apple-slap-flop/"><link rel="stylesheet" href="/archive.css"><title>중요 보안 업데이트: 애플 M-시리즈 칩의 SLAP &amp; FLOP 취약점 🔒 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>중요 보안 업데이트: 애플 M-시리즈 칩의 SLAP &amp; FLOP 취약점 🔒</h1><p><time>2025-01-31</time></p><div>
+<p class="wp-block-paragraph">최근 발견된 <strong>SLAP(추측적 로드 주소 예측)</strong>과 <strong>FLOP(잘못된 로드 출력 예측)</strong> 취약점이 애플의 최신 M2, M3, A15, A17 시리즈 칩에 영향을 미치고 있습니다. 🍎💻📱</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1014" height="1024" data-attachment-id="1889" data-permalink="https://2twodragon.com/apple-slap-flop/image-32/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-21.png?fit=1410%2C1424&amp;ssl=1" data-orig-size="1410,1424" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-21.png?fit=1014%2C1024&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-21.png?resize=1014%2C1024&#038;ssl=1" alt="" class="wp-image-1889" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-21.png?resize=1014%2C1024&amp;ssl=1 1014w, https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-21.png?resize=297%2C300&amp;ssl=1 297w, https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-21.png?resize=150%2C150&amp;ssl=1 150w, https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-21.png?resize=768%2C776&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-21.png?resize=600%2C606&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-21.png?resize=100%2C100&amp;ssl=1 100w, https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-21.png?resize=50%2C50&amp;ssl=1 50w, https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-21.png?w=1410&amp;ssl=1 1410w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading">📌 <strong>애플 M &amp; A 시리즈 칩이란?</strong></h3>
+
+
+
+<p class="wp-block-paragraph">애플의 <strong>M 시리즈</strong>와 <strong>A 시리즈</strong>는 애플이 자체 설계한 고성능 반도체로, 각각 Mac과 iPhone, iPad 등에 탑재되어 있습니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>M 시리즈 (예: M1, M2, M3)</strong> <strong>용도</strong>: MacBook, Mac Mini, iMac 등 데스크톱 및 노트북에 탑재.
+<ul class="wp-block-list">
+<li><strong>특징</strong>: 고성능과 에너지 효율성을 동시에 제공, 통합된 아키텍처로 뛰어난 멀티태스킹 성능. ⚡️🔋</li>
+</ul>
+</li>
+
+
+
+<li><strong>A 시리즈 (예: A15, A17)</strong> <strong>용도</strong>: iPhone, iPad에 탑재.
+<ul class="wp-block-list">
+<li><strong>특징</strong>: 뛰어난 처리 속도와 그래픽 성능, AI 및 머신러닝 기능 강화. 📱🤖</li>
+</ul>
+</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading">🌟 <strong>애플 반도체의 중요성</strong></h3>
+
+
+
+<p class="wp-block-paragraph">애플의 자체 반도체는 하드웨어와 소프트웨어의 최적화를 통해 뛰어난 사용자 경험을 제공합니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>성능 향상</strong>: 빠른 처리 속도와 효율적인 전력 관리. 🚀🔧</li>
+
+
+
+<li><strong>통합 보안</strong>: 하드웨어 수준에서의 보안 기능 강화. 🔐🛡️</li>
+
+
+
+<li><strong>에코시스템 통합</strong>: 다양한 애플 기기 간의 원활한 호환성 제공. 📲🔗</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading">🛡️ <strong>과거의 주요 취약점</strong></h3>
+
+
+
+<p class="wp-block-paragraph">애플 반도체는 그 혁신성에도 불구하고 몇 가지 보안 취약점이 발견된 바 있습니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Spectre &amp; Meltdown</strong>: <strong>발견 시기</strong>: 2018년
+<ul class="wp-block-list">
+<li><strong>영향</strong>: 대부분의 현대 프로세서에 영향을 미치며, 데이터 유출 가능성.</li>
+
+
+
+<li><strong>대응</strong>: 소프트웨어 패치와 펌웨어 업데이트를 통해 완화. 🛠️🔄</li>
+</ul>
+</li>
+
+
+
+<li><strong>Rowhammer 공격</strong> <strong>발견 시기</strong>: 2019년
+<ul class="wp-block-list">
+<li><strong>영향</strong>: 메모리 오류를 유발해 시스템 권한 상승 가능성.</li>
+
+
+
+<li><strong>대응</strong>: 메모리 컨트롤러 개선 및 소프트웨어 방어 강화. 🧱🔒</li>
+</ul>
+</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<figure class="wp-block-image size-full"><img data-recalc-dims="1" loading="lazy" decoding="async" width="890" height="498" data-attachment-id="1884" data-permalink="https://2twodragon.com/apple-slap-flop/image-31/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-20.png?fit=890%2C498&amp;ssl=1" data-orig-size="890,498" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-20.png?fit=890%2C498&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-20.png?resize=890%2C498&#038;ssl=1" alt="" class="wp-image-1884" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-20.png?w=890&amp;ssl=1 890w, https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-20.png?resize=300%2C168&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-20.png?resize=768%2C430&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/01/image-20.png?resize=600%2C336&amp;ssl=1 600w" sizes="auto, (max-width: 890px) 100vw, 890px" /></figure>
+
+
+
+<h3 class="wp-block-heading">🔒 <strong>새로운 보안 위협: SLAP &amp; FLOP 취약점</strong> 🔒</h3>
+
+
+
+<p class="wp-block-paragraph">최근 <strong>SLAP(추측적 로드 주소 예측)</strong>과 <strong>FLOP(잘못된 로드 출력 예측)</strong> 취약점이 애플의 최신 M2, M3, A15, A17 시리즈 칩에 영향을 미치고 있습니다. 🍎💻📱</p>
+
+
+
+<h3 class="wp-block-heading">🛡️ <strong>취약점이란?</strong></h3>
+
+
+
+<ul class="wp-block-list">
+<li><strong>SLAP</strong> <strong>대상</strong>: M2/A15 이후 칩
+<ul class="wp-block-list">
+<li><strong>공격 방식</strong>: 로드 주소 예측기를 조작해 경계를 벗어난 데이터 액세스 🔍🔓</li>
+</ul>
+</li>
+
+
+
+<li><strong>FLOP</strong> <strong>대상</strong>: M3/A17 이후 프로세서
+<ul class="wp-block-list">
+<li><strong>공격 방식</strong>: 잘못된 로드 값 예측을 이용해 메모리 안전 검사 우회 🕵️‍♂️🔐</li>
+</ul>
+</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading">⚠️ <strong>위험 요소</strong></h3>
+
+
+
+<ul class="wp-block-list">
+<li><strong>데이터 유출</strong>: 암호화 키, 신용카드 정보, 이메일 내용 등 민감한 정보 탈취 가능 💳📧🔑</li>
+
+
+
+<li><strong>보안 경계 우회</strong>: 브라우저 샌드박스를 탈출하여 시스템 전반에 접근 🖥️🔓</li>
+
+
+
+<li><strong>광범위한 영향</strong>: 2021년 이후 출시된 대부분의 Mac, iPhone, iPad가 대상 📅📱💻</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading">🌐 <strong>공격 방식</strong></h3>
+
+
+
+<p class="wp-block-paragraph">악성 웹사이트를 통해 Safari와 Chrome 브라우저에서 공격이 이루어지며, 추측 실행 기능을 악용하여 사용자 데이터를 탈취합니다. 🌐🕸️💣</p>
+
+
+
+<h3 class="wp-block-heading">🔧 <strong>애플의 대응</strong></h3>
+
+
+
+<p class="wp-block-paragraph">애플은 이 문제를 인정하고 패치를 준비 중이며, 현재로서는 사용자에게 즉각적인 위험은 없다고 보고 있습니다. 최신 보안 업데이트를 꾸준히 확인하고 설치하는 것이 중요합니다. 🔄🛠️</p>
+
+
+
+<h3 class="wp-block-heading">🛡️ <strong>사용자 보호 방법</strong></h3>
+
+
+
+<ol class="wp-block-list">
+<li><strong>브라우저 업데이트</strong>: Safari, Chrome 등을 최신 버전으로 유지하세요. 📲🔄</li>
+
+
+
+<li><strong>보안 소프트웨어 사용</strong>: 콘텐츠 차단기 및 보안 확장 프로그램을 활성화하세요. 🛡️🔧</li>
+
+
+
+<li><strong>주의</strong>: 출처가 불분명한 웹사이트 방문 시 주의하세요. 🚫🌐</li>
+</ol>
+
+
+
+<h3 class="wp-block-heading">🔐 <strong>정보 보안 방법</strong> 🔐</h3>
+
+
+
+<p class="wp-block-paragraph">안전한 디지털 생활을 위해 다음의 정보 보안 방법을 실천하세요:</p>
+
+
+
+<ol class="wp-block-list">
+<li><strong>강력한 암호 사용</strong>: 복잡한 비밀번호를 설정하고 주기적으로 변경하세요. 🔑🔄</li>
+
+
+
+<li><strong>다단계 인증(2FA) 활성화</strong>: 계정 보안을 강화하기 위해 다단계 인증을 사용하세요. 📲🔒</li>
+
+
+
+<li><strong>소프트웨어 업데이트</strong>: 운영체제와 애플리케이션을 최신 상태로 유지하여 취약점을 방지하세요. 💻🔄</li>
+
+
+
+<li><strong>안티바이러스 및 방화벽 사용</strong>: 악성 소프트웨어로부터 시스템을 보호하세요. 🛡️🦠</li>
+
+
+
+<li><strong>데이터 암호화</strong>: 중요한 데이터를 암호화하여 무단 접근을 방지하세요. 🔐📂</li>
+
+
+
+<li><strong>교육과 인식 향상</strong>: 피싱 공격과 같은 소셜 엔지니어링 위협에 대비해 보안 교육을 받으세요. 🎓🧠</li>
+
+
+
+<li><strong>백업 전략 수립</strong>: 중요한 데이터를 정기적으로 백업하여 데이터 손실에 대비하세요. 💾🔄</li>
+</ol>
+
+
+
+<h3 class="wp-block-heading">🛡️ <strong>사이버 보안의 중요성</strong> 🛡️</h3>
+
+
+
+<p class="wp-block-paragraph">사이버 보안은 개인과 조직 모두에게 필수적인 요소입니다. 그 중요성은 다음과 같습니다:</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>데이터 보호</strong>: 개인정보, 금융 정보 등 민감한 데이터를 안전하게 보호하여 사생활 침해를 방지합니다. 🔒📊</li>
+
+
+
+<li><strong>비즈니스 연속성</strong>: 사이버 공격으로 인한 비즈니스 중단을 예방하여 기업의 신뢰성을 유지합니다. 🏢🔄</li>
+
+
+
+<li><strong>경제적 손실 방지</strong>: 사이버 공격으로 인한 금전적 피해를 예방하고, 복구 비용을 절감합니다. 💰🚫</li>
+
+
+
+<li><strong>사회적 신뢰 유지</strong>: 개인과 조직의 사이버 보안은 사회 전체의 신뢰성을 유지하는 데 필수적입니다. 🌍🤝</li>
+
+
+
+<li><strong>법적 준수</strong>: 다양한 데이터 보호법과 규정을 준수하여 법적 문제를 예방합니다. 📜⚖️</li>
+
+
+
+<li><strong>국가 안보</strong>: 중요한 인프라와 시스템의 보안을 유지하여 국가 안보에 기여합니다. 🏛️🔐</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading">📈 <strong>미래 전망</strong></h3>
+
+
+
+<p class="wp-block-paragraph">공격 기술이 계속 발전함에 따라 사용자와 보안 전문가 모두의 지속적인 경계가 필요합니다. 조직은 자동화된 웹 순찰 시스템을 도입해 잠재적인 악성 사이트를 식별하고 모니터링할 필요가 있습니다. 🔍🤖</p>
+
+
+
+<p class="wp-block-paragraph">🔗 <strong>출처</strong> 🔗</p>
+
+
+
+<ol class="wp-block-list">
+<li><a href="https://macdailynews.com/2025/01/28/apple-to-patch-slap-and-flop-web-browser-vulnerabilities/">Apple to patch SLAP and FLOP web browser vulnerabilities</a></li>
+
+
+
+<li><a href="https://www.bleepingcomputer.com/news/security/new-apple-cpu-side-channel-attack-steals-data-from-browsers/">New Apple CPU side-channel attacks steal data from browsers</a></li>
+
+
+
+<li><a href="https://securityboulevard.com/2025/01/slap-flop-apple-silicon-richixbw/">SLAP/FLOP: Apple Silicon&#8217;s &#8216;Son of Spectre&#8217; Critical Flaws</a></li>
+</ol>
+
+
+
+<p class="wp-block-paragraph">🔗 <strong>더 자세한 정보는 프로필 링크를 확인하세요!</strong> 🔗</p>
+
+
+
+<p class="wp-block-paragraph"><strong>Stay Safe, Stay Secure!</strong> 🔒</p>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

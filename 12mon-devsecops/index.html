@@ -1,0 +1,232 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/12mon-devsecops/"><link rel="stylesheet" href="/archive.css"><title>[12월 컨퍼런스 회고] AWSKRUG, OWASP, Datadog으로 미리 보는 2025년: AI와 보안의 공존 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>[12월 컨퍼런스 회고] AWSKRUG, OWASP, Datadog으로 미리 보는 2025년: AI와 보안의 공존</h1><p><time>2025-12-18</time></p><div>
+<p class="wp-block-paragraph">12월은 한 해를 마무리하는 시기이자, 내년의 기술 트렌드를 가장 먼저 접할 수 있는 달이기도 합니다. 이번 달에는&nbsp;<strong>AWSKRUG AI IDE Kiro Launch Party</strong>,&nbsp;<strong>OWASP Seoul Chapter 송년회</strong>, 그리고&nbsp;<strong>Datadog Security 101 세미나</strong>에 연달아 참석하며, 개발 생산성의 도구인 AI와 이를 지키는 보안 기술이 어떻게 융합되고 있는지 생생하게 느낄 수 있었습니다.</p>
+
+
+
+<p class="wp-block-paragraph">본 포스팅에서는 이 행사들에서 얻은 핵심 인사이트를 바탕으로,&nbsp;<strong>AWS re:Invent 2025의 최신 소식</strong>부터&nbsp;<strong>DevSecOps의 실질적인 구현 전략</strong>까지 정리해 보고자 합니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">1. AWSKRUG &amp; Kiro: Agentic AI와 개발 생산성의 진화</h2>
+
+
+
+<p class="wp-block-paragraph">AWSKRUG 행사에서는 국산 AI IDE인&nbsp;<strong>Kiro</strong>의 런칭과 함께, 라스베가스에서 열린&nbsp;<strong>AWS re:Invent 2025</strong>의 따끈따끈한 리캡(Recap)이 진행되었습니다.</p>
+
+
+
+<h3 class="wp-block-heading">🎰 AWS re:Invent 2025 Key Takeaways</h3>
+
+
+
+<p class="wp-block-paragraph">올해 re:Invent의 핵심은 단연&nbsp;<strong>&#8216;Agentic AI(에이전트형 AI)&#8217;</strong>였습니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li>단순히 코드를 추천하는 것을 넘어, AI가 스스로 계획을 수립하고 도구를 사용하여 복잡한 작업을 완수하는 <strong>Agentic Workflows</strong>가 AWS Bedrock과 Q에 대거 탑재되었습니다.</li>
+
+
+
+<li>서버리스(Serverless) 역시 AI 워크로드를 효율적으로 처리하기 위해 콜드 스타트 개선과 비용 최적화 측면에서 큰 진전을 보였습니다.</li>
+
+
+
+<li>AWS re:Infoce 2025 참고 : <a href="https://twodragon.tistory.com/693" target="_blank" rel="noreferrer noopener">https://twodragon.tistory.com/693</a></li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><a href="https://twodragon.tistory.com/693" target="_blank" rel="noreferrer noopener">AWS re:Inforce 2025: 클라우드 보안의 현재와 미래 🛡️들어가며 🚀2025년 6월 필라델피아에서 개최된 AWS re:Inforce는 5,800명의 보안 전문가들이 모여 클라우드 보안의 최신 트렌드와 기술을 공유하는 장이었습니다. 특히 한국 참가자가 전년 대비 2배twodragon.tistory.com</a></p>
+
+
+
+<h3 class="wp-block-heading">🛠 Kiro (AI IDE) 활용: 코딩을 넘어 운영까지</h3>
+
+
+
+<p class="wp-block-paragraph">개인적으로 테스트했을 때 Kiro는 단순한 코드 에디터가 아닌 &#8216;운영 파트너&#8217;로서의 가능성을 보여줄 수 있습니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Architecture as Code (Python Diagram):</strong> &#8220;현재 작성된 테라폼(Terraform) 코드를 분석해서, Python Diagrams 라이브러리를 이용해 아키텍처 구성도로 그려줘&#8221;라고 요청하여 문서화를 자동화할 수 있습니다.
+<ul class="wp-block-list">
+<li><a href="https://twodragon.tistory.com/673" target="_blank" rel="noreferrer noopener">https://twodragon.tistory.com/673</a></li>
+</ul>
+</li>
+
+
+
+<li><strong>Log-based FinOps:</strong> &#8220;지난달 CloudTrail 로그를 분석해 사용되지 않는 EBS 볼륨과 유휴 RDS를 찾아내고, 예상 절감 비용을 표로 보여줘&#8221;라며 비용 관리까지 AI에게 맡기는 방식도 가능합니다.</li>
+
+
+
+<li><strong>Kiro를 활용한 DevSecOps 로드맵 작성</strong>도 가능하며,<strong> EKS 환경 보안 우선순위, 개인정보보호 우선 순위 분석</strong>을 참고</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><a href="https://twodragon.tistory.com/673" target="_blank" rel="noreferrer noopener">Amazon Bedrock으로 Slack 기반 AIOps 챗봇 만들기: AWS 보안 아키텍처 제안부터 장애 해결까지! 🚀최근 IT 운영(AIOps) 분야에서 Generative AI의 활용은 더욱 활발해지고 있습니다. 특히 Slack과 같은 협업 플랫폼과의 통합은 업무 생산성을 크게 향상시키죠. 이번 포스팅에서는 Amazon Bedrock과 AWS CDK를twodragon.tistory.com</a></p>
+
+
+
+<figure class="wp-block-image"><img data-recalc-dims="1" decoding="async" src="https://i0.wp.com/blog.kakaocdn.net/dna/eNz0sQ/dJMcacIrBq2/AAAAAAAAAAAAAAAAAAAAAOTwHUQocIyzJlg_gg0VTyXraY9xGzrPWb-FPwbULR-M/img.png?ssl=1" alt=""/></figure>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td><img data-recalc-dims="1" loading="lazy" decoding="async" src="https://i0.wp.com/blog.kakaocdn.net/dna/bg0dsV/dJMcaaRoeex/AAAAAAAAAAAAAAAAAAAAAC06t9uznX01grKjiBJZlmlASzLtkjkrWIuymojLYe4j/img.jpg?resize=415%2C1241&#038;ssl=1" width="415" height="1241"></td><td><img data-recalc-dims="1" loading="lazy" decoding="async" src="https://i0.wp.com/blog.kakaocdn.net/dna/bTCRxc/dJMcafLVr4Q/AAAAAAAAAAAAAAAAAAAAAKlHdoqeBAJ5e3EnLHqN0dTaA3Jzgm8T8IiH61cFfkn4/img.jpg?resize=384%2C1269&#038;ssl=1" width="384" height="1269"></td></tr></tbody></table></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">2. Datadog Security 101: 통합 관제와 가시성(Visibility)</h2>
+
+
+
+<p class="wp-block-paragraph">Datadog 세미나에서는 &#8220;보이지 않으면 보호할 수 없다&#8221;는 대전제를 바탕으로, 클라우드 보안의 가시성 확보 방안을 실습했습니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Cloudcraft &amp; 시각화:</strong> 클라우드 리소스의 연결 관계를 시각화하여 보안 취약점이 있는 리소스를 붉게 표시해 주는 기능은 직관적인 리스크 파악에 큰 도움이 되었습니다.</li>
+
+
+
+<li><strong>통합 보안 플랫폼:</strong> Cloud SIEM(로그 분석), CSM(설정 관리), AAP(애플리케이션 보호)가 하나의 플랫폼에서 유기적으로 작동하여, 사각지대 없는 보안 관제가 가능함을 확인했습니다.
+<ul class="wp-block-list">
+<li>Datadog Learn 을 통해 테스트 가능 : <a href="https://learn.datadoghq.com/courses/app-protection-block-attacks" target="_blank" rel="noreferrer noopener">https://learn.datadoghq.com/courses/app-protection-block-attacks</a></li>
+
+
+
+<li><a href="https://twodragon.tistory.com/671" target="_blank" rel="noreferrer noopener">https://twodragon.tistory.com/671</a></li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><a href="https://twodragon.tistory.com/671" target="_blank" rel="noreferrer noopener">Datadog Watchdog,로그 관리, Contents Pack으로 완성하는 AIOps 🐶효과적인 IT 운영 관리에서 핵심은 이상 징후를 빠르게 탐지하고 신속하게 대응하는 것입니다. 🚨Datadog은 이를 위한 강력한 AI 엔진인 Watchdog과 효율적인 로그 관리 기능을 제공하여 AIOps를 실현twodragon.tistory.com</a></p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">3. DevSecOps 트렌드: GitHub와 Datadog의 전략적 공조</h2>
+
+
+
+<p class="wp-block-paragraph">OWASP와 Datadog 세미나를 관통한 핵심 메시지는&nbsp;<strong>&#8220;정적 분석(Build)과 동적 분석(Runtime)의 결합&#8221;</strong>이었습니다. 두 도구의 역할을 명확히 구분하고 통합하는 것이 2025년 DevSecOps의 핵심입니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li>코드 보안 툴 비교. : <a href="https://twodragon.tistory.com/685" target="_blank" rel="noreferrer noopener">https://twodragon.tistory.com/685</a></li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><a href="https://twodragon.tistory.com/685" target="_blank" rel="noreferrer noopener">Amazon Q Developer와 GitHub Advanced Security를 활용한 코드 보안 강화 및 AWS 최적화최근 개발 환경에서 코드 보안의 중요성은 아무리 강조해도 지나치지 않습니다. 🛡️ Amazon Q Developer와 GitHub Advanced Security는 이러한 코드 보안을 한층 강화하고, 개발 생산성을 높이는 데 도움을twodragon.tistory.com</a></p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td><strong>비교 항목</strong></td><td><strong>GitHub Code Scanning (Advanced Security)</strong></td><td><strong>Datadog Code Security</strong></td></tr><tr><td><strong>포지션</strong></td><td><strong>Gatekeeper (문지기)</strong></td><td><strong>Observer (관찰자)</strong></td></tr><tr><td><strong>분석 시점</strong></td><td><strong>PR / Build 단계</strong>&nbsp;(정적 분석)</td><td><strong>Runtime / Production 단계</strong>&nbsp;(동적 분석)</td></tr><tr><td><strong>주요 역할</strong></td><td>코드 내 하드코딩된 Secret, 취약한 패키지 의존성 탐지 및&nbsp;<strong>Merge 차단</strong></td><td>실제 실행 중인 서비스에서&nbsp;<strong>공격 트래픽과 취약점의 연결 고리</strong>&nbsp;파악</td></tr><tr><td><strong>상호 보완</strong></td><td>배포 전에 알려진 위험을 원천 봉쇄 (Shift-Left)</td><td>배포 후 발생하는 제로데이 공격 및 실제 위협 우선순위 식별</td></tr></tbody></table></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">4. 2025 AI 보안 가이드:&nbsp;claude.md로 보안 내재화하기</h2>
+
+
+
+<p class="wp-block-paragraph">2025년 개발 트렌드의 핵심은&nbsp;<strong>&#8220;AI에게 우리 팀의 보안 표준을 학습시키는 것&#8221;</strong>입니다. 프로젝트 루트에&nbsp;.md룰셋 파일을 심어두면, AI가 코드를 생성할 때&nbsp;<strong>OWASP Top 10</strong>과&nbsp;<strong>AWS Best Practices</strong>를 자동으로 준수하게 만들 수 있습니다.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="285" data-attachment-id="2724" data-permalink="https://2twodragon.com/12mon-devsecops/image-123/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/12/image.png?fit=1454%2C404&amp;ssl=1" data-orig-size="1454,404" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/12/image.png?fit=1024%2C285&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/12/image.png?resize=1024%2C285&#038;ssl=1" alt="" class="wp-image-2724" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/12/image.png?resize=1024%2C285&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/12/image.png?resize=300%2C83&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/12/image.png?resize=768%2C213&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/12/image.png?resize=600%2C167&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/12/image.png?w=1454&amp;ssl=1 1454w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<p class="wp-block-paragraph"><strong>📂 파일 예시:&nbsp;gemini.md&nbsp;(또는&nbsp;claude.md,&nbsp;.cursorrules)</strong></p>
+
+
+
+<pre class="wp-block-preformatted"># System Instructions: Security-First Coding Guidelines
+
+당신은 시니어 DevSecOps 엔지니어입니다. 코드 생성 시 아래의 <strong>**OWASP Top 10 2025**</strong> 및 <strong>**AWS 보안 모범 사례**</strong>를 반드시 준수하세요.
+
+## 🛡️ 1. OWASP Top 10 2025 Compliance
+- <strong>**Broken Access Control (접근 제어):**</strong>
+  - 모든 API 엔드포인트에 권한 검사(Authorization) 로직을 필수로 포함하세요.
+  - URL 파라미터 조작을 통한 IDOR(Insecure Direct Object References) 취약점을 방어하세요.
+- <strong>**Injection Prevention (인젝션 방지):**</strong>
+  - SQL 쿼리는 반드시 Parameterized Query(Prepared Statements)를 사용하세요.
+  - OS 명령어 실행(`exec`, `eval`)은 엄격히 금지합니다.
+- <strong>**Security Misconfiguration (보안 설정 오류):**</strong>
+  - 불필요한 기본 계정이나 포트, 디버깅 기능을 비활성화된 상태로 코드를 작성하세요.
+
+## ☁️ 2. AWS Best Practices (Cloud Security)
+- <strong>**IAM &amp; Least Privilege (최소 권한 원칙):**</strong>
+  - IAM 정책 생성 시 와일드카드(`*`) 사용을 금지합니다. 필요한 Action과 Resource만 명시하세요.
+- <strong>**Secrets Management (키 관리):**</strong>
+  - <strong>**절대**</strong> 코드 내에 Access Key, Password를 하드코딩하지 마세요.
+  - `boto3` 사용 시 `AWS Secrets Manager` 또는 `SSM Parameter Store`를 호출하여 환경 변수로 로드하는 패턴을 사용하세요.
+- <strong>**Data Protection (데이터 보호):**</strong>
+  - S3 버킷 생성 시 `Block Public Access`를 True로 설정하고, 기본 암호화(SSE)를 활성화하세요.
+  - Security Group의 Inbound 규칙에 `0.0.0.0/0` (Any Open) 사용을 지양하세요.
+
+## 📝 출력 가이드
+보안 위험이 있는 요청을 받으면 다음과 같이 답변하세요:
+<em>&gt; **⚠️ Security Warning:** 요청하신 코드는 [SQL 인젝션] 위험이 있습니다. 보안 모범 사례에 따라 [Parameterized Query]를 적용한 안전한 코드를 제안합니다.</em>
+</pre>
+
+
+
+<p class="wp-block-paragraph">이렇게 파일을 설정해두면, 신입 개발자나 AI가 실수를 하더라도&nbsp;<strong>&#8220;IAM 정책&#8221;</strong>&nbsp;가 포함되어 있어 위험합니다. 최소 권한으로 수정했습니다.&#8221;**라는 피드백을 즉시 받을 수 있습니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">마치며</h2>
+
+
+
+<p class="wp-block-paragraph">12월의 여러 컨퍼런스를 통해 확인한 2025년의 방향성은 명확합니다.&nbsp;<strong>&#8220;AI라는 강력한 엔진을 달고, 통합된 보안 가시성이라는 안전벨트를 매는 것&#8221;</strong>입니다.</p>
+
+
+
+<p class="wp-block-paragraph">Kiro와 같은 도구로 개발 속도를 높이되, GitHub와 Datadog의 상호 보완적인 보안 체계를 구축하고, AI에게 우리만의 보안 원칙(claude.md)을 학습시킨다면, 다가오는 2025년은 그 어느 때보다 안전하고 효율적인 해가 될 것입니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>참고 링크</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>AWSKRUG Meetups: <a href="https://github.com/awskrug/meetups" target="_blank" rel="noreferrer noopener">https://github.com/awskrug/meetups</a></li>
+
+
+
+<li>Datadog Learning Center: <a href="https://learn.datadoghq.com/courses/app-protection-block-attacks" target="_blank" rel="noreferrer noopener">App Protection Lab</a></li>
+</ul>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

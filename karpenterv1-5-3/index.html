@@ -1,0 +1,133 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/karpenterv1-5-3/"><link rel="stylesheet" href="/archive.css"><title>Post-Mortem: How Karpenter v1.5.3 and a Missing PDB Caused a 10-Minute Outage! 🚨 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>Post-Mortem: How Karpenter v1.5.3 and a Missing PDB Caused a 10-Minute Outage! 🚨</h1><p><time>2025-10-23</time></p><div>
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph">Hey everyone! Today, I&#8217;m sharing a detailed post-mortem on a critical 10-minute service failure we experienced. 😱 It all started when our Kubernetes auto-scaler, Karpenter, decided to consolidate three nodes at once, taking down over 20 pods simultaneously. Here’s what happened and what we learned.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="574" data-attachment-id="2674" data-permalink="https://2twodragon.com/karpenterv1-5-3/image-119/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/10/image-1.png?fit=2482%2C1392&amp;ssl=1" data-orig-size="2482,1392" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/10/image-1.png?fit=1024%2C574&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/10/image-1.png?resize=1024%2C574&#038;ssl=1" alt="" class="wp-image-2674" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/10/image-1.png?resize=1024%2C574&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/10/image-1.png?resize=300%2C168&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/10/image-1.png?resize=768%2C431&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/10/image-1.png?resize=1536%2C861&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/10/image-1.png?resize=2048%2C1149&amp;ssl=1 2048w, https://legacy.2twodragon.com/wp-content/uploads/2025/10/image-1.png?resize=600%2C337&amp;ssl=1 600w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading"><strong>🔍 Root Cause Analysis (RCA)</strong></h3>
+
+
+
+<p class="wp-block-paragraph">This failure was a &#8220;perfect storm&#8221; 🌪️ caused by several factors aligning at the worst possible time:</p>
+
+
+
+<ol start="1" class="wp-block-list">
+<li><strong>Aggressive Karpenter Policy:</strong>&nbsp;We had recently changed our&nbsp;<code>consolidationPolicy</code>&nbsp;to the more aggressive&nbsp;<code>WhenEmptyOrUnderutilized</code>&nbsp;and upgraded to v1.5.3, which has a more assertive consolidation algorithm.</li>
+
+
+
+<li><strong>Missing PodDisruptionBudget (PDB):</strong>&nbsp;This was the killer. 🎯 We had&nbsp;<strong>no PDBs</strong>&nbsp;configured for any service, including our critical&nbsp;<code>Config Server</code>.</li>
+
+
+
+<li><strong>Cascading Failure (Dependency Hell):</strong>&nbsp;When the&nbsp;<code>Config Server</code>&nbsp;pod was terminated, all other services failed to start. Why? They couldn&#8217;t fetch their configurations, leading to a system-wide meltdown. domino:</li>
+
+
+
+<li><strong>Short Probe Timeouts:</strong>&nbsp;Our&nbsp;<code>readinessProbe</code>&nbsp;was set to only 60 seconds, which wasn&#8217;t nearly enough time for our complex Spring Boot apps to initialize properly. ⏳</li>
+</ol>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading"><strong>🛠️ Solutions and Action Plan</strong></h3>
+
+
+
+<p class="wp-block-paragraph">We broke down our recovery into immediate, short-term, and mid-term actions.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Immediate (P0) 🔥:</strong>
+<ul class="wp-block-list">
+<li><strong>Apply PDBs (Mandatory!):</strong>&nbsp;We immediately added&nbsp;<code>PodDisruptionBudget</code>&nbsp;to all production services. This means&nbsp;<code>minAvailable: 1</code>&nbsp;for critical services (like&nbsp;<code>Config Server</code>) and&nbsp;<code>maxUnavailable</code>&nbsp;(e.g.,&nbsp;<code>1</code>&nbsp;or&nbsp;<code>33%</code>) for others.</li>
+
+
+
+<li><strong>Revert Karpenter Policy:</strong>&nbsp;We switched the&nbsp;<code>consolidationPolicy</code>&nbsp;back to the safer&nbsp;<code>WhenEmpty</code>&nbsp;and are now implementing schedule-based consolidation (only during off-peak hours). 🌙</li>
+</ul>
+</li>
+
+
+
+<li><strong>Short-Term (P1) 🏃‍♂️:</strong>
+<ul class="wp-block-list">
+<li><strong>Improve Probes:</strong>&nbsp;We increased the&nbsp;<code>initialDelaySeconds</code>&nbsp;to 120s for&nbsp;<code>readinessProbe</code>&nbsp;and added a&nbsp;<code>startupProbe</code>&nbsp;to give our apps plenty of time to start.</li>
+
+
+
+<li><strong>Add PreStop Hook:</strong>&nbsp;We implemented a&nbsp;<code>preStop</code>&nbsp;hook (e.g.,&nbsp;<code>sleep 15</code>) to ensure graceful shutdowns and connection draining.</li>
+</ul>
+</li>
+
+
+
+<li><strong>Mid-Term (P2) 🏗️:</strong>
+<ul class="wp-block-list">
+<li><strong>Decouple Dependencies:</strong>&nbsp;We&#8217;re configuring services with&nbsp;<code>spring.cloud.config.fail-fast: false</code>. Now, services can start even if the Config Server is temporarily down.</li>
+
+
+
+<li><strong>Implement Resiliency:</strong>&nbsp;We&#8217;re strengthening our systems with Circuit Breaker patterns (with fallbacks) and adding dependency checks (DB, Config Server) to our application health indicators.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading"><strong>📚 Lessons Learned</strong></h3>
+
+
+
+<p class="wp-block-paragraph">This incident was painful, but the lessons are invaluable:</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>PDBs are NOT optional.</strong>&nbsp;They are mandatory for any production workload. Full stop. ✅</li>
+
+
+
+<li><strong>Be conservative with infrastructure.</strong>&nbsp;Auto-scaling settings should be safe by default, not aggressive.</li>
+
+
+
+<li><strong>Design for failure.</strong>&nbsp;Assume dependencies&nbsp;<em>will</em>&nbsp;fail and build resiliency (like circuit breakers and fallbacks) from day one.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">Hope this breakdown helps someone else avoid the same &#8220;perfect storm&#8221;!</p>
+
+
+
+<p class="wp-block-paragraph">References : <a href="https://twodragon.tistory.com/m/695">https://twodragon.tistory.com/m/695</a></p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"></p>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

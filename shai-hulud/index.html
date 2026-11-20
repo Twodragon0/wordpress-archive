@@ -1,0 +1,75 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/shai-hulud/"><link rel="stylesheet" href="/archive.css"><title>URGENT SECURITY ALERT: “Shai-Hulud” NPM Supply Chain Attack Compromises 180+ Packages 🚨 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>URGENT SECURITY ALERT: “Shai-Hulud” NPM Supply Chain Attack Compromises 180+ Packages 🚨</h1><p><time>2025-09-17</time></p><div>
+<p class="wp-block-paragraph">A Must-Read for All Developers and Security Professionals<br>A first-of-its-kind, self-replicating worm attack has been discovered within the NPM ecosystem. This sophisticated attack, named &#8220;Shai-Hulud,&#8221; has already compromised over 180 packages, including the highly popular @ctrl/tinycolor (2 million weekly downloads).</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="571" data-attachment-id="2656" data-permalink="https://2twodragon.com/img_8750/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/09/img_8750.jpg?fit=1536%2C857&amp;ssl=1" data-orig-size="1536,857" data-comments-opened="1" data-image-meta="{&quot;orientation&quot;:&quot;1&quot;}" data-image-title="img_8750" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/09/img_8750.jpg?fit=1024%2C571&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/09/img_8750.jpg?resize=1024%2C571&#038;ssl=1" alt="" class="wp-image-2656" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/09/img_8750.jpg?resize=1024%2C571&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/09/img_8750.jpg?resize=300%2C167&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/09/img_8750.jpg?resize=768%2C429&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/09/img_8750.jpg?resize=600%2C335&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/09/img_8750.jpg?w=1536&amp;ssl=1 1536w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<h4 class="wp-block-heading">📍 At a Glance: Key Information</h4>
+
+
+
+<ul class="wp-block-list">
+<li>Attack Vector: The worm steals NPM tokens from a compromised developer&#8217;s environment. It then automatically publishes new malicious versions of packages owned by the developer, spreading itself to other systems and exfiltrating collected credentials.</li>
+
+
+
+<li>Impact Scope: Over 180 packages have been confirmed as compromised, including those under the scopes @ctrl/<em>, @crowdstrike/</em>, and popular libraries such as angulartics2 and ngx-bootstrap.</li>
+
+
+
+<li>Data Exfiltration: The primary goal is credential theft. The worm has been observed leaking stolen tokens for GitHub, AWS, GCP, and Azure to public repositories.<br>🛡️ Immediate Actions Required</li>
+
+
+
+<li>Audit &amp; Remediate Packages: Immediately identify, remove, or downgrade any vulnerable packages in your projects.</li>
+
+
+
+<li>Rotate All Credentials: Revoke and rotate all potentially compromised tokens. This includes NPM, GitHub, and all cloud service provider (AWS, GCP, Azure) tokens associated with your development and CI/CD environments.</li>
+
+
+
+<li>Pin Dependencies: Pin your project dependencies to known, safe versions in your package.json to prevent accidental updates to malicious versions.</li>
+
+
+
+<li>Scan for Indicators of Compromise: Check your GitHub organization for any suspicious repositories named &#8220;Shai-Hulud,&#8221; which the attackers use for data exfiltration.</li>
+</ul>
+
+
+
+<h4 class="wp-block-heading">💡 Key Lessons Learned</h4>
+
+
+
+<ul class="wp-block-list">
+<li>Ecosystem-Wide Threat: A single compromised developer account can trigger a cascading, ecosystem-level security breach.</li>
+
+
+
+<li>Automation as an Attack Accelerator: CI/CD automation, while powerful, can be exploited to dramatically accelerate the speed and scale of a supply chain attack.</li>
+
+
+
+<li>Zero Trust is Essential: This incident underscores the critical need for a Zero Trust security model, where no user or dependency is trusted by default.<br>This attack is a stark reminder that an NPM dependency is not just static code; it is executable code with potential access to production-level privileges.<br>✅ Urgent Organizational Countermeasures<br>Proactive, organization-wide measures are critical to defend against future attacks:</li>
+
+
+
+<li>Mandate 2FA: Enforce Two-Factor Authentication (2FA) for all developer accounts, especially on NPM and GitHub.</li>
+
+
+
+<li>New Package Cooldown Period: Implement a 48-hour &#8220;cooldown&#8221; period for newly published or updated packages before they can be used in production, allowing time for community vetting.</li>
+
+
+
+<li>SBOM-Based Real-Time Monitoring: Employ a Software Bill of Materials (SBOM) to enable real-time monitoring and alerting for newly discovered vulnerabilities in your software stack.<br>Is your organization secure? We urge you to conduct an immediate review based on this information. For a full technical breakdown, refer to the original analysis:</li>
+
+
+
+<li><a href="https://twodragon.tistory.com/694">https://twodragon.tistory.com/694</a></li>
+</ul>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

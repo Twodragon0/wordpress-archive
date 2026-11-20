@@ -1,0 +1,341 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/aws-sysops-soa/"><link rel="stylesheet" href="/archive.css"><title>AWS SysOps Administrator(SOA) – Associate 자격증 시험 준비 – Part1 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>AWS SysOps Administrator(SOA) – Associate 자격증 시험 준비 – Part1</h1><p><time>2024-12-15</time></p><div>
+<figure class="wp-block-image aligncenter size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="225" height="225" data-attachment-id="1537" data-permalink="https://2twodragon.com/img_6836-1/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6836-1.png?fit=225%2C225&amp;ssl=1" data-orig-size="225,225" data-comments-opened="1" data-image-title="img_6836-1" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6836-1.png?fit=225%2C225&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6836-1.png?resize=225%2C225&#038;ssl=1" alt="" class="wp-image-1537" srcset="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6836-1.png?w=225&amp;ssl=1 225w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6836-1.png?resize=150%2C150&amp;ssl=1 150w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6836-1.png?resize=100%2C100&amp;ssl=1 100w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6836-1.png?resize=50%2C50&amp;ssl=1 50w" sizes="auto, (max-width: 225px) 100vw, 225px" /></figure>
+
+
+
+<p class="p1 wp-block-paragraph">AWS Certified SysOps Administrator – Associate 자격증 시험 준비를 위해 필수적으로 숙지해야 할 개념들을 체계적으로 통합 및 정리하였습니다. 이 가이드는 모니터링 및 로깅, 배포 및 자동화, 고가용성 및 복구 전략, 보안 및 컴플라이언스, 데이터베이스 관리, 비용 관리 및 최적화, 네트워킹 및 콘텐츠 전송, 애플리케이션 관리, 문제 해결 및 최적화, 고급 AWS 서비스 및 통합, 시스템 구조 및 아키텍처 설계, 알고리즘 및 자동화 전략 등 주요 영역을 포함하여 실습과 서비스 내용을 함께 제공합니다.</p>
+
+
+
+<h3 class="wp-block-heading p3"><strong>목차</strong></h3>
+
+
+
+<ol class="wp-block-list">
+<li>모니터링 및 로깅 심화</li>
+
+
+
+<li>배포 및 자동화 심화</li>
+
+
+
+<li>고가용성 및 복구 전략</li>
+
+
+
+<li>보안 및 컴플라이언스 심화</li>
+
+
+
+<li>데이터베이스 관리 심화</li>
+
+
+
+<li>비용 관리 및 최적화 심화</li>
+
+
+
+<li>네트워킹 및 콘텐츠 전송 심화 (SOA &#8211; Part2)</li>
+
+
+
+<li>애플리케이션 관리 심화</li>
+
+
+
+<li>문제 해결 및 최적화 심화</li>
+
+
+
+<li>고급 AWS 서비스 및 통합</li>
+
+
+
+<li>시스템 구조 및 아키텍처 설계</li>
+
+
+
+<li>알고리즘 및 자동화 전략</li>
+
+
+
+<li>실전 연습 및 모의 시험</li>
+
+
+
+<li>추가 학습 자료 및 학습 전략</li>
+
+
+
+<li>마무리 팁</li>
+</ol>
+
+
+
+<h3 class="wp-block-heading p3"><strong>1. 모니터링 및 로깅 심화</strong></h3>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="794" data-attachment-id="1517" data-permalink="https://2twodragon.com/img_6834-1/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6834-1.png?fit=1242%2C963&amp;ssl=1" data-orig-size="1242,963" data-comments-opened="1" data-image-title="img_6834-1" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6834-1.png?fit=1024%2C794&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6834-1.png?resize=1024%2C794&#038;ssl=1" alt="" class="wp-image-1517" srcset="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6834-1.png?resize=1024%2C794&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6834-1.png?resize=300%2C233&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6834-1.png?resize=768%2C595&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6834-1.png?resize=600%2C465&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6834-1.png?w=1242&amp;ssl=1 1242w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /><figcaption class="wp-element-caption"><a href="https://11st-tech.github.io/2021/10/01/aws-security1/" target="_blank" rel="noreferrer noopener">https://11st-tech.github.io/2021/10/01/aws-security1/</a></figcaption></figure>
+
+
+
+<ul class="wp-block-list">
+<li>CloudWatch 커스텀 지표(Custom Metrics): CloudWatch는 기본 지표 외에 사용자 정의 지표를 수집, 모니터링, 시각화할 수 있고, 애플리케이션에서 특정 이벤트 발생 시 CloudWatch에 커스텀 지표 전송 스크립트 작성</li>
+
+
+
+<li>CloudWatch Logs Insights: 대량의 로그 데이터를 효율적으로 검색하고 분석할 수 있는 강력한 쿼리 언어 제공하고, 다양한 로그 데이터를 CloudWatch Logs Insights로 실시간 쿼리 및 분석이 가능</li>
+
+
+
+<li>Events 및 Alarms 설정: 특정 지표 임계값 초과 시 Lambda 함수를 트리거하는 알람 설정하고, 특정 이벤트에 대한 자동화된 응답을 설정할 수 있음.</li>
+
+
+
+<li>CloudTrail 멀티 리전 설정: 여러 리전에 걸쳐 CloudTrail을 설정하고 통합 관리 콘솔에서 로그 확인함. AWS 계정 내의 API 호출을 추적하며, 여러 리전에서의 활동을 통합 관리 가능함.</li>
+
+
+
+<li>로그 파일 무결성 검증: CloudTrail 로그 파일의 무결성 검증 절차 수행함. 로그 파일의 변경 여부를 확인하여 보안과 컴플라이언스 강화함.</li>
+
+
+
+<li>CloudTrail Insights: 비정상적인 API 활동 탐지 및 경고 설정하고, 비정상적인 API 호출 패턴을 자동으로 감지하여 보안 위협 조기 발견.</li>
+
+
+
+<li>AWS Config 규정 준수 규칙(Custom Rules): 특정 규정 준수 요구 사항을 충족하기 위한 커스텀 규칙 작성 및 적용하고, 리소스의 설정 변경을 추적하고 규정 준수를 자동으로 확인.</li>
+
+
+
+<li>Config Conformance Packs: 규정 준수를 위한 여러 AWS Config 규칙을 하나의 패키지로 관리하고, 여러 규칙을 패키지화하여 일괄적으로 관리 및 적용</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading p3">2. <strong>배포 및 자동화 심화 Infrastructure as Code (IaC)</strong></h3>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="550" data-attachment-id="1519" data-permalink="https://2twodragon.com/img_6835-1/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6835-1.png?fit=1358%2C729&amp;ssl=1" data-orig-size="1358,729" data-comments-opened="1" data-image-title="img_6835-1" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6835-1.png?fit=1024%2C550&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6835-1.png?resize=1024%2C550&#038;ssl=1" alt="" class="wp-image-1519" srcset="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6835-1.png?resize=1024%2C550&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6835-1.png?resize=300%2C161&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6835-1.png?resize=768%2C412&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6835-1.png?resize=600%2C322&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6835-1.png?w=1358&amp;ssl=1 1358w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /><figcaption class="wp-element-caption"><a href="https://medium.com/swlh/putting-security-into-the-iac-pipeline-4de98f88ad24" target="_blank" rel="noreferrer noopener">https://medium.com/swlh/putting-security-into-the-iac-pipeline-4de98f88ad24</a></figcaption></figure>
+
+
+
+<ul class="wp-block-list">
+<li>AWS CloudFormation Advanced Features Stack Sets: 여러 AWS 계정과 리전에 걸쳐 CloudFormation 스택 배포하고, 대규모 환경에서 일관된 인프라 배포 지원함.</li>
+
+
+
+<li>Change Sets: 템플릿 변경 사항 사전 검토 및 승인하고, 인프라 변경 사항을 사전에 검토하여 예기치 않은 변경 방지.</li>
+
+
+
+<li>Nested Stacks: 복잡한 템플릿을 여러 중첩된 스택으로 분할하여 관리 용이성 향상하고, 복잡한 인프라를 모듈화하여 관리하기 위해 Nested Stacks 사용</li>
+
+
+
+<li>AWS CDK (Cloud Development Kit): 프로그래밍 언어로 인프라를 코드로 정의, 복잡한 로직 쉽게 구현. TypeScript 또는 Python을 사용해 인프라 정의 및 배포 애플리케이션 작성</li>
+
+
+
+<li>자동화 스크립팅 AWS Systems Manager: 인스턴스 관리, 패치 관리, 명령 실행 등의 기능을 통해 운영 작업 자동화하고, Patch Manager를 사용해 EC2 인스턴스의 패치 관리 자동화</li>
+
+
+
+<li>AWS Lambda를 활용한 자동화: 특정 이벤트 발생 시 자동으로 실행되는 Lambda 함수 작성 및 배포하고, 이벤트 기반으로 코드를 실행하여 다양한 자동화 워크플로우 구현.</li>
+
+
+
+<li>배포 전략 블루/그린 배포: 새로운 버전을 기존 환경과 병행 배포하여 배포 중단 시간 최소화히고, 두 개의 독립된 환경(블루와 그린) 설정 및 무중단 배포 시나리오 구현</li>
+
+
+
+<li>카나리 배포: 새로운 애플리케이션 버전을 소규모 트래픽에 먼저 배포하여 문제 발생 시 신속하게 롤백 가능. 전체 트래픽의 일부만 새로운 버전으로 전환하여 점진적 배포 진행하고, AWS CodeDeploy 사용하여 설정 및 단계별 트래픽 전환</li>
+
+
+
+<li>롤링 업데이트(Rolling Update): 인스턴스를 하나씩 교체하면서 업데이트를 진행하여 서비스 중단 없이 배포 완료. Auto Scaling 그룹을 이용해 인스턴스를 단계적으로 업데이트하여 가용성 유지</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading p3"><strong>3. 고가용성 및 복구 전략</strong></h3>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="937" height="489" data-attachment-id="1538" data-permalink="https://2twodragon.com/img_6837-1/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6837-1.png?fit=937%2C489&amp;ssl=1" data-orig-size="937,489" data-comments-opened="1" data-image-title="img_6837-1" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6837-1.png?fit=937%2C489&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6837-1.png?resize=937%2C489&#038;ssl=1" alt="" class="wp-image-1538" srcset="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6837-1.png?w=937&amp;ssl=1 937w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6837-1.png?resize=300%2C157&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6837-1.png?resize=768%2C401&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6837-1.png?resize=600%2C313&amp;ssl=1 600w" sizes="auto, (max-width: 937px) 100vw, 937px" /><figcaption class="wp-element-caption"><a href="https://aws.amazon.com/ko/blogs/tech/disaster-recovery-dr-architecture-on-aws-part-i-strategies-for-recovery-in-the-cloud-1/">https://aws.amazon.com/ko/blogs/tech/disaster-recovery-dr-architecture-on-aws-part-i-strategies-for-recovery-in-the-cloud-1/</a></figcaption></figure>
+
+
+
+<ul class="wp-block-list">
+<li>재해 복구(Disaster Recovery) 전략 RTO (Recovery Time Objective)와 RPO (Recovery Point Objective): 서비스 중단 시 복구 시간과 데이터 손실 허용 범위 설정하여 적절한 복구 전략 선택하고, 애플리케이션의 RTO와 RPO 정의 및 이에 맞는 재해 복구 계획 수립</li>
+
+
+
+<li>다중 리전 아키텍처: 리전 간 데이터 복제를 통해 리전 장애 시 자동 전환 가능하고, 두 개 이상의 리전에 걸쳐 데이터 복제 및 자동 전환 설정</li>
+
+
+
+<li>백업 및 복구 AWS Backup: 다양한 AWS 서비스의 데이터를 중앙에서 백업하고 복원할 수 있는 관리형 백업 서비스로, 중앙집중식 백업 계획 설정 및 다양한 AWS 리소스의 백업 및 복원 테스트</li>
+
+
+
+<li>EBS 스냅샷과 S3 버전 관리: EBS 스냅샷은 블록 스토리지의 백업을 제공하며, S3 버전 관리는 객체의 이전 버전을 유지하여 복구 용이하고, EBS 볼륨의 스냅샷 생성 및 S3 버전 관리 활성화하여 데이터 복원 시나리오 실행</li>
+
+
+
+<li>고가용성 아키텍처 설계 멀티 AZ 및 멀티 리전 배포: AZ 간 분산 배포를 통해 단일 AZ 장애 시에도 서비스 가용성 유지하고, 애플리케이션을 여러 가용 영역(AZ)에 배포하고 장애 발생 시 자동 전환 설정</li>
+
+
+
+<li>로드 밸런서 설정 고도화: 각 로드 밸런서는 다양한 트래픽 관리 기능을 제공하며, 사용 사례에 따라 적절히 선택 필요하고, Application Load Balancer(ALB), Network Load Balancer(NLB), Classic Load Balancer(CLB)의 설정을 비교하고 최적의 로드 밸런서 선택 및 배포</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading p3"><strong>4. 보안 및 컴플라이언스 심화</strong></h3>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="624" height="456" data-attachment-id="1539" data-permalink="https://2twodragon.com/img_6838-1/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6838-1.png?fit=624%2C456&amp;ssl=1" data-orig-size="624,456" data-comments-opened="1" data-image-title="img_6838-1" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6838-1.png?fit=624%2C456&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6838-1.png?resize=624%2C456&#038;ssl=1" alt="" class="wp-image-1539" srcset="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6838-1.png?w=624&amp;ssl=1 624w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6838-1.png?resize=300%2C219&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6838-1.png?resize=600%2C438&amp;ssl=1 600w" sizes="auto, (max-width: 624px) 100vw, 624px" /><figcaption class="wp-element-caption"><a href="https://aws.amazon.com/ko/blogs/tech/strengthen-the-devops-pipeline-and-protect-data/">https://aws.amazon.com/ko/blogs/tech/strengthen-the-devops-pipeline-and-protect-data/</a></figcaption></figure>
+
+
+
+<ul class="wp-block-list">
+<li>고급 IAM 관리 &#8211; IAM 역할(Role)과 신뢰 정책(Trust Policies): 역할을 통해 다른 AWS 계정이나 서비스에 안전하게 접근 권한 위임 가능하고, 크로스 계정 접근을 위한 IAM 역할과 신뢰 정책 설정</li>
+
+
+
+<li>권한 경계(Permissions Boundaries): IAM 엔티티에 적용 가능한 최대 권한 설정하여 권한 남용 방지하고, IAM 사용자나 역할에 권한 경계 설정하여 최대 권한 제한</li>
+
+
+
+<li>조건부 접근 제어: 조건부 접근을 통해 보안성을 강화하고 세부적인 접근 제어 구현. 특정 조건(예: IP 주소, MFA 인증)을 기반으로 한 IAM 정책 작성</li>
+
+
+
+<li>데이터 보호 및 암호화 AWS KMS (Key Management Service): 데이터 암호화를 위한 키 관리 및 보안 정책 설정 및 관리하고, KMS 키 생성, 관리 및 특정 AWS 서비스와 통합하여 암호화 적용</li>
+
+
+
+<li>S3 Object Lock: S3 Object Lock을 통해 데이터의 불변성 보장 및 무결성 유지히고, S3 버킷에 Object Lock 설정하여 객체의 변경 방지</li>
+
+
+
+<li>전송 중 및 저장 시 암호화: 데이터 전송 중 및 저장 시 암호화를 통해 데이터 보안 강화하고, S3, EBS, RDS 등 다양한 서비스에서 TLS/SSL 설정 및 데이터 암호화 적용</li>
+
+
+
+<li>네트워크 보안 고도화 AWS WAF (Web Application Firewall): 웹 애플리케이션을 다양한 공격으로부터 보호하기 위한 필터링 규칙 설정 가능하고, WAF 규칙 설정하여 웹 애플리케이션 트래픽 필터링 및 보호</li>
+
+
+
+<li>AWS Shield: DDoS 공격으로부터 애플리케이션 보호하는 관리형 보안 서비스로, AWS Shield Advanced 설정을 통해 DDoS 공격 방어</li>
+
+
+
+<li>PrivateLink: VPC 간에 프라이빗 네트워크 연결 설정하여 보안성 높이고, VPC 간 프라이빗 연결 설정하여 서비스 노출 최소화</li>
+
+
+
+<li>컴플라이언스 관리 AWS Artifact: 규정 준수를 위한 문서와 보고서 제공하여 컴플라이언스 요구 사항 충족하고, AWS Artifact에서 규정 준수 관련 문서 다운로드 및 검토</li>
+
+
+
+<li>서비스별 컴플라이언스: AWS 서비스는 다양한 산업 표준 및 규정을 준수하여 보안과 컴플라이언스 강화하고, 특정 AWS 서비스가 준수하는 규정 이해하고, 해당 규정에 맞게 서비스 설정</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading p3"><strong>5. 데이터베이스 관리 심화</strong></h3>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="655" data-attachment-id="1554" data-permalink="https://2twodragon.com/img_6844-1/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6844-1.png?fit=1599%2C1023&amp;ssl=1" data-orig-size="1599,1023" data-comments-opened="1" data-image-title="img_6844-1" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6844-1.png?fit=1024%2C655&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6844-1.png?resize=1024%2C655&#038;ssl=1" alt="" class="wp-image-1554" srcset="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6844-1.png?resize=1024%2C655&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6844-1.png?resize=300%2C192&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6844-1.png?resize=768%2C491&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6844-1.png?resize=1536%2C983&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6844-1.png?resize=600%2C384&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6844-1.png?w=1599&amp;ssl=1 1599w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /><figcaption class="wp-element-caption"><a href="https://aws.amazon.com/ko/blogs/architecture/disaster-recovery-solutions-with-aws-managed-services-part-3-multi-site-active-passive/">https://aws.amazon.com/ko/blogs/architecture/disaster-recovery-solutions-with-aws-managed-services-part-3-multi-site-active-passive/</a></figcaption></figure>
+
+
+
+<ul class="wp-block-list">
+<li>고가용성과 확장성 RDS Multi-AZ 및 Read Replica: RDS 인스턴스를 Multi-AZ로 설정하고 Read Replica 생성하여 읽기 성능 향상</li>
+
+
+
+<li>Aurora 클러스터: Amazon Aurora는 고성능과 고가용성을 제공하는 관계형 데이터베이스 서비스로 Aurora 클러스터 생성 및 고가용성 및 성능 최적화 설정</li>
+
+
+
+<li>백업 및 복구 &#8211; 자동 백업과 수동 스냅샷: 자동 백업은 정기적인 데이터 백업 제공, 수동 스냅샷은 특정 시점 데이터 저장으로, RDS의 자동 백업 설정과 수동 스냅샷 생성 및 복원 시나리오 실행</li>
+
+
+
+<li>포인트 인 타임 복구(PITR): PITR을 통해 데이터 손실 시 특정 시점으로 데이터베이스 복구 가능하고, RDS 인스턴스에서 특정 시점으로 데이터베이스 복원.</li>
+
+
+
+<li>보안 데이터베이스 암호화: 데이터베이스 데이터를 암호화하여 데이터 보안 강화하고, RDS와 DynamoDB의 암호화 설정 및 관리.</li>
+
+
+
+<li>네트워크 격리: VPC 내에서 데이터베이스 인스턴스를 격리하여 네트워크 보안 강화하고, RDS 인스턴스를 VPC 내에 안전하게 배치하고 네트워크 접근 제어 설정.</li>
+
+
+
+<li>성능 최적화 인덱스 관리: 인덱스는 데이터베이스 쿼리 성능 향상에 중요한 요소이고, 효율적인 쿼리 성능을 위해 적절한 인덱스 설계 및 적용.</li>
+
+
+
+<li>쿼리 최적화: 비효율적인 쿼리를 최적화하여 데이터베이스 성능 향상하고, Slow Query 로그 분석 및 쿼리 튜닝을 통해 성능 개선.</li>
+
+
+
+<li>캐싱 전략: 캐싱을 통해 데이터베이스 부하 줄이고 응답 속도 향상하고, ElastiCache를 사용하여 데이터베이스 캐싱 구현 및 성능 테스트.</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading p3"><strong>6. 비용 관리 및 최적화 심화</strong></h3>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="776" height="1024" data-attachment-id="1560" data-permalink="https://2twodragon.com/img_6849-1/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6849-1.jpg?fit=801%2C1057&amp;ssl=1" data-orig-size="801,1057" data-comments-opened="1" data-image-meta="{&quot;orientation&quot;:&quot;1&quot;}" data-image-title="img_6849-1" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6849-1.jpg?fit=776%2C1024&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6849-1.jpg?resize=776%2C1024&#038;ssl=1" alt="" class="wp-image-1560" srcset="https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6849-1.jpg?resize=776%2C1024&amp;ssl=1 776w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6849-1.jpg?resize=227%2C300&amp;ssl=1 227w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6849-1.jpg?resize=768%2C1013&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6849-1.jpg?resize=600%2C792&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2024/12/img_6849-1.jpg?w=801&amp;ssl=1 801w" sizes="auto, (max-width: 776px) 100vw, 776px" /><figcaption class="wp-element-caption"><a href="https://tech.inflab.com/20240227-finops-for-startup/">https://tech.inflab.com/20240227-finops-for-startup/</a></figcaption></figure>
+
+
+
+<ul class="wp-block-list">
+<li>비용 추적 및 분석 AWS Cost Explorer 고급 기능: Cost Explorer는 비용과 사용량 시각화 및 분석 도구 제공하고, 사용자 지정 보고서 작성 및 비용 할당 태그 활용하여 비용 분석.</li>
+
+
+
+<li>AWS Budgets: 예산 설정하고 초과 시 알림 받아 비용 효율적으로 관리하고, 비용, 사용량, 예약 인스턴스 활용률에 대한 예산 설정 및 알림 구성.</li>
+
+
+
+<li>비용 절감 전략 Reserved Instances vs. Savings Plans: 장기 사용 전제로 할인 옵션 제공하여 비용 절감 가능하고, 다양한 시나리오에 맞게 Reserved Instances와 Savings Plans 비교 및 최적 옵션 선택.</li>
+
+
+
+<li>스팟 인스턴스 활용: 스팟 인스턴스는 저렴하게 여유 자원 사용 가능하지만, 중단 리스크 존재하고, 스팟 인스턴스를 사용하여 비용 절감 워크로드 실행 및 관련 리스크 관리.</li>
+
+
+
+<li>리소스 최적화 도구: AWS 도구 통해 리소스 사용 모니터링 및 최적화하고, Trusted Advisor와 Compute Optimizer 활용하여 리소스 효율성 분석 및 최적화 방안 적용.</li>
+
+
+
+<li>태깅 전략 &#8211; 리소스 태깅: 태그 통해 리소스 조직화 및 비용 특정 프로젝트나 부서로 할당 가능하고, 일관된 태깅 정책 수립 및 리소스에 태그 적용하여 비용 할당 및 추적.</li>
+
+
+
+<li>태그 기반 자동화: 태그 기반으로 리소스 자동 관리 및 운영 효율성 높이고, 태그 이용한 리소스 관리 스크립트 작성 및 자동화 구현</li>
+</ul>
+
+
+
+<p class="p8 wp-block-paragraph">이어서 AWS SOA &#8211; Part 2</p>
+
+
+
+<p class="wp-block-paragraph"></p>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

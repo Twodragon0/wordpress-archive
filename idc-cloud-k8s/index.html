@@ -1,0 +1,483 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/idc-cloud-k8s/"><link rel="stylesheet" href="/archive.css"><title>온프레미스 vs 가상머신 가상화 vs 클라우드 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>온프레미스 vs 가상머신 가상화 vs 클라우드</h1><p><time>2025-03-22</time></p><div>
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="570" data-attachment-id="2328" data-permalink="https://2twodragon.com/idc-cloud-k8s/image-82/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-36.png?fit=1416%2C788&amp;ssl=1" data-orig-size="1416,788" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-36.png?fit=1024%2C570&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-36.png?resize=1024%2C570&#038;ssl=1" alt="" class="wp-image-2328" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-36.png?resize=1024%2C570&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-36.png?resize=300%2C167&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-36.png?resize=768%2C427&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-36.png?resize=600%2C334&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-36.png?w=1416&amp;ssl=1 1416w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<h2 class="wp-block-heading">1. 온프레미스(IDC) vs 클라우드 데이터 센터(CDC)</h2>
+
+
+
+<p class="wp-block-paragraph">전통적인 온프레미스(일반 데이터 센터)는 기업이 직접 구축한 시설에서 다양한 플랫폼(메인프레임, 유닉스, 윈도우)을 운영합니다. 반면, 클라우드 데이터 센터는 설비 설치와 유지보수 부담 없이 IT 비즈니스에 집중할 수 있도록 지원합니다.</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th><strong>구분</strong></th><th><strong>일반 데이터 센터(IDC)</strong></th><th><strong>클라우드 데이터 센터(CDC)</strong></th></tr></thead><tbody><tr><td><strong>IT 인프라</strong></td><td>다양한 플랫폼(메인프레임, 유닉스, 윈도우) <br>– 금융 관련 전산 업무 등 복잡한 작업 처리</td><td>단일 플랫폼(현재는 주로 윈도우 기반) – 일관된 환경으로 관리</td></tr><tr><td></td><td></td><td></td></tr><tr><td><strong>전력밀도</strong></td><td>저밀도 (보통 1~3Kw/Rack)</td><td>고밀도 (10Kw/Rack 이상, 고사양의 서버를 집중 배치하여 자원 효율성을 극대화)</td></tr><tr><td><strong>데이터센터 구조</strong></td><td>설비 확장이 제한적인 구조</td><td>모듈형, 유연한 IT 인프라 확장을 지원<br>– 필요에 따라 빠른 확장이 가능</td></tr><tr><td></td><td></td><td></td></tr><tr><td><strong>운영</strong></td><td>IT 인프라와 설비를 별도로 관리하여 운영</td><td>안전성과 비용 효율적인 통합 관리<br>– 인프라 구축 부담 없이 비즈니스에 집중</td></tr><tr><td></td><td></td><td></td></tr></tbody></table></figure>
+
+
+
+<p class="wp-block-paragraph"><em>데이터 센터 전환의 이유:</em></p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>유연성:</strong> 빠른 확장과 축소가 가능</li>
+
+
+
+<li><strong>안전성:</strong> 클라우드 제공자가 최신 보안 업데이트와 관리 제공</li>
+
+
+
+<li><strong>비용 최적화:</strong> 초기 투자비용 절감과 운영 비용 효율성을 통한 비용 절감</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">아래는 OSI 7계층 전체를 통합하여,&nbsp;<strong>온프레미스</strong>&nbsp;환경과&nbsp;<strong>퍼블릭 클라우드</strong>&nbsp;환경의 네트워크 구성 및 동작 특징을 한눈에 비교할 수 있도록 정리한 통합 표와 이에 대한 부연 설명입니다.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="785" data-attachment-id="2329" data-permalink="https://2twodragon.com/idc-cloud-k8s/image-83/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-37.png?fit=2208%2C1692&amp;ssl=1" data-orig-size="2208,1692" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-37.png?fit=1024%2C785&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-37.png?resize=1024%2C785&#038;ssl=1" alt="" class="wp-image-2329" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-37.png?resize=1024%2C785&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-37.png?resize=300%2C230&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-37.png?resize=768%2C589&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-37.png?resize=1536%2C1177&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-37.png?resize=2048%2C1569&amp;ssl=1 2048w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-37.png?resize=600%2C460&amp;ssl=1 600w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<figure class="wp-block-embed is-type-rich"><div class="wp-block-embed__wrapper">
+<a class="m-story" href="https://medium.com/harrythegreat/osi계층-tcp-ip-모델-쉽게-알아보기-f308b1115359" target="_blank" data-width="500" data-border="1" data-collapsed="">Medium.com에서 보기</a>
+</div></figure>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="549" data-attachment-id="2330" data-permalink="https://2twodragon.com/idc-cloud-k8s/image-84/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-38.png?fit=2016%2C1080&amp;ssl=1" data-orig-size="2016,1080" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-38.png?fit=1024%2C549&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-38.png?resize=1024%2C549&#038;ssl=1" alt="" class="wp-image-2330" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-38.png?resize=1024%2C549&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-38.png?resize=300%2C161&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-38.png?resize=768%2C411&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-38.png?resize=1536%2C823&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-38.png?resize=600%2C321&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-38.png?w=2016&amp;ssl=1 2016w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<p class="wp-block-paragraph"><a href="https://twodragon.tistory.com/557">https://twodragon.tistory.com/557</a></p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="782" data-attachment-id="2331" data-permalink="https://2twodragon.com/idc-cloud-k8s/image-85/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-39.png?fit=1904%2C1454&amp;ssl=1" data-orig-size="1904,1454" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-39.png?fit=1024%2C782&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-39.png?resize=1024%2C782&#038;ssl=1" alt="" class="wp-image-2331" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-39.png?resize=1024%2C782&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-39.png?resize=300%2C229&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-39.png?resize=768%2C586&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-39.png?resize=1536%2C1173&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-39.png?resize=600%2C458&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-39.png?w=1904&amp;ssl=1 1904w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">2. AWS, Azure, GCP 주요 서비스 비교</h2>
+
+
+
+<p class="wp-block-paragraph">퍼블릭 클라우드의 대표 기업인 AWS, Azure, GCP는 각기 다른 명칭과 특징을 가진 서비스를 제공합니다. 아래는 각 클라우드 플랫폼의 핵심 서비스와 장단점을 비교한 내용입니다.</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th><strong>구분</strong></th><th><strong>AWS</strong></th><th><strong>Azure</strong></th><th><strong>GCP</strong></th></tr></thead><tbody><tr><td><strong>컴퓨팅 서비스</strong></td><td><strong>Elastic Compute Cloud (EC2)</strong></td><td><strong>Virtual Machines</strong></td><td><strong>Compute Engine</strong></td></tr><tr><td><strong>스토리지</strong></td><td><strong>Amazon S3</strong></td><td><strong>Azure Blob Storage</strong></td><td><strong>Cloud Storage</strong></td></tr><tr><td><strong>네트워크</strong></td><td><strong>Amazon VPC</strong></td><td><strong>Azure Virtual Network</strong></td><td><strong>Cloud Virtual Network</strong></td></tr><tr><td><strong>보안</strong></td><td><strong>Amazon GuardDuty</strong></td><td><strong>Advanced Threat Protection</strong></td><td><strong>Event Threat Detection</strong></td></tr><tr><td><strong>계정/권한 관리</strong></td><td><strong>IAM</strong></td><td><strong>Active Directory Role based Access Control (RBAC)</strong></td><td><strong>Cloud Identity</strong></td></tr><tr><td><strong>주요 장점</strong></td><td>1. 광범위하고 성숙한 서비스 제공<br>2. 안정적인 인프라 지원</td><td>1. MS 제품과의 높은 통합성<br>2. 하이브리드 클라우드 친화적</td><td>1. 분석/머신러닝 투자 집중<br>2. 자동화 환경 구축에 유리한 옵션</td></tr><tr><td><strong>단점</strong></td><td>1. 서비스가 너무 많아 관리가 복잡<br>2. 고급 지식 필요</td><td>1. 대규모 구현에 한계 존재<br>2. 구현을 위한 전문 기술 요구</td><td>1. 계약 협상에서 엄격<br>2. 소규모 파트너 생태계 형성 어려움</td></tr></tbody></table></figure>
+
+
+
+<p class="wp-block-paragraph"><em>각 클라우드 플랫폼은 서비스 이름은 다르지만, 기본적으로는 컴퓨팅, 스토리지, 네트워크, 보안, 계정/권한 관리 등 인프라 전반에 걸친 솔루션을 제공하여 기업이 원하는 비즈니스를 더욱 유연하고 안정적으로 운영할 수 있도록 도와줍니다.</em></p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">3. 클라우드 서비스 모델: On-Premise vs IaaS vs CaaS vs PaaS vs FaaS vs SaaS</h2>
+
+
+
+<p class="wp-block-paragraph">클라우드 환경은 전통적인 온프레미스 환경과는 다르게 여러 서비스 모델로 나누어져 있으며, 각 모델은 인프라 관리의 추상화 수준에 따라 구분됩니다.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="542" data-attachment-id="2332" data-permalink="https://2twodragon.com/idc-cloud-k8s/image-86/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-40.png?fit=2038%2C1078&amp;ssl=1" data-orig-size="2038,1078" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-40.png?fit=1024%2C542&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-40.png?resize=1024%2C542&#038;ssl=1" alt="" class="wp-image-2332" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-40.png?resize=1024%2C542&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-40.png?resize=300%2C159&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-40.png?resize=768%2C406&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-40.png?resize=1536%2C812&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-40.png?resize=600%2C317&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-40.png?w=2038&amp;ssl=1 2038w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<ul class="wp-block-list">
+<li><strong>On-Premise (IDC):</strong>
+<ul class="wp-block-list">
+<li>자체 데이터 센터에서 물리 서버, 네트워크, 스토리지를 직접 관리 및 운영</li>
+</ul>
+</li>
+
+
+
+<li><strong>IaaS (Infrastructure-as-a-Service):</strong>
+<ul class="wp-block-list">
+<li><strong>예:</strong> AWS EC2, Azure Virtual Machines</li>
+
+
+
+<li>고객이 가상 머신, 네트워크, 스토리지 등 인프라 자원을 임대하여 사용</li>
+</ul>
+</li>
+
+
+
+<li><strong>CaaS (Containers-as-a-Service):</strong>
+<ul class="wp-block-list">
+<li><strong>예:</strong> AWS ECS, EKS, Azure Kubernetes Service (AKS)</li>
+
+
+
+<li>컨테이너 기반 어플리케이션을 배포 및 관리하는 서비스</li>
+</ul>
+</li>
+
+
+
+<li><strong>PaaS (Platform-as-a-Service):</strong>
+<ul class="wp-block-list">
+<li><strong>예:</strong> AWS Lambda (서버리스), Google App Engine, SAP Cloud Platform</li>
+
+
+
+<li>어플리케이션 개발을 위한 플랫폼을 제공하여 인프라 관리 없이 애플리케이션에 집중할 수 있게 함</li>
+</ul>
+</li>
+
+
+
+<li><strong>FaaS (Function-as-a-Service):</strong>
+<ul class="wp-block-list">
+<li><strong>예:</strong> AWS Lambda, Azure Functions, Google Cloud Functions</li>
+
+
+
+<li>단위 함수 단위로 서버리스 환경에서 코드를 실행, 이벤트 기반 처리에 최적화</li>
+</ul>
+</li>
+
+
+
+<li><strong>SaaS (Software-as-a-Service):</strong>
+<ul class="wp-block-list">
+<li><strong>예:</strong> Office365, Google Workspace</li>
+
+
+
+<li>완성된 소프트웨어를 서비스 형태로 제공하여 사용자가 직접 설치나 유지보수를 할 필요 없음</li>
+</ul>
+</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">클라우드의 서비스 모델은 고객의 요구에 따라 점진적으로 인프라 관리의 부담을 줄이고, 개발과 비즈니스에 더 집중할 수 있도록 설계되어 있습니다.</p>
+
+
+
+<p class="wp-block-paragraph">이처럼 온프레미스 환경은 물리적 인프라와 직접적으로 연결된 네트워크 구성 요소들을 직접 관리하는 반면, 퍼블릭 클라우드 환경은 물리 계층부터 하위 네트워크 기능을 클라우드 제공자가 추상화 및 관리하여 사용자에게는 보다 유연하고 확장 가능한 가상 네트워크 및 서비스로 제공됩니다.</p>
+
+
+
+<p class="wp-block-paragraph">기존 내용을 바탕으로&nbsp;<strong>온프레미스</strong>,&nbsp;<strong>가상머신(VM) 기반 가상화</strong>,&nbsp;<strong>클라우드</strong>&nbsp;환경의 차이와 발전 과정을 설명하는 통합 글입니다. 이 글에서는 가상화 기술의 전개, 각 기술의 특징, 그리고 쿠버네티스와 연계되는 개념들을 함께 다루어 IT 인프라 관리와 서비스 운영에 대한 전체적인 그림을 제시합니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">4. 온프레미스 vs 가상머신 가상화 vs 클라우드</h2>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="539" data-attachment-id="2333" data-permalink="https://2twodragon.com/idc-cloud-k8s/image-87/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-41.png?fit=2472%2C1302&amp;ssl=1" data-orig-size="2472,1302" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-41.png?fit=1024%2C539&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-41.png?resize=1024%2C539&#038;ssl=1" alt="" class="wp-image-2333" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-41.png?resize=1024%2C539&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-41.png?resize=300%2C158&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-41.png?resize=768%2C405&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-41.png?resize=1536%2C809&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-41.png?resize=2048%2C1079&amp;ssl=1 2048w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-41.png?resize=600%2C316&amp;ssl=1 600w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<p class="wp-block-paragraph"><a href="https://www.inflearn.com/blogs/6905">https://www.inflearn.com/blogs/6905</a></p>
+
+
+
+<h3 class="wp-block-heading"><strong>온프레미스 (On-Premise) 환경</strong></h3>
+
+
+
+<ul class="wp-block-list">
+<li><strong>물리 인프라 직접 관리</strong>온프레미스 환경에서는 기업이나 조직이 데이터 센터 내에 물리 서버, 네트워크 장비(스위치, 라우터 등), 스토리지 시스템을 직접 구축하고 관리합니다.
+<ul class="wp-block-list">
+<li><strong>장점:</strong>
+<ul class="wp-block-list">
+<li>완벽한 제어권을 바탕으로 맞춤형 보안 정책 구현 가능</li>
+
+
+
+<li>내부 네트워크 환경(예, LAN)의 자유로운 구성과 확장</li>
+</ul>
+</li>
+
+
+
+<li><strong>단점:</strong>
+<ul class="wp-block-list">
+<li>초기 투자 비용과 유지보수에 많은 비용과 노력이 소요됨</li>
+
+
+
+<li>물리적 제약으로 확장성이 제한적일 수 있음</li>
+</ul>
+</li>
+</ul>
+</li>
+
+
+
+<li><strong>실제 리소스 기반 서비스 제공</strong>온프레미스 구축 시 ARP, DHCP 등 로우레벨 네트워크 프로토콜이 자연스럽게 작동하며, VLAN 또는 서브넷을 통해 내부 네트워크를 세분화하고 보안 및 효율성을 높입니다.</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading"><strong>가상머신(VM) 기반 가상화</strong></h3>
+
+
+
+<ul class="wp-block-list">
+<li><strong>가상화 기술의 등장과 발전</strong>물리 서버의 비용과 관리 부담을 줄이기 위해 등장한 기술이 바로 <strong>가상머신 가상화</strong>입니다.
+<ul class="wp-block-list">
+<li><strong>호스트 가상화 (Hosted Virtualization):</strong>
+<ul class="wp-block-list">
+<li><strong>구조:</strong> 물리 서버 위에 Host OS가 존재하고, 그 위에서 하이퍼바이저(예: VMware Workstation, VirtualBox 등)를 실행해 여러 VM(Guest OS)를 생성합니다.</li>
+
+
+
+<li><strong>용도:</strong> 주 운영체제 외에 일시적으로 다른 운영체제가 필요할 때 사용하며, 개발 및 테스트 환경에 적합합니다.</li>
+</ul>
+</li>
+
+
+
+<li><strong>하이퍼바이저(VMware ESXi, Hyper-V 등) 가상화:</strong>
+<ul class="wp-block-list">
+<li><strong>구조:</strong> 물리 서버 위에 바로 하이퍼바이저가 설치되어 Host OS 없이 VM을 직접 관리합니다.</li>
+
+
+
+<li><strong>특징:</strong> 오버헤드가 줄어들어 성능이 우수하며, 데이터 센터에서 본격적인 업무용 시스템 운영 시 주로 사용됩니다.</li>
+</ul>
+</li>
+</ul>
+</li>
+
+
+
+<li><strong>가상화의 효과</strong>
+<ul class="wp-block-list">
+<li><strong>자원 효율성:</strong> 하나의 물리 서버에서 여러 VM을 동시에 운영함으로써 하드웨어 자원을 효율적으로 활용할 수 있습니다.</li>
+
+
+
+<li><strong>관리 편의성:</strong> 중앙 집중식 관리 도구와 자동화 기술을 활용해 VM 생성, 배포 및 장애 복구를 보다 용이하게 수행할 수 있습니다.</li>
+
+
+
+<li><strong>보안과 격리:</strong> 각 VM은 독립된 운영체제 환경을 제공하므로, 하나의 VM에서 문제가 발생해도 다른 VM에 영향이 적습니다.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading"><strong>클라우드 환경</strong></h3>
+
+
+
+<ul class="wp-block-list">
+<li><strong>클라우드의 등장 및 추상화</strong>클라우드 컴퓨팅은 온프레미스와 전통적인 VM 가상화를 한 단계 더 추상화한 형태로, <strong>인프라를 서비스(Infrastructure as a Service, IaaS)</strong>, <strong>플랫폼 서비스(PaaS)</strong>, <strong>소프트웨어 서비스(SaaS)</strong> 등 다양한 모델을 제공합니다.
+<ul class="wp-block-list">
+<li><strong>특징:</strong>
+<ul class="wp-block-list">
+<li><strong>물리 인프라 추상화:</strong> 클라우드 제공자가 데이터 센터 내의 물리 인프라와 네트워크, 스토리지를 관리하고, 사용자는 가상 자원(VPC, 가상 머신, 스토리지 등)을 API나 콘솔을 통해 제어합니다.</li>
+
+
+
+<li><strong>확장성 및 유연성:</strong> 필요에 따라 리소스를 신속하게 확장(또는 축소)할 수 있으며, Auto Scaling, 로드밸런싱 등 관리형 서비스를 통해 서비스 운영을 자동화할 수 있습니다.</li>
+
+
+
+<li><strong>비용 효율성:</strong> 사용한 만큼 비용을 지불하는 OPEX 모델을 통해 초기 투자 비용을 크게 낮출 수 있습니다.</li>
+</ul>
+</li>
+</ul>
+</li>
+
+
+
+<li><strong>가상화 기술과 클라우드 네이티브</strong>최근에는 <strong>컨테이너</strong> 기술과 <strong>쿠버네티스</strong> 같은 오케스트레이션 도구가 부상하면서, 전통적인 VM 가상화와는 또 다른 차원의 추상화를 실현하고 있습니다.
+<ul class="wp-block-list">
+<li><strong>컨테이너 vs VM:</strong>
+<ul class="wp-block-list">
+<li><strong>컨테이너:</strong> Host OS의 커널을 공유하면서 애플리케이션 실행에 필수적인 라이브러리와 바이너리만 포함하여, 빠른 기동과 작은 사이즈를 자랑합니다.</li>
+
+
+
+<li><strong>VM:</strong> 각 VM마다 별도의 운영체제를 포함하기 때문에 오버헤드는 크지만, 보다 강력한 격리와 독립성을 제공합니다.</li>
+</ul>
+</li>
+
+
+
+<li><strong>쿠버네티스와 클라우드 네이티브:</strong>
+<ul class="wp-block-list">
+<li>쿠버네티스는 컨테이너를 관리하는 데 최적화된 플랫폼으로, Pod, Service, Persistent Volume(PV) 등 주요 리소스를 추상화하여 기존의 물리 서버, 네트워크, 스토리지 역할을 대신합니다.</li>
+
+
+
+<li>이를 통해 클라우드 환경에서는 개발자는 인프라의 복잡성을 신경쓰지 않고, 애플리케이션 로직과 서비스 개발에 집중할 수 있습니다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">5. 가상화 기술과 쿠버네티스에서의 리소스 추상화</h2>
+
+
+
+<h3 class="wp-block-heading"><strong>가상화 기술 비교</strong></h3>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th><strong>항목</strong></th><th><strong>호스트 가상화</strong></th><th><strong>하이퍼바이저 가상화</strong></th><th><strong>컨테이너 가상화</strong></th></tr></thead><tbody><tr><td><strong>구조</strong></td><td>물리 서버 내 Host OS 위에서 하이퍼바이저 실행, 그 위에 여러 VM 실행</td><td>물리 서버 위에 직접 하이퍼바이저 설치, Host OS 없이 VM 생성</td><td>Host OS의 커널 공유, 애플리케이션과 필요한 라이브러리만 포함</td></tr><tr><td><strong>장점</strong></td><td>사용 중인 OS 환경 내에서 보조적으로 다른 OS 실행</td><td>오버헤드 감소, 성능 우수, 데이터센터 환경에 적합</td><td>경량화, 빠른 시작/종료, 높은 자원 효율성</td></tr><tr><td><strong>단점</strong></td><td>Host OS의 자원 공유로 인한 성능 제약</td><td>VM 관리 및 배포 복잡성, 초기 구축 비용 증가</td><td>격리성은 상대적으로 낮고, 보안 및 네트워킹에 대해 별도의 도구/설정 필요</td></tr></tbody></table></figure>
+
+
+
+<h3 class="wp-block-heading"><strong>쿠버네티스의 핵심 리소스와 온프레미스 구성 요소 대응</strong></h3>
+
+
+
+<p class="wp-block-paragraph">쿠버네티스는 기존 데이터 센터의&nbsp;<strong>물리 서버</strong>,&nbsp;<strong>네트워크</strong>,&nbsp;<strong>스토리지</strong>&nbsp;구성 요소를 추상화하여 제공하는데, 그 대표적인 리소스는 다음과 같습니다.</p>
+
+
+
+<ol class="wp-block-list">
+<li><strong>Pod</strong>
+<ul class="wp-block-list">
+<li><strong>역할:</strong> 컨테이너(혹은 컨테이너들의 집합)가 실행되는 최소 단위</li>
+
+
+
+<li><strong>온프레미스 대응:</strong> 물리 서버나 VM 위에서 애플리케이션이 설치되어 동작하는 역할과 유사하지만, 훨씬 가볍게 실행되고, 쉽게 배포·이동할 수 있음</li>
+</ul>
+</li>
+
+
+
+<li><strong>Service</strong>
+<ul class="wp-block-list">
+<li><strong>역할:</strong> Pod 간 혹은 외부와의 네트워크 통신을 위해 추상화된 네트워크 접점 제공</li>
+
+
+
+<li><strong>온프레미스 대응:</strong> 실제 네트워크 장비(예: 로드밸런서, 라우터)를 통해 트래픽을 분산하고 관리했던 기능을 대신함</li>
+
+
+
+<li><strong>유형:</strong>
+<ul class="wp-block-list">
+<li><strong>ClusterIP:</strong> 클러스터 내부 통신 전용</li>
+
+
+
+<li><strong>NodePort:</strong> 각 노드 단위의 네트워크 포트를 통한 외부 접근</li>
+
+
+
+<li><strong>LoadBalancer:</strong> 클라우드 관리형 로드밸런서를 통한 외부 트래픽 처리</li>
+
+
+
+<li><strong>ExternalName:</strong> 외부 DNS 이름과의 매핑 제공</li>
+</ul>
+</li>
+</ul>
+</li>
+
+
+
+<li><strong>Persistent Volume(PV)</strong>
+<ul class="wp-block-list">
+<li><strong>역할:</strong> 데이터 저장소를 클러스터에 추상화하여 제공, Pod가 필요할 때 동적으로 연결 가능</li>
+
+
+
+<li><strong>온프레미스 대응:</strong> 물리적 스토리지(파일 서버, SAN 등)나 VM 환경에서 따로 구축하는 스토리지 인프라의 역할을 대신함</li>
+
+
+
+<li><strong>지원:</strong> CSI(Container Storage Interface) 등을 통해 다양한 종류의 스토리지(파일, 블록)와 연동</li>
+</ul>
+</li>
+</ol>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">6. 결론: IT 인프라의 진화와 현재의 클라우드</h2>
+
+
+
+<p class="wp-block-paragraph">전통적인 온프레미스 환경에서는 물리적 서버, 네트워크, 스토리지 등 각각을 직접 관리하며&nbsp;<strong>보안</strong>과&nbsp;<strong>성능 최적화</strong>를 위해 다양한 장비와 솔루션을 도입했습니다.</p>
+
+
+
+<p class="wp-block-paragraph">이후 가상머신 기술이 등장하면서, 하나의 물리 서버 위에 여러 VM을 동시 운영해 자원 효율성을 높이고 관리 부담을 경감시켰으며, 데이터 센터에서는 이러한 기술을 통해&nbsp;<strong>비용 절감</strong>과&nbsp;<strong>운영 자동화</strong>를 도모했습니다.</p>
+
+
+
+<p class="wp-block-paragraph">최근에는 클라우드 컴퓨팅과 컨테이너 기술, 그리고 쿠버네티스를 중심으로&nbsp;<strong>인프라 추상화</strong>가 더욱 진일보했습니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>클라우드 환경</strong>에서는 물리 인프라의 복잡한 관리 대신, 가상 네트워크, 관리형 로드밸런서, 자동 확장(Auto Scaling) 같은 서비스 덕분에 개발자와 운영팀이 핵심 비즈니스 애플리케이션에 집중할 수 있게 되었습니다.</li>
+
+
+
+<li><strong>쿠버네티스</strong>는 온프레미스의 서버, 네트워크, 스토리지 구성을 추상화하여 Pod, Service, PV 등으로 대신하고, 이를 통해 애플리케이션 배포와 운영의 민첩성을 극대화합니다.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">이러한 변화는 IT 인프라를 단순히 “서버와 네트워크” 이상의 개념으로 확장시키며, 가상화 기술에 대한 이해와 더불어 클라우드 및 컨테이너 생태계에 대한 이해가 필수적임을 보여줍니다.</p>
+
+
+
+<p class="wp-block-paragraph">온라인 강의나 블로그를 통해 VM과 컨테이너, 그리고 클라우드 네이티브의 세계를 이해하는 것은 IT 환경의 근본 변화와 그 활용 방법을 이해하는 데 큰 도움이 됩니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph">이와 같이 온프레미스, 가상머신 가상화, 그리고 클라우드 환경은 각기 다른 특성과 장점을 가지고 있으며, 현재 IT 인프라는 이들 기술이 단계적으로 발전 및 통합되어 서비스의 확장성과 운영 효율을 극대화하고 있습니다.</p>
+
+
+
+<p class="wp-block-paragraph"></p>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

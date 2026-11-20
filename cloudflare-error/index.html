@@ -1,0 +1,316 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/cloudflare-error/"><link rel="stylesheet" href="/archive.css"><title>[Post-Mortem] 2025년 11월 18일 Cloudflare 글로벌 장애 대응 일지: 우리는 무엇을 배웠나 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>[Post-Mortem] 2025년 11월 18일 Cloudflare 글로벌 장애 대응 일지: 우리는 무엇을 배웠나</h1><p><time>2025-11-19</time></p><div>
+<h2 class="wp-block-heading">1. 들어가며</h2>
+
+
+
+<p class="wp-block-paragraph">ㅁ2025년 11월 18일 저녁, 전 세계 수많은 인터넷 서비스를 마비시킨 Cloudflare의 글로벌 네트워크 장애가 발생했습니다. 우리 서비스 역시 예외는 아니었습니다.</p>
+
+
+
+<p class="wp-block-paragraph">이 글은 긴박했던 장애 상황에서 우리 팀이 어떻게 문제를 인지하고 대응했는지, 특히&nbsp;<strong>모바일과 PC 환경에서 나타난 상이한 증상</strong>을 어떻게 분석했는지를 기록합니다. 또한, 향후 유사한 &#8216;외부 인프라 장애(Outage)&#8217;에 대비하기 위해 수립한&nbsp;<strong>구체적인 개선 계획</strong>을 공유하여, 같은 고민을 하는 엔지니어링 팀들에게 도움이 되고자 합니다.</p>
+
+
+
+<figure class="wp-block-image"><img data-recalc-dims="1" decoding="async" src="https://i0.wp.com/blog.kakaocdn.net/dna/nvrna/dJMcagYcGrW/AAAAAAAAAAAAAAAAAAAAALyQgzCqaUwjQAiD5xP6cEuL_Aqs3T9oIAlemtEQwvMr/img.png?ssl=1" alt=""/></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">2. 장애 개요 (Incident Overview)</h2>
+
+
+
+<h3 class="wp-block-heading">원인 (Root Cause)</h3>
+
+
+
+<p class="wp-block-paragraph">Cloudflare의 사후 분석에 따르면, 이번 장애의 핵심 원인은&nbsp;<strong>Bot Management 기능</strong>에 있었습니다.</p>
+
+
+
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph">&#8220;Bot Management 구성 파일을 생성하는 로직의 버그로 인해 트래픽 처리 경로의 소프트웨어 일부가 크래시(Crash)되었으며, 이 오류가 글로벌 엣지(Edge)로 전파되었습니다.&#8221;</p>
+</blockquote>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="725" height="1024" data-attachment-id="2718" data-permalink="https://2twodragon.com/cloudflare-error/image-122/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/11/image-1.png?fit=1036%2C1464&amp;ssl=1" data-orig-size="1036,1464" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/11/image-1.png?fit=725%2C1024&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/11/image-1.png?resize=725%2C1024&#038;ssl=1" alt="" class="wp-image-2718" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/11/image-1.png?resize=725%2C1024&amp;ssl=1 725w, https://legacy.2twodragon.com/wp-content/uploads/2025/11/image-1.png?resize=212%2C300&amp;ssl=1 212w, https://legacy.2twodragon.com/wp-content/uploads/2025/11/image-1.png?resize=768%2C1085&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/11/image-1.png?resize=600%2C848&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/11/image-1.png?w=1036&amp;ssl=1 1036w" sizes="auto, (max-width: 725px) 100vw, 725px" /></figure>
+
+
+
+<figure class="wp-block-image"><img data-recalc-dims="1" decoding="async" src="https://i0.wp.com/blog.kakaocdn.net/dna/oaH05/dJMcaaKr0WA/AAAAAAAAAAAAAAAAAAAAAChKFIJEsOffo7fHR3CetLzX1T89jY78dAaD474_sbDc/img.png?ssl=1" alt=""/></figure>
+
+
+
+<h3 class="wp-block-heading">주요 증상</h3>
+
+
+
+<ul class="wp-block-list">
+<li><strong>연결 실패:</strong> 웹 서비스 접속 시 간헐적인 5xx 에러 및 타임아웃 발생.</li>
+
+
+
+<li><strong>리소스 누락:</strong> CDN을 타는 정적 리소스(이미지, CSS 등) 로딩 실패.</li>
+
+
+
+<li><strong>관리 도구 마비:</strong> Cloudflare 대시보드 및 API 접근 불가로 인한 설정 변경의 어려움.</li>
+
+
+
+<li><strong>플래핑(Flapping):</strong> 지역별 엣지 서버 상태에 따라 &#8220;됐다가 안 됐다가&#8221;를 반복하는 불안정한 양상.</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading">🔍 특이점: 모바일 Web vs PC Web의 차이</h3>
+
+
+
+<p class="wp-block-paragraph">이번 장애에서 가장 흥미로웠던 기술적 발견은&nbsp;<strong>클라이언트 환경별로 영향도가 달랐다</strong>는 점입니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>모바일 웹 (In-App Webview 등):</strong> 앱 컨테이너의 네트워크 경계와 독자적인 쿠키/스토리지 정책으로 인해 PC 웹과는 전혀 다른 오류 패턴을 보였습니다.</li>
+
+
+
+<li><strong>캐시 키(Cache Key)의 파편화:</strong> 서브도메인 및 경로(Path)별로 캐시 키 정책이 달랐던 탓에, 동일한 도메인임에도 불구하고 장바구니는 죽고 홈페이지는 살아있는 일관성 없는 패턴이 관찰되었습니다.</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">3. 대응 타임라인 (Timeline)</h2>
+
+
+
+<p class="wp-block-paragraph">긴박했던 4시간의 기록입니다. (KST 기준)</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><tbody><tr><td><strong>시각</strong></td><td><strong>단계</strong></td><td><strong>주요 내용</strong></td></tr><tr><td><strong>20:33</strong></td><td>🚨&nbsp;<strong>최초 감지</strong></td><td>외부 접속 이슈 제보 급증, Cloudflare 대시보드 접근 불가 확인</td></tr><tr><td><strong>21:00</strong></td><td>🧐&nbsp;<strong>범위 파악</strong></td><td>iOS/Android/Web 간헐적 장애 재현, Cloudflare Status 글로벌 공지 확인</td></tr><tr><td><strong>21:05</strong></td><td>📞&nbsp;<strong>라인 확보</strong></td><td>파트너사 유선 연락 및 비상 지원 채널 확보</td></tr><tr><td><strong>21:10</strong></td><td>🛠&nbsp;<strong>우회 시도</strong></td><td><strong>DNS Only 모드 전환 (Proxy 우회)</strong>&nbsp;결정 및 실행 → 일부 경로 개선 확인</td></tr><tr><td><strong>22:00</strong></td><td>📈&nbsp;<strong>점진적 복구</strong></td><td>도메인/엣지별 순차 회복 관찰 (잔여 이미지 로딩 오류 지속)</td></tr><tr><td><strong>24:28</strong></td><td>✅&nbsp;<strong>공식 종료</strong></td><td>Cloudflare &#8220;Resolved&#8221; 선언</td></tr><tr><td><strong>익일</strong></td><td>🔄&nbsp;<strong>정상화</strong></td><td>Proxy 모드 원복 및 임시 보안 설정 롤백</td></tr></tbody></table></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">4. 대응 회고 (Retrospective)</h2>
+
+
+
+<h3 class="wp-block-heading">👍 잘한 점 (Good)</h3>
+
+
+
+<ol class="wp-block-list">
+<li><strong>신속한 결단 (Speed):</strong> 장애 감지 후 <strong>40분 이내</strong>에 DNS Only 모드로 전환하여 오리진 서버로 직접 트래픽을 돌리는 결단을 내렸습니다.</li>
+
+
+
+<li><strong>즉각적인 모니터링 구축:</strong> 대시보드가 먹통인 상황에서 Datadog Synthetic 룰을 즉시 생성하여 Cloudflare Status API와 연동, 실시간 상태를 추적했습니다.</li>
+
+
+
+<li><strong>안전한 롤백:</strong> 서비스 정상화 확인 후, 보안 홀을 막기 위해 즉시 Proxy 모드로 원복했습니다.</li>
+</ol>
+
+
+
+<h3 class="wp-block-heading">👎 아쉬웠던 점 (Improvement Needed)</h3>
+
+
+
+<ol class="wp-block-list">
+<li><strong>SOP(표준 운영 절차)의 부재:</strong> DNS Only 전환은 WAF와 DDoS 방어를 포기하는 위험한 결정입니다. 이에 대한 <strong>사전 승인 프로세스</strong>가 없어 의사결정에 시간이 소요되었습니다.</li>
+
+
+
+<li><strong>가시성(Visibility) 한계:</strong> 지역별, 그리고 앞서 언급한 &#8216;모바일 vs PC&#8217; 간의 차이를 실시간으로 보여주는 대시보드가 없어 상황 판단이 경험에 의존했습니다.</li>
+
+
+
+<li><strong>커뮤니케이션 포맷:</strong> 내부 및 고객 공지의 톤앤매너, 업데이트 주기가 사전에 정의되지 않아 혼선이 있었습니다.</li>
+</ol>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">5. 향후 개선 과제 (Action Plan)</h2>
+
+
+
+<p class="wp-block-paragraph">우리는 이번 장애를 계기로 다음과 같은&nbsp;<strong>5가지 핵심 개선 과제</strong>를 도출했습니다.</p>
+
+
+
+<h3 class="wp-block-heading">① 외부 인프라 장애 대응 SOP 수립</h3>
+
+
+
+<ul class="wp-block-list">
+<li><strong>심각도 정의:</strong> Cloudflare Status(Investigating ~ Resolved)에 따른 내부 대응 레벨 매핑.</li>
+
+
+
+<li><strong>비상 연락망:</strong> 대시보드 접근 불가 시 벤더 핫라인 및 우회 경로 체크리스트화.</li>
+
+
+
+<li><strong>공지 원칙:</strong> 공급사가 &#8220;Resolved&#8221;를 띄우기 전까지는 보수적으로 &#8220;복구 중&#8221; 톤을 유지.</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading">② 우회 전략(Bypass Strategy) 사전 정의</h3>
+
+
+
+<p class="wp-block-paragraph">가장 중요한 것은&nbsp;<strong>&#8220;Cloudflare가 없을 때 우리는 어떻게 생존할 것인가?</strong>&#8220;입니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>DNS Only 전환 프로토콜:</strong>
+<ul class="wp-block-list">
+<li>누가 승인하는가? (CTO/Lead급 위임)</li>
+
+
+
+<li>감수할 리스크는 무엇인가? (Bot 차단 불가, 캐시 미스 급증)</li>
+</ul>
+</li>
+
+
+
+<li><strong>CDN 이중화 검토:</strong> AWS CloudFront나 Fastly 등을 예비(Standby)로 두거나, 트래픽을 분산하는 Multi-CDN 전략 검토.</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading">③ 캐시 및 오리진 보호 정책 표준화</h3>
+
+
+
+<ul class="wp-block-list">
+<li><strong>캐시 키 정규화:</strong> 쿼리스트링 순서 정렬, 불필요한 쿠키 제외 등을 통해 캐시 적중률(Hit Ratio)을 높이고 장애 시 변수 최소화.</li>
+
+
+
+<li><strong>레이어드 캐시(Layered Cache):</strong> Browser TTL, Edge TTL, Origin TTL을 분리하여 Edge가 죽어도 브라우저 캐시로 버틸 수 있는 시간 확보.</li>
+
+
+
+<li><strong>민감 경로 보호:</strong> 결제 등 핵심 로직은 no-store 원칙을 엄격히 적용.</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading">④ 모니터링의 다층화</h3>
+
+
+
+<ul class="wp-block-list">
+<li><strong>API 연동:</strong> Datadog에 Cloudflare Status API를 연동하여 status.indicator 변경 시 즉시 알림 발송.</li>
+
+
+
+<li><strong>Bot Score 추적:</strong> 이번 장애의 원인이었던 Bot Management의 이상 징후를 미리 알기 위해 Bot Score 급변 구간 모니터링 추가.</li>
+
+
+
+<li><strong>플랫폼별 헬스체크:</strong> 단순히 curl을 날리는 것을 넘어, 실제 <strong>모바일 User-Agent</strong>를 헤더에 포함한 헬스체크 프로브(Probe) 추가.</li>
+
+
+
+<li><a href="https://www.cloudflarestatus.com/api/v2/status.json" target="_blank" rel="noreferrer noopener">https://www.cloudflarestatus.com/api/v2/status.json</a> GET 요청으로 모니터링</li>
+</ul>
+
+
+
+<pre id="code_1763522397656" class="wp-block-preformatted">let body = JSON.parse(dd.response.body);
+let indicator = body['status']['indicator'];
+
+<em>// none or minor = PASS</em>
+dd.assert(
+  indicator === 'none' || indicator === 'minor',
+  `indicator must be none or minor, but got: ${indicator}`
+);</pre>
+
+
+
+<h3 class="wp-block-heading">⑤ 실행 체크리스트 (Playbook)</h3>
+
+
+
+<ul class="wp-block-list">
+<li>[ ] 외부 CDN/DNS 장애 대응 플레이북 문서화</li>
+
+
+
+<li>[ ] DNS Only 전환 및 롤백 시뮬레이션</li>
+
+
+
+<li>[ ] Datadog Synthetic 룰 정식 등록</li>
+
+
+
+<li>[ ] 사내/대고객 커뮤니케이션 템플릿 작성</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h2 class="wp-block-heading">6. 결론</h2>
+
+
+
+<p class="wp-block-paragraph">외부 인프라 장애는 언제든 다시 발생할 수 있습니다. 중요한 것은 장애를 막는 것이 아니라,&nbsp;<strong>장애가 발생했을 때 얼마나 빠르고 우아하게 대처하느냐</strong>입니다.</p>
+
+
+
+<p class="wp-block-paragraph">이번 Cloudflare 사태를 통해 우리는&nbsp;<strong>&#8220;CDN 의존성에 대한 대안&#8221;과 &#8220;플랫폼별 네트워크 특성의 차이&#8221;</strong>를 뼈저리게 배웠습니다. 이 기록이 안정적인 서비스를 고민하는 모든 팀에게 의미 있는 참고 자료가 되기를 바랍니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>참고 자료:</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li><a href="https://blog.cloudflare.com/18-november-2025-outage/" target="_blank" rel="noreferrer noopener">Cloudflare 공식 블로그</a></li>
+
+
+
+<li><a href="https://www.cloudflarestatus.com/" target="_blank" rel="noreferrer noopener">Cloudflare Status Dashboard</a></li>
+
+
+
+<li><a href="https://www.cloudflarestatus.com/incidents/8gmgl950y3h7" target="_blank" rel="noreferrer noopener">Cloudflare Incident Log (2025-11-18)</a></li>
+
+
+
+<li><a href="https://news.hada.io/topic?id=24466" target="_blank" rel="noreferrer noopener">GeekNews: Cloudflare 장애 토픽</a></li>
+</ul>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

@@ -1,0 +1,219 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/aws-services/"><link rel="stylesheet" href="/archive.css"><title>🌥️ AWS 핵심 서비스 알아보기: EC2, S3, IAM, EKS, LB, RDS, CloudTrail, GuardDuty, Lambda 🚀 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>🌥️ AWS 핵심 서비스 알아보기: EC2, S3, IAM, EKS, LB, RDS, CloudTrail, GuardDuty, Lambda 🚀</h1><p><time>2024-10-05</time></p><div>
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="1024" data-attachment-id="893" data-permalink="https://2twodragon.com/0d303b67-0a0e-4409-8b0f-2b3fa4eceb94-1/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2024/10/0d303b67-0a0e-4409-8b0f-2b3fa4eceb94-1.jpg?fit=1024%2C1024&amp;ssl=1" data-orig-size="1024,1024" data-comments-opened="1" data-image-meta="{&quot;created_timestamp&quot;:&quot;1728054449&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="0d303b67-0a0e-4409-8b0f-2b3fa4eceb94-1" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2024/10/0d303b67-0a0e-4409-8b0f-2b3fa4eceb94-1.jpg?fit=1024%2C1024&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2024/10/0d303b67-0a0e-4409-8b0f-2b3fa4eceb94-1.jpg?resize=1024%2C1024&#038;ssl=1" alt="" class="wp-image-893" srcset="https://legacy.2twodragon.com/wp-content/uploads/2024/10/0d303b67-0a0e-4409-8b0f-2b3fa4eceb94-1.jpg?w=1024&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2024/10/0d303b67-0a0e-4409-8b0f-2b3fa4eceb94-1.jpg?resize=300%2C300&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2024/10/0d303b67-0a0e-4409-8b0f-2b3fa4eceb94-1.jpg?resize=150%2C150&amp;ssl=1 150w, https://legacy.2twodragon.com/wp-content/uploads/2024/10/0d303b67-0a0e-4409-8b0f-2b3fa4eceb94-1.jpg?resize=768%2C768&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2024/10/0d303b67-0a0e-4409-8b0f-2b3fa4eceb94-1.jpg?resize=600%2C600&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2024/10/0d303b67-0a0e-4409-8b0f-2b3fa4eceb94-1.jpg?resize=100%2C100&amp;ssl=1 100w, https://legacy.2twodragon.com/wp-content/uploads/2024/10/0d303b67-0a0e-4409-8b0f-2b3fa4eceb94-1.jpg?resize=50%2C50&amp;ssl=1 50w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<p class="wp-block-paragraph">클라우드를 처음 접할 때 꼭 알아야 할 AWS 핵심 서비스들! 한눈에 정리해볼게요.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>1️⃣ EC2 (Elastic Compute Cloud)</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>🖥️ <strong>가상 서버 제공</strong>: 원하는 만큼 서버를 생성하고 애플리케이션을 유연하게 운영할 수 있어요.</li>
+
+
+
+<li>🔄 <strong>자동 확장</strong>: 트래픽에 따라 서버 수를 자동으로 늘리거나 줄일 수 있어, 비용 효율적!</li>
+
+
+
+<li>💡 <strong>사용 예시</strong>: 웹사이트 호스팅, 백엔드 시스템, 데이터 처리 등 다양한 용도로 사용 가능.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>2️⃣ S3 (Simple Storage Service)</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>📦 <strong>클라우드 스토리지</strong>: 파일을 안전하게 저장하고 언제 어디서든 쉽게 접근 가능!</li>
+
+
+
+<li>🔒 <strong>강력한 보안</strong>: 99.999999999% 내구성을 보장해 데이터 손실 위험 없이 사용 가능.</li>
+
+
+
+<li>💰 <strong>저렴한 비용</strong>: 필요한 만큼만 저장소를 사용하고 비용 절감까지 가능해요.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>3️⃣ IAM (Identity and Access Management)</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>🔑 <strong>접근 권한 관리</strong>: AWS 리소스에 대한 접근을 세밀하게 제어할 수 있어 보안 강화.</li>
+
+
+
+<li>💼 <strong>역할 기반 액세스</strong>: 사용자, 그룹, 역할별로 세분화된 권한 설정이 가능해요.</li>
+
+
+
+<li>🔐 <strong>보안 강화</strong>: 특정 작업만 허용할 수 있어, 민감한 데이터 보호에 적합합니다.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>4️⃣ EKS (Elastic Kubernetes Service)</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>🐳 <strong>Kubernetes 관리형 서비스</strong>: AWS에서 손쉽게 Kubernetes 클러스터를 운영할 수 있어요.</li>
+
+
+
+<li>🚀 <strong>자동 확장</strong>: 클러스터의 리소스를 자동으로 관리하고 확장성을 보장합니다.</li>
+
+
+
+<li>💡 <strong>사용 예시</strong>: 컨테이너 기반의 애플리케이션을 대규모로 배포하고 운영할 때 유리해요.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>5️⃣ LB (Load Balancer)</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>⚖️ <strong>트래픽 분산</strong>: 여러 서버에 트래픽을 분산시켜 애플리케이션의 성능을 최적화할 수 있어요.</li>
+
+
+
+<li>🌐 <strong>다양한 유형</strong>: Application, Network 등 다양한 로드 밸런서 옵션으로 맞춤형 설정 가능.</li>
+
+
+
+<li>💼 <strong>사용 예시</strong>: 트래픽이 많은 웹사이트나 애플리케이션의 가용성을 높이는 데 필수!</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>6️⃣ RDS (Relational Database Service)</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>💾 <strong>관리형 데이터베이스</strong>: MySQL, PostgreSQL, Oracle 등 관계형 데이터베이스를 쉽게 설정하고 운영할 수 있어요.</li>
+
+
+
+<li>🔄 <strong>자동 관리</strong>: 백업, 복구, 소프트웨어 패치 등을 자동으로 관리해 줍니다.</li>
+
+
+
+<li>💡 <strong>사용 예시</strong>: 온라인 쇼핑몰, 블로그 등 데이터 중심의 애플리케이션에 적합해요.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>7️⃣ CloudTrail</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>👀 <strong>사용자 활동 추적</strong>: AWS 계정에서 발생하는 모든 API 호출을 기록해 모니터링을 강화.</li>
+
+
+
+<li>📝 <strong>로그 저장</strong>: 누가 어떤 작업을 했는지 추적 가능해, 보안 및 컴플라이언스 준수에 유리.</li>
+
+
+
+<li>🔍 <strong>사용 예시</strong>: 보안 감사 및 이상 활동 탐지, 문제 해결 시 활용할 수 있어요.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>8️⃣ GuardDuty</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>🛡️ <strong>지능형 위협 탐지</strong>: AWS 계정과 인프라에서 발생하는 보안 위협을 자동으로 탐지합니다.</li>
+
+
+
+<li>🔍 <strong>지속적인 모니터링</strong>: 네트워크 및 계정 활동을 모니터링하여 비정상적인 행동을 실시간으로 감지.</li>
+
+
+
+<li>💡 <strong>사용 예시</strong>: 잠재적인 공격 시도나 데이터 유출을 빠르게 탐지해 대응할 수 있어요.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>9️⃣ Lambda</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li>⚡ <strong>서버리스 컴퓨팅</strong>: 서버를 관리할 필요 없이 코드를 실행할 수 있어요.</li>
+
+
+
+<li>⏳ <strong>이벤트 기반</strong>: 특정 이벤트가 발생할 때만 실행되므로 비용 절감에 탁월합니다.</li>
+
+
+
+<li>💡 <strong>사용 예시</strong>: 파일 업로드 시 자동으로 이미지 리사이징, 실시간 데이터 처리 등 자동화 작업에 적합.</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>💡 요약:</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>EC2</strong>: 확장 가능한 가상 서버.</li>
+
+
+
+<li><strong>S3</strong>: 안전하고 저렴한 클라우드 스토리지.</li>
+
+
+
+<li><strong>IAM</strong>: 세밀한 접근 권한 관리.</li>
+
+
+
+<li><strong>EKS</strong>: Kubernetes 관리형 서비스.</li>
+
+
+
+<li><strong>LB</strong>: 트래픽을 분산시켜 서버 부담 줄이기.</li>
+
+
+
+<li><strong>RDS</strong>: 자동 관리형 데이터베이스.</li>
+
+
+
+<li><strong>CloudTrail</strong>: 모든 활동을 기록해 보안 관리 강화.</li>
+
+
+
+<li><strong>GuardDuty</strong>: AWS 인프라의 실시간 위협 탐지.</li>
+
+
+
+<li><strong>Lambda</strong>: 서버리스 컴퓨팅으로 이벤트 기반 자동화.</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">AWS의 다양한 서비스를 통해 더 나은 클라우드 경험을 시작해보세요! 여러분의 선택은?👇</p>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

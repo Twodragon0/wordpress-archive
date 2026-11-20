@@ -1,0 +1,265 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/mcp-security/"><link rel="stylesheet" href="/archive.css"><title>MCP(Model Context Protocol) 보안 리스크와 대응 방안 총정리 🛡️ | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>MCP(Model Context Protocol) 보안 리스크와 대응 방안 총정리 🛡️</h1><p><time>2025-04-09</time></p><div>
+<p class="wp-block-paragraph">AI 기술의 확산과 함께&nbsp;<strong>MCP(Model Context Protocol)</strong>&nbsp;사용도 급격히 늘고 있습니다. MCP는 AI 시스템이 외부 도구, 소프트웨어, 데이터 소스 등과 연동할 수 있게 해주는 강력한 프로토콜이지만, 이로 인해 새로운 보안 이슈도 함께 떠오르고 있습니다.</p>
+
+
+
+<p class="wp-block-paragraph">이번 글에서는&nbsp;<strong>MCP 사용 시 발생 가능한 보안 리스크</strong>와 이를 해결하기 위한 실질적인 대응 방안을 정리했습니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>🔍 MCP란?</strong></p>
+
+
+
+<p class="wp-block-paragraph"><strong>MCP(Model Context Protocol)</strong>는 AI가 외부 애플리케이션 및 도구들과&nbsp;<strong>안전하게 상호작용</strong>할 수 있도록 설계된 표준 프로토콜입니다. 주로 아래와 같은 기능을 지원합니다:</p>
+
+
+
+<ul class="wp-block-list">
+<li>OAuth 기반 인증 및 외부 서비스 연동</li>
+
+
+
+<li>다양한 플러그인 확장 기능</li>
+
+
+
+<li>AI와의 문맥 유지(세션 기반)</li>
+
+
+
+<li>외부 데이터 호출 및 명령 수행</li>
+</ul>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="432" data-attachment-id="2426" data-permalink="https://2twodragon.com/mcp-security/image-98/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-4.png?fit=1390%2C586&amp;ssl=1" data-orig-size="1390,586" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-4.png?fit=1024%2C432&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-4.png?resize=1024%2C432&#038;ssl=1" alt="" class="wp-image-2426" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-4.png?resize=1024%2C432&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-4.png?resize=300%2C126&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-4.png?resize=768%2C324&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-4.png?resize=600%2C253&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-4.png?w=1390&amp;ssl=1 1390w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>🚨 MCP 사용 시 보안 위협 요소</strong></p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th><strong>보안 위협 요소</strong></th><th><strong>설명</strong></th><th><strong>위험도</strong></th></tr></thead><tbody><tr><td><strong>OAuth 인증 미흡</strong></td><td>토큰 유출 시 인증 우회 및 세션 탈취 가능</td><td>매우 높음</td></tr><tr><td><strong>프롬프트 인젝션</strong></td><td>악성 명령이 포함된 입력으로 시스템 오작동 유도</td><td>매우 높음</td></tr><tr><td><strong>플러그인 취약점</strong></td><td>외부 확장 기능을 통한 악성 코드 유입 가능</td><td>높음</td></tr><tr><td><strong>민감 데이터 유출</strong></td><td>다양한 앱·도구와 연동되면서 데이터 노출 가능성 증가</td><td>매우 높음</td></tr><tr><td><strong>문맥 지속성 문제</strong></td><td>대화 내역에 민감 정보가 계속 남아 있을 수 있음</td><td>높음</td></tr><tr><td><strong>세션 하이재킹</strong></td><td>세션 토큰 재사용을 통한 권한 탈취</td><td>높음</td></tr><tr><td><strong>원격 호출 및 API 악용</strong></td><td>MCP를 통해 비인가 서버로 정보 유출 가능</td><td>중간~높음</td></tr><tr><td><strong>코드 유출 및 변조</strong></td><td>소스코드 관리 툴과 연동된 경우, MCP 경유 유출 가능</td><td>높음</td></tr><tr><td><strong>엔드포인트 보안</strong></td><td>사용자의 기기 보안이 약할 경우 MCP 경유 침해 가능</td><td>높음</td></tr></tbody></table></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>🧩 실제 예시: 민감 정보와 MCP</strong></p>
+
+
+
+<p class="wp-block-paragraph">MCP는 외부 앱(iTerm, VSCode, Notion 등)과 연결되어 동작하기 때문에&nbsp;<strong>IAM Role, Access Key, API Key, Secrets Manager 등의 민감정보</strong>가 모델 문맥에 포함될 수 있습니다.</p>
+
+
+
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph">예: 사용자가 AWS CLI를 열어 Key를 확인한 뒤, 같은 세션에서 AI를 호출하면 해당 정보가 노출될 수 있음</p>
+</blockquote>
+
+
+
+<p class="wp-block-paragraph">이를 방지하려면:</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>사용자 주의 교육</strong></li>
+
+
+
+<li><strong>문맥 정보 자동 정제 시스템</strong></li>
+
+
+
+<li><strong>민감 정보 DLP(Data Loss Prevention) 연동</strong></li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">이 필요합니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>✅ 보안 대응 방안 정리</strong></p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="503" data-attachment-id="2423" data-permalink="https://2twodragon.com/mcp-security/image-95/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-1.png?fit=1402%2C688&amp;ssl=1" data-orig-size="1402,688" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-1.png?fit=1024%2C503&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-1.png?resize=1024%2C503&#038;ssl=1" alt="" class="wp-image-2423" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-1.png?resize=1024%2C503&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-1.png?resize=300%2C147&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-1.png?resize=768%2C377&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-1.png?resize=600%2C294&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/04/image-1.png?w=1402&amp;ssl=1 1402w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th><strong>보안 영역</strong></th><th><strong>대응 방안</strong></th></tr></thead><tbody><tr><td><strong>인증 및 접근 제어</strong></td><td>OAuth 프로토콜 강화, 주기적 토큰 갱신, RBAC 적용</td></tr><tr><td><strong>프롬프트 검증</strong></td><td>명령어 실행 제한, 입력 정규화, 프롬프트 필터링 시스템 구축</td></tr><tr><td><strong>플러그인 관리</strong></td><td>화이트리스트 운영, 보안 검증 필수화, 사용자 확인 절차 삽입</td></tr><tr><td><strong>데이터 보호</strong></td><td>저장/전송 암호화 (TLS 1.2+), 민감 데이터 분리 암호화, DLP 연동</td></tr><tr><td><strong>세션 보안</strong></td><td>세션 재사용 탐지, 세션 토큰 만료 설정, AI 문맥 메타데이터 암호화</td></tr><tr><td><strong>코드 보안</strong></td><td>저장소 접근 제한, 자동 코드 스캐너 도입, Git 연동 정책 강화</td></tr><tr><td><strong>엔드포인트 보안</strong></td><td>기기 보안 업데이트, 위협 탐지 및 방지 솔루션 도입, 비인가 앱 차단</td></tr><tr><td><strong>사용자 인식 개선</strong></td><td>보안 교육, 정책 고지, 피드백 수렴 및 개선 주기화</td></tr></tbody></table></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>📚 인사이트 참고 ① — QueryPie 화이트페이퍼 요약</strong></p>
+
+
+
+<p class="wp-block-paragraph">📄&nbsp;<a href="https://www.querypie.com/ko/resources/discover/white-paper/15/redefining-pam-for-the-mcp-era"><em>“MCP 시대를 위한 특권 접근 제어(PAM)의 재정의”</em></a></p>
+
+
+
+<p class="wp-block-paragraph"><strong>주요 메시지:</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>기존 PAM 체계는 AI를 고려하지 않음</strong>&nbsp;→ LLM의 문맥 내 정보 호출은 새로운 형태의 접근 위협</li>
+
+
+
+<li>“Prompt-to-Privileged Action” 문제: AI가 사람을 대신해 민감한 명령을 실행할 수 있는 구조</li>
+
+
+
+<li>접근 정책은 ID 중심에서&nbsp;<strong>행동 기반 권한 모델</strong>로 진화해야 함 (예: “이 사용자가 이 행동을 해도 되는가?”)</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">✅&nbsp;<strong>추천 전략</strong>:</p>
+
+
+
+<ul class="wp-block-list">
+<li>정책 중심의 접근 제어(PDP)와 감사 로깅 강화</li>
+
+
+
+<li><strong>Session-level PAM</strong>&nbsp;도입 필요 (프롬프트 단위 감시)</li>
+
+
+
+<li>Prompt Layer에서의&nbsp;<strong>DLP 정책</strong>&nbsp;및 리스크 감지 시스템 연동</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>📚 인사이트 참고 ② — 기술 블로그 요약</strong></p>
+
+
+
+<p class="wp-block-paragraph">📄&nbsp;<a href="https://channy.creation.net/blog/1937"><em>“AI와 API 보안, 어떻게 대비할까” – by Channy Yun (AWS)</em></a></p>
+
+
+
+<p class="wp-block-paragraph"><strong>핵심 요점:</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>AI 시스템은 자동으로 API 호출 권한을 부여받는 경우가 많아 취약점이 치명적</strong></li>
+
+
+
+<li>사용자가 의도치 않게&nbsp;<strong>AI를 통해 백엔드 시스템을 제어</strong>하게 될 수도 있음</li>
+
+
+
+<li><strong>“AI도 사용자처럼 최소 권한 원칙 적용”</strong>&nbsp;필수</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">✅&nbsp;<strong>추천 전략</strong>:</p>
+
+
+
+<ul class="wp-block-list">
+<li>IAM, API Gateway, Scope 제어 등&nbsp;<strong>프로그래머블 보안 레이어 구축</strong></li>
+
+
+
+<li>API 호출 권한은 반드시 분리된 Role로 구성하고,&nbsp;<strong>세션 만료시간 단축</strong></li>
+
+
+
+<li>로깅/모니터링을 통해 비정상 호출 탐지 체계 강화</li>
+</ul>
+
+
+
+<p class="wp-block-paragraph"><strong>🧠 마무리</strong></p>
+
+
+
+<p class="wp-block-paragraph">MCP는 AI의 능력을 극대화하는 혁신적인 기술이지만,&nbsp;<strong>그만큼 보안 리스크도 분명히 존재</strong>합니다. 특히 다양한 앱, 저장소, 사용자 기기와 연결되는 만큼,&nbsp;<strong>보안은 기술 도입 초기부터 함께 설계되어야</strong>&nbsp;합니다.</p>
+
+
+
+<blockquote class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow">
+<p class="wp-block-paragraph">“AI가 똑똑해질수록, 우리가 더 철저해져야 한다.”</p>
+</blockquote>
+
+
+
+<p class="wp-block-paragraph">MCP를 안전하게 사용하기 위해선 다음의 3가지를 기억하세요:</p>
+
+
+
+<ol class="wp-block-list">
+<li><strong>프롬프트 단위 보안 통제</strong></li>
+
+
+
+<li><strong>AI 권한은 인간보다 더 좁게 설계</strong></li>
+
+
+
+<li><strong>사용자뿐만 아니라 ‘세션’도 감시 대상</strong></li>
+</ol>
+
+
+
+<p class="wp-block-paragraph">이 글이 여러분의 조직이나 팀이 MCP를 안전하게 도입하는 데 도움이 되기를 바랍니다. </p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>📌 참고 자료</strong></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;<a href="https://openai.com/security-and-privacy/">OpenAI Security &amp; Privacy</a></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;<a href="https://github.com/OWASP/www-project-top-10-for-large-language-model-applications">OWASP LLM 보안 가이드라인</a></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;<a href="https://stytch.com/blog/model-context-protocol-introduction">Stytch: MCP 소개 블로그</a></p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

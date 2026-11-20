@@ -1,0 +1,325 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/cloudflare-cloudfront-s3/"><link rel="stylesheet" href="/archive.css"><title>Cloudflare, CloudFront, S3의 통합 CORS 구성 및 보안 최적화 가이드 🔐 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>Cloudflare, CloudFront, S3의 통합 CORS 구성 및 보안 최적화 가이드 🔐</h1><p><time>2025-03-28</time></p><div>
+<p class="wp-block-paragraph"><strong>CloudFront, Cloudflare, S3의 개념과 CORS의 필요성 및 보안적 위협요인에 대한 이해를 통합적으로 정리한 문서</strong>입니다.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="440" data-attachment-id="2378" data-permalink="https://2twodragon.com/cloudflare-cloudfront-s3/image-91/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-45.png?fit=1600%2C688&amp;ssl=1" data-orig-size="1600,688" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-45.png?fit=1024%2C440&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-45.png?resize=1024%2C440&#038;ssl=1" alt="" class="wp-image-2378" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-45.png?resize=1024%2C440&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-45.png?resize=300%2C129&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-45.png?resize=768%2C330&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-45.png?resize=1536%2C660&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-45.png?resize=600%2C258&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-45.png?w=1600&amp;ssl=1 1600w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>🔰 개념 및 보안 이슈 요약</strong></p>
+
+
+
+<p class="wp-block-paragraph"><strong>✅ Amazon S3란?</strong></p>
+
+
+
+<p class="wp-block-paragraph"><strong>Amazon S3(Simple Storage Service)</strong>는 AWS에서 제공하는 객체 스토리지 서비스입니다. 주로 정적 웹사이트 호스팅이나 파일(이미지, 영상 등) 저장 용도로 많이 사용됩니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>✅ CloudFront란?</strong></p>
+
+
+
+<p class="wp-block-paragraph"><strong>CloudFront</strong>는 AWS가 제공하는 글로벌 CDN(콘텐츠 전송 네트워크) 서비스로, 웹 콘텐츠를 사용자에게 빠르고 효율적으로 전달합니다. S3 같은 원본(origin)의 콘텐츠를 캐싱하고 글로벌 엣지 로케이션에서 빠르게 제공합니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>✅ Cloudflare란?</strong></p>
+
+
+
+<p class="wp-block-paragraph"><strong>Cloudflare</strong>는 CDN과 DNS, 웹 방화벽(WAF), DDoS 보호를 통합 제공하는 서비스입니다. 웹사이트의 성능 향상과 보안을 강화하기 위해 CloudFront와 함께 구성하여 사용하기도 합니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>✅ CORS란? (Cross-Origin Resource Sharing)</strong></p>
+
+
+
+<p class="wp-block-paragraph">CORS는 서로 다른 도메인 간의 자원 요청(리소스 요청)을 브라우저가 허용하도록 규정하는 보안 메커니즘입니다.</p>
+
+
+
+<p class="wp-block-paragraph">브라우저 보안 정책인&nbsp;<strong>동일 출처 정책(Same-Origin Policy)</strong>&nbsp;은 원칙적으로 서로 다른 도메인 간의 자원 접근을 제한합니다. 하지만 API, 이미지, 동영상과 같은 리소스를 외부 도메인에서 접근하려면 CORS 설정을 통해 접근을 명시적으로 허용해야 합니다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>🔹 CORS가 필요한 이유</strong></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;API 요청이나 정적 콘텐츠를 서로 다른 도메인에서 안전하게 호출할 수 있도록 허용하기 위함입니다.</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;CORS를 설정하지 않으면 브라우저가 외부 도메인의 리소스를 차단하여 서비스 이용이 어려워집니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>🚨 CORS 설정 시 위협 요인 및 보안의 중요성</strong></p>
+
+
+
+<p class="wp-block-paragraph">CORS를 잘못 설정하면 아래와 같은 보안 위협이 발생할 수 있습니다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>⚠️ 주요 위협 요인:</strong></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;<strong>무분별한 허용(*) 설정 시 민감한 리소스 노출 위험</strong></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;공격자가 악성 웹사이트를 통해 사용자의 브라우저에서 민감한 데이터에 접근하거나 변조 가능</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;잘못된 헤더 설정으로 불필요한 리소스 접근 허용, 데이터 탈취 가능성 존재</p>
+
+
+
+<p class="wp-block-paragraph"><strong>🔒 보안이 중요한 이유:</strong></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;CORS는 외부 도메인 접근 허용 여부를 결정하는 중요한 보안 정책입니다.</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;특히 금융정보, 개인정보와 같이 민감한 데이터가 포함된 API 및 콘텐츠 제공 시, 엄격하고 명시적인 CORS 정책이 필수적입니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph">아래는&nbsp;<strong>위의 개념과 중요성을 기반으로 Cloudflare + CloudFront + Amazon S3를 이용한 CORS의 안전한 구성 및 보안 최적화 방법</strong>을 단계별로 통합한 내용입니다.</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>📌 권장 구성 구조</strong></p>
+
+
+
+<pre class="wp-block-code"><code>&#91;Client] 
+  ↓ HTTPS
+&#91;Cloudflare (DNS/WAF)]
+  ↓ HTTPS (Full-Strict SSL)
+&#91;CloudFront (CDN, Response Headers)]
+  ↓ HTTPS (Origin Access Control)
+&#91;Amazon S3 (Origin)]</code></pre>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>📍 권장 헤더 설정 값 (시간 환산)</strong></p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th><strong>헤더</strong></th><th><strong>설정값</strong></th><th><strong>분(minute)</strong></th><th><strong>시간(hour)</strong></th><th><strong>일(day)</strong></th></tr></thead><tbody><tr><td>Access-Control-Max-Age</td><td><strong>600초</strong></td><td>10분</td><td>0.1667시간</td><td>약 0.00694일</td></tr><tr><td>Strict-Transport-Security</td><td><strong>31536000초</strong></td><td>525600분</td><td>8760시간</td><td>365일 (1년)</td></tr></tbody></table></figure>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;Access-Control-Max-Age&nbsp;→&nbsp;<strong>10분</strong>&nbsp;(최적의 성능과 보안 균형)</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;Strict-Transport-Security&nbsp;→&nbsp;<strong>1년</strong>&nbsp;(보안 최적 권장값)</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>📍 Amazon S3의 엄격한 CORS 구성 예시</strong></p>
+
+
+
+<p class="wp-block-paragraph">AWS 콘솔 → S3 → 버킷 선택 → 권한 → CORS 구성:</p>
+
+
+
+<pre class="wp-block-code"><code>&#91;
+  {
+    "AllowedHeaders": &#91;"Authorization", "Content-Type", "X-Requested-With"],
+    "AllowedMethods": &#91;"GET", "HEAD", "OPTIONS"],
+    "AllowedOrigins": &#91;"https://mydomain.com"],
+    "ExposeHeaders": &#91;"ETag"],
+    "MaxAgeSeconds": 600
+  }
+]</code></pre>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;반드시 명시된 특정 도메인만 허용 (절대&nbsp;*&nbsp;사용 금지)</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;최소한의 헤더와 메서드만 허용</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>📍 CloudFront의 Response Headers Policy 설정</strong></p>
+
+
+
+<p class="wp-block-paragraph">AWS CloudFront → Policies → Response Headers Policy:</p>
+
+
+
+<p class="wp-block-paragraph"><strong>🔸 CORS 권장 설정</strong></p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th><strong>항목</strong></th><th><strong>값</strong></th></tr></thead><tbody><tr><td>Access-Control-Allow-Origin</td><td>https://mydomain.com</td></tr><tr><td>Access-Control-Allow-Methods</td><td>GET, HEAD, OPTIONS</td></tr><tr><td>Access-Control-Allow-Headers</td><td>Authorization, Content-Type</td></tr><tr><td>Access-Control-Max-Age</td><td>600</td></tr><tr><td>Access-Control-Expose-Headers</td><td>ETag</td></tr></tbody></table></figure>
+
+
+
+<p class="wp-block-paragraph"><strong>🔸 Security Headers 설정 (권장)</strong></p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th><strong>항목</strong></th><th><strong>값</strong></th></tr></thead><tbody><tr><td>Strict-Transport-Security</td><td>max-age=31536000; includeSubDomains; preload</td></tr><tr><td>X-Content-Type-Options</td><td>nosniff</td></tr><tr><td>X-Frame-Options</td><td>DENY&nbsp;또는&nbsp;SAMEORIGIN</td></tr><tr><td>X-XSS-Protection</td><td>1; mode=block</td></tr></tbody></table></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>📍 Cloudflare를 통한 CloudFront 앞단 보호 (DNS/WAF 구성)</strong></p>
+
+
+
+<p class="wp-block-paragraph"><strong>🔸 DNS만 사용하는 경우 (Private DNS)</strong></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;간단히 DNS만 Cloudflare로 관리, CDN 역할은 CloudFront가 전담</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th><strong>타입</strong></th><th><strong>이름</strong></th><th><strong>대상</strong></th><th><strong>프록시 상태</strong></th></tr></thead><tbody><tr><td>CNAME</td><td>cdn.mydomain.com</td><td>d111111abcdef.cloudfront.net</td><td>DNS only (회색 구름)</td></tr></tbody></table></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>🔸 DNS + WAF 적용한 고급 보안 구성 (권장)</strong></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;Proxy 활성화하여 Cloudflare의 WAF로 보호 (DDoS, Bot 관리 등)</p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th><strong>타입</strong></th><th><strong>이름</strong></th><th><strong>대상</strong></th><th><strong>프록시 상태</strong></th></tr></thead><tbody><tr><td>CNAME</td><td>cdn.mydomain.com</td><td>d111111abcdef.cloudfront.net</td><td>Proxy 활성화 (주황색)</td></tr></tbody></table></figure>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;SSL/TLS Encryption 모드:&nbsp;<strong>Full (Strict)</strong>&nbsp;설정 필수 (CloudFront ACM 인증서 필요)</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;Cloudflare IP만 CloudFront 접근 허용 설정</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>🚨 CloudFront + Cloudflare 구성 시 주의사항 및 권장 설정</strong></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;Cloudflare의 Proxy 활성화 시 일부 CloudFront 고유 헤더는 제거될 수 있음</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;Cloudflare로 인해 Client IP는&nbsp;CF-Connecting-IP&nbsp;헤더를 통해 확인 필요</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;AWS CloudFront의 접근을 Cloudflare IP 대역으로 제한하여 보안 향상</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>📌 월간 예상 비용 예시 (트래픽 1TB 기준)</strong></p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th><strong>서비스</strong></th><th><strong>항목</strong></th><th><strong>비용</strong></th><th><strong>비고</strong></th></tr></thead><tbody><tr><td>Amazon S3</td><td>스토리지</td><td>$0.025/GB</td><td>월 1TB 사용시 약&nbsp;<strong>$25.60</strong></td></tr><tr><td>CloudFront</td><td>트래픽</td><td>$0.114/GB <br>(서울 기준)</td><td>월 1TB 사용시 약&nbsp;<strong>$116.74</strong></td></tr><tr><td>Cloudflare</td><td>DNS/WAF</td><td>$25 (Pro Plan 기준)</td><td>무제한 트래픽 포함</td></tr></tbody></table></figure>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;<strong>월 총 예상 비용</strong>: 약&nbsp;<strong>$167.34</strong></p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>🎯 최종 권장 구성 요약 및 결론</strong></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;Cloudflare + CloudFront + S3를 결합한 구성은 성능과 보안을 균형있게 최적화합니다.</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;명시적이고 엄격한 CORS 정책으로 데이터 보안 위협을 방지합니다.</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;Cloudflare WAF를 통해 외부 공격으로부터 강력한 보호를 제공합니다.</p>
+
+
+
+<p class="wp-block-paragraph">이 구성을 통해 높은 보안성과 안정성을 갖춘 웹 인프라를 구축할 수 있습니다.</p>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

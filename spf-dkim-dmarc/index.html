@@ -1,0 +1,443 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/spf-dkim-dmarc/"><link rel="stylesheet" href="/archive.css"><title>이메일 발송 신뢰도 높이기: SendGrid SPF, DKIM, DMARC 설정 완벽 가이드 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>이메일 발송 신뢰도 높이기: SendGrid SPF, DKIM, DMARC 설정 완벽 가이드</h1><p><time>2025-06-24</time></p><div>
+<p class="wp-block-paragraph">이메일은 비즈니스 커뮤니케이션의 핵심 도구이지만, 스팸 메일함으로 직행하거나 아예 차단되는 경우만큼 답답한 일도 없습니다. 고객에게 중요한 정보가 담긴 메일이 제대로 전달되지 않는다면 비즈니스에 큰 타격을 줄 수 있습니다. 이러한 문제를 해결하고 이메일 발송 신뢰도를 높이는 열쇠는 바로&nbsp;<strong>SPF, DKIM, DMARC</strong>와 같은 이메일 인증 기술에 있습니다.</p>
+
+
+
+<p class="wp-block-paragraph">이번 글에서는 이메일 발송 서비스로 널리 사용되는&nbsp;<strong>SendGrid, Google</strong>을&nbsp;기준으로, 마치 전문가처럼 SPF, DKIM, DMARC를 설정하여 이메일 전달률을 극대화하는 방법을 단계별로 알아보겠습니다.</p>
+
+
+
+<h3 class="wp-block-heading"><strong>🎯 0단계: 이메일 보안 설정, 왜 필요하고 무엇을 준비해야 할까요?</strong></h3>
+
+
+
+<p class="wp-block-paragraph">스팸 메일과 피싱 공격이 날로 정교해지면서, 주요 이메일 서비스 제공업체(Gmail, Outlook 등)는 수신되는 메일이 진짜 발신자로부터 온 것인지 더욱 엄격하게 검증합니다. SPF, DKIM, DMARC는 이러한 검증 과정에서 내 도메인의 정당성을 증명하는 역할을 합니다.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>SPF (Sender Policy Framework):</strong>&nbsp;내 도메인 이름으로 이메일을 보낼 수 있도록 허용한 메일 서버 목록을 DNS에 공개합니다.</li>
+
+
+
+<li><strong>DKIM (DomainKeys Identified Mail):</strong>&nbsp;이메일에 디지털 서명을 추가하여 메일 내용이 중간에 위조되지 않았음을 증명합니다.</li>
+
+
+
+<li><strong>DMARC (Domain-based Message Authentication, Reporting, and Conformance):</strong>&nbsp;SPF와 DKIM 검증 결과를 바탕으로 메일 처리 정책(예: 차단, 격리)을 수신 측에 알리고, 인증 실패 시 보고서를 받아볼 수 있게 합니다.</li>
+</ul>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="576" data-attachment-id="2593" data-permalink="https://2twodragon.com/img_8087-1/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8087-1.jpg?fit=1280%2C720&amp;ssl=1" data-orig-size="1280,720" data-comments-opened="1" data-image-meta="{&quot;orientation&quot;:&quot;1&quot;}" data-image-title="img_8087-1" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8087-1.jpg?fit=1024%2C576&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8087-1.jpg?resize=1024%2C576&#038;ssl=1" class="wp-image-2593" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8087-1.jpg?resize=1024%2C576&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8087-1.jpg?resize=300%2C169&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8087-1.jpg?resize=768%2C432&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8087-1.jpg?resize=600%2C338&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8087-1.jpg?w=1280&amp;ssl=1 1280w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<p class="wp-block-paragraph"><strong>준비물:</strong></p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>사용할 도메인:</strong>&nbsp;예)&nbsp;example.com</li>
+
+
+
+<li><strong>발신자 이메일 주소:</strong>&nbsp;예)&nbsp;noreply@example.com</li>
+
+
+
+<li><strong>DNS 관리 권한:</strong>&nbsp;도메인을 구입한 곳(예: GoDaddy, 가비아) 또는 DNS 호스팅 서비스(예: Cloudflare, AWS Route 53)의 설정 페이지 접근 권한이 필요합니다.</li>
+
+
+
+<li><strong>SendGrid 계정</strong></li>
+</ul>
+
+
+
+<p class="wp-block-paragraph">이제 본격적으로 설정을 시작해 봅시다!</p>
+
+
+
+<h3 class="wp-block-heading"><strong>✅ 1단계: SendGrid 발신자 인증 (Single Sender Verification)</strong></h3>
+
+
+
+<p class="wp-block-paragraph">가장 먼저 SendGrid에서 내가 사용할 발신자 이메일 주소를 인증해야 합니다.</p>
+
+
+
+<ol class="wp-block-list">
+<li>SendGrid 대시보드에 로그인합니다.</li>
+
+
+
+<li><strong>Settings &gt; Sender Authentication</strong>으로 이동합니다.</li>
+
+
+
+<li><strong>Single Sender Verification</strong>&nbsp;섹션에서 &#8220;Create New Sender&#8221; 또는 유사한 버튼을 클릭합니다.</li>
+
+
+
+<li>양식에 발신자 이름, 이메일 주소(noreply@example.com), 회신 주소 등을 입력하고 저장합니다.</li>
+
+
+
+<li>입력한 발신자 이메일 주소로 인증 메일이 발송됩니다. 해당 메일을 확인하고 인증 링크를 클릭하여 완료합니다.</li>
+</ol>
+
+
+
+<p class="wp-block-paragraph">이제&nbsp;noreply@example.com&nbsp;주소로 테스트 메일을 보낼 수 있게 되었습니다. 하지만 이는 가장 기본적인 인증이며, 실제 대량 발송 및 높은 신뢰도를 위해서는&nbsp;<strong>도메인 전체를 인증</strong>하는 것이 강력히 권장됩니다.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="1024" data-attachment-id="2594" data-permalink="https://2twodragon.com/img_8088-1/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8088-1.png?fit=1744%2C1746&amp;ssl=1" data-orig-size="1744,1746" data-comments-opened="1" data-image-title="img_8088-1" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8088-1.png?fit=1024%2C1024&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8088-1.png?resize=1024%2C1024&#038;ssl=1" class="wp-image-2594" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8088-1.png?resize=1024%2C1024&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8088-1.png?resize=300%2C300&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8088-1.png?resize=150%2C150&amp;ssl=1 150w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8088-1.png?resize=768%2C769&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8088-1.png?resize=1534%2C1536&amp;ssl=1 1534w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8088-1.png?resize=600%2C601&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8088-1.png?resize=100%2C100&amp;ssl=1 100w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8088-1.png?resize=50%2C50&amp;ssl=1 50w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8088-1.png?w=1744&amp;ssl=1 1744w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<h3 class="wp-block-heading"><strong>✅ 2단계: SendGrid 도메인 인증 (SPF &amp; DKIM 설정)</strong></h3>
+
+
+
+<p class="wp-block-paragraph">도메인 인증은 SendGrid가 내 도메인을 대신하여 이메일을 보낼 수 있도록 공식적으로 허용하는 과정입니다. 이 과정을 통해 SPF와 DKIM 레코드가 자동으로 설정(또는 설정 정보가 제공)됩니다.</p>
+
+
+
+<ol class="wp-block-list">
+<li>SendGrid 대시보드의&nbsp;<strong>Settings &gt; Sender Authentication</strong>으로 이동합니다.</li>
+
+
+
+<li><strong>Domain Authentication</strong>&nbsp;섹션에서 &#8220;Authenticate Your Domain&#8221; 또는 &#8220;Get Started&#8221;를 클릭합니다.</li>
+
+
+
+<li><strong>DNS Host 선택:</strong>&nbsp;DNS 레코드를 관리하는 서비스를 선택합니다 (예: Cloudflare, GoDaddy, Amazon Route 53 등). 목록에 없다면 &#8220;Other Host (Not Listed)&#8221;를 선택합니다.</li>
+
+
+
+<li><strong>Use branded links? (브랜드 링크 사용 여부):</strong>&nbsp;<strong>Yes</strong>를 선택하는 것이 좋습니다. 이를 통해 이메일 내의 모든 링크(오픈 추적, 클릭 추적 등)가 SendGrid 도메인이 아닌 내 도메인으로 표시되어 신뢰도를 더욱 높일 수 있습니다.</li>
+
+
+
+<li><strong>Domain (도메인):</strong>&nbsp;인증할 도메인(예:&nbsp;example.com)을 입력합니다.</li>
+
+
+
+<li><strong>Advanced Settings (고급 설정 &#8211; 선택 사항):</strong>&nbsp;자동 보안(Automated Security)을 선택하는 것이 일반적입니다. 커스텀 DKIM 선택자 등을 사용할 수 있습니다.</li>
+
+
+
+<li>&#8220;Next&#8221;를 클릭하면 SendGrid가 DNS에 추가해야 할 여러 개의 CNAME 레코드 (또는 경우에 따라 TXT 레코드 포함) 정보를 보여줍니다. 일반적으로 다음과 같은 레코드들이 생성됩니다:
+<ul class="wp-block-list">
+<li><strong>DKIM 레코드 (2개):</strong>
+<ul class="wp-block-list">
+<li>Type:&nbsp;CNAME</li>
+
+
+
+<li>Name/Host:&nbsp;s1._domainkey.example.com&nbsp;(실제 값은 다름)</li>
+
+
+
+<li>Value/Points to:&nbsp;s1.domainkey.uXXXXX.wlXXX.sendgrid.net&nbsp;(실제 값은 다름)</li>
+
+
+
+<li>Name/Host:&nbsp;s2._domainkey.example.com&nbsp;(실제 값은 다름)</li>
+
+
+
+<li>Value/Points to:&nbsp;s2.domainkey.uXXXXX.wlXXX.sendgrid.net&nbsp;(실제 값은 다름)</li>
+</ul>
+</li>
+
+
+
+<li><strong>SPF 레코드 (및 브랜드 링크용 MAIL FROM 도메인 레코드):</strong>
+<ul class="wp-block-list">
+<li>SendGrid는 주로 CNAME 레코드를 사용하여 MAIL FROM 도메인을 설정하고, 이를 통해 SPF 정렬을 맞춥니다. 예를 들어,&nbsp;em123.example.com과 같은 레코드가 생성될 수 있습니다.</li>
+
+
+
+<li>만약 TXT 레코드로 직접 SPF를 설정해야 하는 경우, SendGrid의 SPF는&nbsp;include:sendgrid.net입니다. 기존 SPF 레코드가 있다면 여기에 추가합니다. (예:&nbsp;v=spf1 include:sendgrid.net ~all)</li>
+</ul>
+</li>
+
+
+
+<li><strong>브랜드 링크용 CNAME 레코드 (선택 시):</strong>
+<ul class="wp-block-list">
+<li>Type:&nbsp;CNAME</li>
+
+
+
+<li>Name/Host:&nbsp;urlXXX.example.com&nbsp;(실제 값은 다름)</li>
+
+
+
+<li>Value/Points to:&nbsp;sendgrid.net&nbsp;(또는 유사한 값)</li>
+</ul>
+</li>
+</ul>
+</li>
+
+
+
+<li><strong>DNS 레코드 추가:</strong>&nbsp;위에서 받은 레코드 정보를 복사하여 내 도메인의 DNS 관리 페이지에 정확히 추가합니다. (각 DNS 호스팅 업체마다 UI는 다를 수 있습니다.)
+<ul class="wp-block-list">
+<li><strong>주의:</strong>&nbsp;DNS 변경 사항이 전 세계로 전파되는 데에는 몇 분에서 최대 48시간까지 소요될 수 있습니다.</li>
+</ul>
+</li>
+
+
+
+<li>DNS 레코드 추가가 완료되면 SendGrid 화면으로 돌아와 하단의&nbsp;<strong>&#8220;Verify&#8221;</strong>&nbsp;버튼을 클릭합니다.
+<ul class="wp-block-list">
+<li>모든 레코드가 정상적으로 확인되면 &#8220;It worked!&#8221; 메시지와 함께 도메인 상태가 &#8220;Verified&#8221;로 변경됩니다.</li>
+</ul>
+</li>
+</ol>
+
+
+
+<p class="wp-block-paragraph">🎉 이제&nbsp;example.com&nbsp;도메인은 SendGrid를 통해 SPF와 DKIM 인증을 받아 메일을 발송할 준비가 되었습니다!</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="267" data-attachment-id="2595" data-permalink="https://2twodragon.com/img_8089-1/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8089-1.png?fit=2000%2C522&amp;ssl=1" data-orig-size="2000,522" data-comments-opened="1" data-image-title="img_8089-1" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8089-1.png?fit=1024%2C267&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8089-1.png?resize=1024%2C267&#038;ssl=1" class="wp-image-2595" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8089-1.png?resize=1024%2C267&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8089-1.png?resize=300%2C78&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8089-1.png?resize=768%2C200&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8089-1.png?resize=1536%2C401&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8089-1.png?resize=600%2C157&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/06/img_8089-1.png?w=2000&amp;ssl=1 2000w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<h3 class="wp-block-heading"><strong>✅ 3단계: DMARC 레코드 설정 (DNS에 추가)</strong></h3>
+
+
+
+<p class="wp-block-paragraph">DMARC는 SPF와 DKIM을 보완하여 이메일 보안을 한층 강화합니다. DMARC 정책을 설정하면, 내 도메인에서 발송된 것처럼 위장한 이메일이 수신자에게 어떻게 처리되어야 하는지(예: 아무것도 안 함, 격리, 거부)를 지정할 수 있고, 관련 활동에 대한 보고서를 받을 수 있습니다.</p>
+
+
+
+<ol class="wp-block-list">
+<li>DNS 관리 페이지에 접속하여 새 TXT 레코드를 추가합니다.</li>
+
+
+
+<li><strong>레코드 정보:</strong>
+<ul class="wp-block-list">
+<li><strong>Type (유형):</strong>&nbsp;TXT</li>
+
+
+
+<li><strong>Name/Host (이름/호스트):</strong>&nbsp;_dmarc.example.com&nbsp;(반드시&nbsp;_dmarc로 시작해야 합니다)</li>
+
+
+
+<li><strong>Value/Content (값/내용):</strong>
+<ul class="wp-block-list">
+<li><strong>초기 권장 값 (모니터링 모드):</strong>v=DMARC1; p=none; rua=mailto:dmarc-reports@example.com;
+<ul class="wp-block-list">
+<li>v=DMARC1: DMARC 버전입니다.</li>
+
+
+
+<li>p=none: 정책을 &#8216;없음&#8217;으로 설정합니다. 즉, DMARC 검증에 실패해도 특별한 조치를 취하지 않고 모니터링만 합니다. 처음에는&nbsp;none으로 시작하여 정상 메일이 차단되지 않도록 하는 것이 안전합니다.</li>
+
+
+
+<li>rua=mailto:dmarc-reports@example.com: DMARC 집계 보고서를 받을 이메일 주소를 지정합니다.&nbsp;dmarc-reports@example.com은 예시이며, 실제 수신 가능한 주소로 변경해야 합니다.</li>
+</ul>
+</li>
+
+
+
+<li><strong>점진적 강화:</strong>
+<ul class="wp-block-list">
+<li>모니터링 후 문제가 없다고 판단되면&nbsp;p=quarantine&nbsp;(격리, 스팸함으로 이동)으로 변경합니다.</li>
+
+
+
+<li>최종적으로&nbsp;p=reject&nbsp;(거부, 메일 반송)로 강화하여 스푸핑 메일을 적극적으로 차단할 수 있습니다.</li>
+</ul>
+</li>
+
+
+
+<li><strong>기타 유용한 태그:</strong>
+<ul class="wp-block-list">
+<li>ruf=mailto:forensic-reports@example.com: 포렌식(실패) 보고서를 받을 이메일 주소입니다. (더 상세하지만 용량이 클 수 있습니다.)</li>
+
+
+
+<li>pct=100: DMARC 정책을 적용할 메일의 비율입니다. (기본값 100)</li>
+
+
+
+<li>adkim=r&nbsp;(relaxed) 또는&nbsp;s&nbsp;(strict): DKIM 정렬 모드입니다.</li>
+
+
+
+<li>aspf=r&nbsp;(relaxed) 또는&nbsp;s&nbsp;(strict): SPF 정렬 모드입니다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+
+
+
+<li>레코드를 저장합니다. DNS 전파 시간을 기다립니다.</li>
+</ol>
+
+
+
+<p class="wp-block-paragraph"><strong>중요:</strong>&nbsp;DMARC 정책을&nbsp;reject로 바로 설정하면 정상적인 메일 발송에 문제가 생길 수 있으므로, 반드시&nbsp;p=none으로 시작하여 충분한 기간 동안 리포트를 분석한 후 점진적으로 강화해야 합니다.</p>
+
+
+
+<figure class="wp-block-image size-large"><img decoding="async" src="file:///private/var/mobile/Containers/Data/Application/29513B48-55F8-43B8-BA32-13775C34C0E2/tmp/org.automattic.MediaImageServiceSymlinks/thumbnail-c678733d-c67c-491e-9fc4-e16352cd3ff3-1028x830.jpeg" class="wp-image--1396687110"/></figure>
+
+
+
+<h3 class="wp-block-heading"><strong>✅ 4단계: 테스트 이메일 구성 및 발송</strong></h3>
+
+
+
+<p class="wp-block-paragraph">이제 모든 설정이 완료되었으니, 실제 이메일을 발송하여 잘 작동하는지 테스트해 봅시다.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>1. SendGrid 템플릿 사용 (선택 사항):&nbsp;</strong>SendGrid의&nbsp;<strong>Email API &gt; Dynamic Templates</strong>에서 테스트용 템플릿을 만들 수 있습니다.</p>
+
+
+
+<pre id="code_1749103011650" class="wp-block-preformatted">&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Example.com 발신 전용 테스트 메일&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body style="font-family: Arial, sans-serif; background-color: #ffffff; padding: 24px; color: #333333;"&gt;
+    &lt;h2 style="color: #000000;"&gt;📬 Example.com 테스트 메일&lt;/h2&gt;
+    &lt;p style="font-size: 14px; line-height: 1.6;"&gt;
+      안녕하세요,&lt;br&gt;&lt;br&gt;
+      이 메일은 &lt;strong&gt;발신 전용&lt;/strong&gt; 이메일 주소 &lt;code&gt;noreply@example.com&lt;/code&gt;에서 발송된 테스트 메일입니다.&lt;br&gt;
+      메일 수신 테스트를 위한 용도로 발송되었으며, 별도의 응답은 처리되지 않습니다.&lt;br&gt;&lt;br&gt;
+      감사합니다.&lt;br&gt;
+      &lt;em&gt;Example.com 팀 드림&lt;/em&gt;
+    &lt;/p&gt;
+    &lt;hr style="margin: 24px 0; border: none; border-top: 1px solid #dddddd;" /&gt;
+    &lt;div data-role="module-unsubscribe" class="module" role="module" data-type="unsubscribe" style="color:#444444; font-size:12px; line-height:20px; padding:16px; text-align:center;" data-muid="4e838cf3-9892-4a6d-94d6-170e474d21e5"&gt;
+      &lt;p style="font-size:12px; line-height:20px;"&gt;
+        &lt;a class="Unsubscribe--unsubscribeLink" href="{{{unsubscribe}}}" target="_blank" style="text-decoration:none;"&gt;
+          수신 거부
+        &lt;/a&gt;
+        &amp;nbsp;|&amp;nbsp;
+        &lt;a href="{{{unsubscribe_preferences}}}" target="_blank" class="Unsubscribe--unsubscribePreferences" style="text-decoration:none;"&gt;
+          수신 설정 관리
+        &lt;/a&gt;
+      &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+
+
+<p class="wp-block-paragraph"><strong>2. API를 사용하여 테스트 발송:&nbsp;</strong>curl&nbsp;명령어 또는 Postman과 같은 API 테스트 도구를 사용하여 발송할 수 있습니다. (YOUR_SENDGRID_API_KEY는 실제 API 키로 대체해야 합니다.)</p>
+
+
+
+<pre id="code_1749103028279" class="wp-block-preformatted">curl --request POST \
+  --url https://api.sendgrid.com/v3/mail/send \
+  --header "Authorization: Bearer YOUR_SENDGRID_API_KEY" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "personalizations": [
+      {
+        "to": [
+          {
+            "email": "test-recipient@gmail.com"
+          }
+        ],
+        "subject": "Example.com 발신 전용 테스트 메일"
+      }
+    ],
+    "from": {
+      "email": "noreply@example.com",
+      "name": "Example.com"
+    },
+    "content": [
+      {
+        "type": "text/html",
+        "value": "&lt;html&gt;&lt;body&gt;&lt;h2&gt;📬 Example.com 테스트 메일&lt;/h2&gt;&lt;p&gt;이 메일은 발신 전용 주소에서 발송된 테스트 메일입니다. SPF, DKIM, DMARC 설정을 확인해주세요.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+      }
+    ]
+  }'</pre>
+
+
+
+<h3 class="wp-block-heading"><strong>✅ 5단계: Gmail 수신 테스트 &amp; 인증 헤더 확인</strong></h3>
+
+
+
+<p class="wp-block-paragraph">테스트 메일을 Gmail과 같은 주요 이메일 서비스로 발송하여 수신 상태 및 인증 결과를 확인합니다.</p>
+
+
+
+<ol class="wp-block-list">
+<li>Gmail에서 테스트 메일을 수신합니다.</li>
+
+
+
+<li>메일 오른쪽 상단의 점 세 개(더보기) 메뉴를 클릭한 후&nbsp;<strong>&#8220;원본 보기 (Show original)&#8221;</strong>를 선택합니다.</li>
+
+
+
+<li>새 창에 메일의 전체 헤더 정보가 표시됩니다. 여기서 다음 항목들을 확인합니다:<ul><li><strong>SPF:</strong>&nbsp;Authentication-Results&nbsp;헤더 또는 유사한 부분에서&nbsp;spf=pass인지 확인합니다. 발신 서버 IP가 SPF 레코드에 명시된 서버와 일치해야 합니다.</li><li><strong>DKIM:</strong>&nbsp;Authentication-Results&nbsp;헤더에서&nbsp;dkim=pass이고, 서명 도메인(d=example.com)이 올바른지 확인합니다.</li><li><strong>DMARC:</strong>&nbsp;Authentication-Results&nbsp;헤더에서&nbsp;dmarc=pass&nbsp;(또는&nbsp;p=none일 경우&nbsp;dmarc=none으로 표시될 수 있음)인지 확인합니다.</li></ul><strong>예시 (Gmail 원본 보기 중):</strong>위와 같이 SPF, DKIM, DMARC가 모두&nbsp;pass로 표시된다면 성공적으로 설정된 것입니다! 하나라도&nbsp;fail이 있다면 이전 단계를 다시 점검해야 합니다.</li>
+</ol>
+
+
+
+<pre id="code_1749103092935" class="wp-block-preformatted">Authentication-Results: mx.google.com;
+       dkim=pass header.i=@example.com header.s=s1 header.b=XXXXXX;
+       spf=pass (google.com: domain of noreply@example.com designates XX.XX.XX.XX as permitted sender) smtp.mailfrom=noreply@example.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=example.com</pre>
+
+
+
+<h3 class="wp-block-heading"><strong>🚀 정리: 성공적인 이메일 발송을 위한 여정</strong></h3>
+
+
+
+<p class="wp-block-paragraph">지금까지 SendGrid를 사용하여 이메일 발송 신뢰도를 높이기 위한 SPF, DKIM, DMARC 설정 방법을 알아보았습니다. 전체 흐름을 다시 한번 정리하면 다음과 같습니다.</p>
+
+
+
+<ol class="wp-block-list">
+<li><strong>[사전 준비]</strong>&nbsp;필요한 정보 확인 및 DNS 관리 권한 확보</li>
+
+
+
+<li><strong>[SendGrid 발신자 인증]</strong>&nbsp;Single Sender Verification (기본)</li>
+
+
+
+<li><strong>[SendGrid 도메인 인증]</strong>&nbsp;SPF 및 DKIM 레코드 DNS에 추가 (필수)</li>
+
+
+
+<li><strong>[DMARC 설정]</strong>&nbsp;DNS에 DMARC (TXT) 레코드 추가 (권장)</li>
+
+
+
+<li><strong>[테스트 발송]</strong>&nbsp;SendGrid 템플릿 또는 API로 테스트 메일 발송</li>
+
+
+
+<li><strong>[수신 확인 및 검증]</strong>&nbsp;Gmail 등에서 메일 헤더의 SPF, DKIM, DMARC 결과 확인</li>
+</ol>
+
+
+
+<p class="wp-block-paragraph">이메일 보안 설정은 한 번으로 끝나는 것이 아니라, DMARC 리포트를 주기적으로 모니터링하고 필요에 따라 정책을 조정해나가는 지속적인 과정입니다. 처음에는 다소 복잡해 보일 수 있지만, 이 가이드를 차근차근 따라 하시면 분명 이메일 전달률 향상이라는 값진 결과를 얻으실 수 있을 것입니다. 여러분의 이메일이 스팸 걱정 없이 안전하게 전달되기를 응원합니다!</p>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

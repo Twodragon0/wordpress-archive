@@ -1,0 +1,119 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/aws-datadog-imdsv2/"><link rel="stylesheet" href="/archive.css"><title>Key Takeaways &amp; Insights from AWS re:Inforce 2025 🚀 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>Key Takeaways &amp; Insights from AWS re:Inforce 2025 🚀</h1><p><time>2025-10-02</time></p><div>
+<p class="wp-block-paragraph">Cloud security is evolving beyond mere defense into an era of&nbsp;<strong>prediction and automation</strong>. Here are the four biggest lessons from the gathering of 5,800 security professionals.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="569" data-attachment-id="2663" data-permalink="https://2twodragon.com/aws-datadog-imdsv2/image-118/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/10/image.png?fit=1964%2C1092&amp;ssl=1" data-orig-size="1964,1092" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/10/image.png?fit=1024%2C569&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/10/image.png?resize=1024%2C569&#038;ssl=1" alt="" class="wp-image-2663" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/10/image.png?resize=1024%2C569&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/10/image.png?resize=300%2C167&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/10/image.png?resize=768%2C427&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/10/image.png?resize=1536%2C854&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/10/image.png?resize=600%2C334&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/10/image.png?w=1964&amp;ssl=1 1964w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<h4 class="wp-block-heading"><strong>1️⃣ The Most Urgent Threat: Internet-facing ALB + IMDSv1</strong></h4>
+
+
+
+<p class="wp-block-paragraph">This combination was highlighted as a critical &#8220;time bomb.&#8221; An externally exposed Application Load Balancer (ALB) paired with the legacy Instance Metadata Service v1 (IMDSv1) is highly vulnerable to SSRF attacks, which can lead to IAM credential theft.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Immediate Action:</strong> Enforce the use of <strong>IMDSv2 on all EC2 instances</strong> now. (This is also applied when upgrading from Amazon Linux 2 to AL2023).</li>
+
+
+
+<li><strong>Long-term Goal:</strong> Transition your ALBs to &#8216;internal&#8217; and enhance your architecture by placing CloudFront + WAF at the edge.</li>
+</ul>
+
+
+
+<h4 class="wp-block-heading"><strong>2️⃣ Cost-Effective Hybrid Security: AWS Native + Datadog + Open Source</strong></h4>
+
+
+
+<p class="wp-block-paragraph">The era of relying on a single vendor for all security solutions is over. The optimal strategy combines the best tools for efficiency and cost-effectiveness.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Foundation (AWS):</strong> Build a strong base with Security Hub, GuardDuty, and AWS Config.</li>
+
+
+
+<li><strong>Core Enhancement (Datadog):</strong> Selectively implement Datadog Cloud SIEM and CSM Threats for areas requiring real-time threat detection and advanced log analysis.</li>
+
+
+
+<li><strong>Fill the Gaps (Open Source):</strong> Use open-source tools like Prowler for regular compliance checks.</li>
+
+
+
+<li><strong>Expected Benefit:</strong> This hybrid approach can lead to <strong>up to 70% in cost savings</strong> compared to using a full-suite single-vendor solution.</li>
+</ul>
+
+
+
+<h4 class="wp-block-heading"><strong>3️⃣ The Central Hub for All Security Data: AWS Security Hub</strong></h4>
+
+
+
+<p class="wp-block-paragraph">AWS Security Hub has emerged as a game-changer for consolidating disparate security data.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Central Hub:</strong> It aggregates findings not only from native tools like GuardDuty and Inspector but also from third-party solutions like Datadog and Prowler.</li>
+
+
+
+<li><strong>Workflow Automation:</strong> Automatically create tickets based on severity, integrate with Datadog SIEM for deep-dive analysis, and trigger automated response playbooks.</li>
+</ul>
+
+
+
+<h4 class="wp-block-heading"><strong>4️⃣ Practical Security in the AI Era (feat. Danggeun Market case study)</strong></h4>
+
+
+
+<p class="wp-block-paragraph">Balancing AI adoption with robust security is crucial. Danggeun Market presented a practical 3-tier framework.</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Network Level:</strong> Use DLP (Data Loss Prevention) patterns to prevent sensitive data leaks.</li>
+
+
+
+<li><strong>Application Level:</strong> Enforce prompt logging and activate options to opt-out of data training.</li>
+
+
+
+<li><strong>Device Level:</strong> Use MDM (Mobile Device Management) to block access from non-compliant devices.</li>
+
+
+
+<li><strong>Security Automation:</strong> Leverage Amazon Bedrock for initial event analysis and SageMaker to differentiate between true/false positives, significantly reducing the security team&#8217;s workload.</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<h3 class="wp-block-heading"><strong>🎯 Conclusion</strong></h3>
+
+
+
+<p class="wp-block-paragraph">Cloud security maturity begins with mastering the fundamentals. Simple configurations, like enforcing IMDSv2, can thwart a vast number of potential threats.</p>
+
+
+
+<p class="wp-block-paragraph">By combining the power of AWS native services, the deep analytical capabilities of Datadog, and the flexibility of open-source tools like Prowler, you can build a security posture that is both highly effective and cost-efficient.</p>
+
+
+
+<p class="wp-block-paragraph"><strong>What are your organization&#8217;s top cloud security priorities?</strong></p>
+
+
+
+<p class="wp-block-paragraph"><a href="https://twodragon.tistory.com/693">https://twodragon.tistory.com/693</a></p>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

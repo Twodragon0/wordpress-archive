@@ -1,0 +1,260 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/aws-vpn-eks/"><link rel="stylesheet" href="/archive.css"><title>AWS Site-to-Site VPN 기반의 EKS 클러스터 접근을 위한 최종 아키텍처 구성도 🚩 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>AWS Site-to-Site VPN 기반의 EKS 클러스터 접근을 위한 최종 아키텍처 구성도 🚩</h1><p><time>2025-03-31</time></p><div>
+<p class="wp-block-paragraph">아래는&nbsp;<strong>사내 Wi-Fi 사용자가 AWS 클라우드의 EKS 내부 서비스(ClusterIP)에 안전하게 접근</strong>할 수 있도록 구축하는 상세한 통합 가이드입니다.</p>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://docs.aws.amazon.com/ko_kr/whitepapers/latest/aws-vpc-connectivity-options/aws-transit-gateway-vpn.html"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="574" data-attachment-id="2388" data-permalink="https://2twodragon.com/aws-vpn-eks/image-93/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-47.png?fit=2040%2C1144&amp;ssl=1" data-orig-size="2040,1144" data-comments-opened="1" data-image-title="image" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-47.png?fit=1024%2C574&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-47.png?resize=1024%2C574&#038;ssl=1" alt="" class="wp-image-2388" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-47.png?resize=1024%2C574&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-47.png?resize=300%2C168&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-47.png?resize=768%2C431&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-47.png?resize=1536%2C861&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-47.png?resize=600%2C336&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/image-47.png?w=2040&amp;ssl=1 2040w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></a></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>📌 1. 최종 아키텍처 구성도 (상세)</strong></p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="497" data-attachment-id="2402" data-permalink="https://2twodragon.com/aws-vpn-eks/aws_eks_vpn_architecture_static_routing_ikev2-2/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/aws_eks_vpn_architecture_static_routing_ikev2-1.png?fit=2333%2C1132&amp;ssl=1" data-orig-size="2333,1132" data-comments-opened="1" data-image-title="aws_eks_vpn_architecture_(static_routing,_ikev2)" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/03/aws_eks_vpn_architecture_static_routing_ikev2-1.png?fit=1024%2C497&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/03/aws_eks_vpn_architecture_static_routing_ikev2-1.png?resize=1024%2C497&#038;ssl=1" alt="" class="wp-image-2402" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/03/aws_eks_vpn_architecture_static_routing_ikev2-1.png?resize=1024%2C497&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/aws_eks_vpn_architecture_static_routing_ikev2-1.png?resize=300%2C146&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/aws_eks_vpn_architecture_static_routing_ikev2-1.png?resize=768%2C373&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/aws_eks_vpn_architecture_static_routing_ikev2-1.png?resize=1536%2C745&amp;ssl=1 1536w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/aws_eks_vpn_architecture_static_routing_ikev2-1.png?resize=2048%2C994&amp;ssl=1 2048w, https://legacy.2twodragon.com/wp-content/uploads/2025/03/aws_eks_vpn_architecture_static_routing_ikev2-1.png?resize=600%2C291&amp;ssl=1 600w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>📌 2. 구성 요소 상세 설명</strong></p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th><strong>서비스/구성요소</strong></th><th><strong>설명 및 역할</strong></th></tr></thead><tbody><tr><td><strong>사내 Wi-Fi 사용자</strong></td><td>AWS 내 프라이빗 EKS 서비스에 접근을 요청하는 사용자</td></tr><tr><td><strong>사내 DNS 서버</strong></td><td>AWS Private DNS(eks.internal) 요청을 받아 Resolver로 전달하는 역할</td></tr><tr><td><strong>Palo Alto Firewall</strong></td><td>온프레미스 보안 담당, AWS와의 VPN 터널(Static,IKEv2) 연결 및 관리</td></tr><tr><td><strong>AWS Site-to-Site VPN</strong></td><td>Palo Alto Firewall과 AWS 간의 보안 터널 (Static Routing, IKEv2)</td></tr><tr><td><strong>AWS Transit Gateway (TGW)</strong></td><td>VPN과 VPC(Resolver,EKS)를 연결하여 네트워크를 중앙에서 관리</td></tr><tr><td><strong>Route53 Resolver</strong></td><td>온프레미스의 DNS 요청을 AWS 내부 DNS로 전달 및 응답처리</td></tr><tr><td><strong>Route53 Private Hosted Zone</strong></td><td>AWS 내부 서비스 도메인(eks.internal)을 관리하는 프라이빗 DNS 영역</td></tr><tr><td><strong>EKS 클러스터 (ClusterIP 서비스)</strong></td><td>Kubernetes 기반 컨테이너 워크로드 관리, 프라이빗 IP를 가진 내부 서비스</td></tr></tbody></table></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>📌 3. 단계별 상세 구축 방법</strong></p>
+
+
+
+<p class="wp-block-paragraph"><strong>✅ ① AWS Site-to-Site VPN (Static Routing, IKEv2)</strong></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;AWS VPN 생성 시&nbsp;<strong>Static Routing</strong>&nbsp;및&nbsp;<strong>IKEv2</strong>&nbsp;선택 필수</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;Palo Alto Firewall에 다음과 같이 정적 경로 추가 예시:</p>
+
+
+
+<pre class="wp-block-code"><code>set network virtual-router default routing-table ip static-route AWS_VPC destination 192.168.0.0/16 interface tunnel.x</code></pre>
+
+
+
+<p class="wp-block-paragraph"><strong>✅ ② AWS Transit Gateway (TGW)</strong></p>
+
+
+
+<p class="wp-block-paragraph"><strong>🔹 Attachments 설정 (예시)</strong></p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th><strong>리소스</strong></th><th><strong>CIDR</strong></th><th><strong>Attachment ID 예시</strong></th></tr></thead><tbody><tr><td>VPN Attachment</td><td>10.100.0.0/16</td><td>tgw-attach-0123456789abcdef0</td></tr><tr><td>EKS VPC Attachment</td><td>192.168.0.0/16</td><td>tgw-attach-abcdef01234567890</td></tr><tr><td>Resolver VPC Attachment</td><td>192.168.100.0/24</td><td>tgw-attach-fedcba9876543210</td></tr></tbody></table></figure>
+
+
+
+<p class="wp-block-paragraph"><strong>🔹 TGW Route Table 수동 구성 예시</strong></p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th><strong>Destination CIDR</strong></th><th><strong>Target Attachment</strong></th></tr></thead><tbody><tr><td>10.100.0.0/16&nbsp;(온프레미스)</td><td>VPN Attachment (tgw-attach-0123456789abcdef0)</td></tr><tr><td>192.168.0.0/16&nbsp;(EKS VPC)</td><td>EKS VPC Attachment (tgw-attach-abcdef01234567890)</td></tr><tr><td>192.168.100.0/24&nbsp;(Resolver VPC)</td><td>Resolver Attachment (tgw-attach-fedcba9876543210)</td></tr></tbody></table></figure>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;Association: EKS VPC, Resolver VPC 필수</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;Propagation: 사용하지 않음 (Static Routing이므로)</p>
+
+
+
+<p class="wp-block-paragraph"><strong>✅ ③ EKS VPC Route Table 구성</strong></p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th><strong>Destination CIDR (사내 CIDR)</strong></th><th><strong>Target (TGW)</strong></th></tr></thead><tbody><tr><td>10.100.0.0/16</td><td>Transit Gateway (tgw-xxxx)</td></tr></tbody></table></figure>
+
+
+
+<p class="wp-block-paragraph"><strong>✅ ④ Route53 Resolver 설정 (필수)</strong></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;<strong>Inbound Endpoint</strong>&nbsp;구성:</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;서브넷 최소 2개 IP (예:&nbsp;10.0.10.10,&nbsp;10.0.11.10)</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;Security Group에서 DNS(UDP/TCP 53) 허용 (사내 CIDR)</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;<strong>Resolver 서브넷 Route Table 필수</strong>:</p>
+
+
+
+<pre class="wp-block-code"><code>Destination: 10.100.0.0/16 (사내 CIDR)
+Target: Transit Gateway (tgw-xxxx)</code></pre>
+
+
+
+<p class="wp-block-paragraph"><strong>✅ ⑤ 사내 DNS 서버 Forwarding 구성</strong></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;사내 DNS 서버에서 조건부 전달자로 AWS Resolver IP 설정 (BIND 예시):</p>
+
+
+
+<pre class="wp-block-code"><code>zone "eks.internal" {
+    type forward;
+    forwarders { 10.0.10.10; 10.0.11.10; };
+};</code></pre>
+
+
+
+<p class="wp-block-paragraph"><strong>✅ ⑥ Route53 Private Hosted Zone</strong></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;프라이빗 도메인 생성 및 EKS ClusterIP 서비스 연결:</p>
+
+
+
+<pre class="wp-block-code"><code>myservice.eks.internal → &#91;ClusterIP 주소]</code></pre>
+
+
+
+<p class="wp-block-paragraph"><strong>✅ ⑦ EKS 노드 Security Group 설정</strong></p>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th><strong>Type</strong></th><th><strong>Protocol</strong></th><th><strong>Port(s)</strong></th><th><strong>Source</strong></th><th><strong>설명</strong></th></tr></thead><tbody><tr><td>Custom TCP</td><td>TCP</td><td>80,443 등</td><td>10.100.0.0/16</td><td>온프레미스 접근 허용</td></tr><tr><td>Custom UDP</td><td>UDP</td><td>53(옵션)</td><td>10.100.0.0/16</td><td>DNS 질의 허용(옵션)</td></tr><tr><td>All traffic</td><td>All</td><td>All</td><td>Node SG 자체</td><td>노드 간 내부 통신 허용</td></tr><tr><td>HTTPS</td><td>TCP</td><td>443</td><td>Control Plane SG</td><td>EKS API 통신 필수 허용</td></tr></tbody></table></figure>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>🚨 최종 체크리스트</strong></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;[✅] AWS VPN Static 라우팅 (IKEv2)</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;[✅] TGW Attachments 및 Routes 설정</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;[✅] EKS VPC Route Table 설정</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;[✅] Route53 Resolver Endpoint 구성</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;[✅] Resolver VPC Route Table 설정</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;[✅] 사내 DNS Forwarding 설정</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;[✅] Route53 Private Hosted Zone 설정</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;[✅] EKS ClusterIP 서비스 DNS 설정</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;[✅] EKS 노드 Security Group 구성</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;[✅] Palo Alto Firewall Static Routing 추가</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>🧪 최종 연결 테스트 방법</strong></p>
+
+
+
+<pre class="wp-block-code"><code># DNS 테스트
+dig myservice.eks.internal
+
+# 통신 테스트
+ping &#91;EKS_Service_IP]
+telnet &#91;EKS_Service_IP] &#91;Port]</code></pre>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>🎯 구성의 핵심 이점 요약</strong></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;VPN 및 프라이빗 DNS 기반으로 외부 노출 최소화</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;TGW 중앙 관리로 네트워크 운영 간소화</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;내부 DNS(eks.internal)를 통해 편리한 서비스 접근</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;Kubernetes 서비스 안전한 내부 IP 사용 (ClusterIP)</p>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>🚨 왜 다른 CIDR 간 통신이 가능한가?</strong></p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;TGW는 서로 다른 CIDR을 가진 네트워크를 연결하고, 라우팅 테이블을 이용해 패킷을 정확한 목적지로 전달합니다.</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;VPN 터널은 중간 네트워크(169.254.x.x)를 이용하여 양측의 네트워크를 연결하며, 라우팅 테이블의 정보로 정확히 패킷을 전달합니다.</p>
+
+
+
+<p class="wp-block-paragraph">•&nbsp;서로의 라우팅 테이블만 정확히 설정되면,&nbsp;<strong>다른 CIDR의 네트워크 간에도 문제없이 통신 가능</strong>합니다.</p>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

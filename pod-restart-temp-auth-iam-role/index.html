@@ -1,0 +1,223 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/pod-restart-temp-auth-iam-role/"><link rel="stylesheet" href="/archive.css"><title>파드 재시작 시의 임시 자격 증명과 토큰 갱신 | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>파드 재시작 시의 임시 자격 증명과 토큰 갱신</h1><p><time>2024-09-01</time></p><div>
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="1024" data-attachment-id="391" data-permalink="https://2twodragon.com/aaf6d40b-0ac6-4e25-8b4f-1378ca683368-2-1/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2024/09/aaf6d40b-0ac6-4e25-8b4f-1378ca683368-2-1.jpg?fit=1024%2C1024&amp;ssl=1" data-orig-size="1024,1024" data-comments-opened="1" data-image-meta="{&quot;created_timestamp&quot;:&quot;1725190214&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="aaf6d40b-0ac6-4e25-8b4f-1378ca683368-2-1" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2024/09/aaf6d40b-0ac6-4e25-8b4f-1378ca683368-2-1.jpg?fit=1024%2C1024&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2024/09/aaf6d40b-0ac6-4e25-8b4f-1378ca683368-2-1.jpg?resize=1024%2C1024&#038;ssl=1" alt="" class="wp-image-391" srcset="https://legacy.2twodragon.com/wp-content/uploads/2024/09/aaf6d40b-0ac6-4e25-8b4f-1378ca683368-2-1.jpg?w=1024&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2024/09/aaf6d40b-0ac6-4e25-8b4f-1378ca683368-2-1.jpg?resize=300%2C300&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2024/09/aaf6d40b-0ac6-4e25-8b4f-1378ca683368-2-1.jpg?resize=100%2C100&amp;ssl=1 100w, https://legacy.2twodragon.com/wp-content/uploads/2024/09/aaf6d40b-0ac6-4e25-8b4f-1378ca683368-2-1.jpg?resize=600%2C600&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2024/09/aaf6d40b-0ac6-4e25-8b4f-1378ca683368-2-1.jpg?resize=150%2C150&amp;ssl=1 150w, https://legacy.2twodragon.com/wp-content/uploads/2024/09/aaf6d40b-0ac6-4e25-8b4f-1378ca683368-2-1.jpg?resize=768%2C768&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2024/09/aaf6d40b-0ac6-4e25-8b4f-1378ca683368-2-1.jpg?resize=50%2C50&amp;ssl=1 50w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<p class="wp-block-paragraph">앞서 설명한 내용에서는 IRSA를 통해 파드가 AWS 리소스에 접근할 수 있는 임시 자격 증명을 어떻게 획득하고, 토큰이 만료되기 전에 어떻게 로테이션되는지를 설명했습니다. 이제, 파드가 재시작될 때 발생할 수 있는 상황과 이와 관련된 토큰 갱신 과정을 살펴보겠습니다.</p>
+
+
+
+<h4 class="wp-block-heading">파드 재시작 시의 상황</h4>
+
+
+
+<p class="wp-block-paragraph">Kubernetes 환경에서 파드는 다양한 이유로 재시작될 수 있습니다. 예를 들어, 애플리케이션 업데이트, 장애 복구, 노드의 스케일링 또는 수동 재배포 등이 원인이 될 수 있습니다. 파드가 재시작되면 기존의 임시 자격 증명은 더 이상 유효하지 않으며, 새로운 자격 증명이 필요합니다.</p>
+
+
+
+<h4 class="wp-block-heading">파드 재시작 시 임시 자격 증명 획득 과정</h4>
+
+
+
+<ol class="wp-block-list">
+<li><strong>새로운 파드 생성:</strong> 파드가 재시작되면 Kubernetes는 새로운 파드를 생성합니다. 이 과정에서 파드에 할당된 서비스 어카운트와 연결된 IAM 역할이 확인됩니다.</li>
+
+
+
+<li><strong>임시 자격 증명 요청:</strong> 새로 생성된 파드는 kubelet을 통해 AWS IAM 역할과 연계된 새로운 임시 자격 증명을 요청합니다. 이 자격 증명은 새롭게 부여되며, 이전에 사용된 자격 증명은 더 이상 사용할 수 없습니다.</li>
+
+
+
+<li><strong>자격 증명의 주입:</strong> 새로운 임시 자격 증명은 파드 내의 특정 경로에 주입됩니다. 파드는 이 자격 증명을 사용하여 AWS 리소스에 접근할 수 있게 됩니다.</li>
+</ol>
+
+
+
+<h4 class="wp-block-heading">파드 재시작과 토큰 갱신의 중요성</h4>
+
+
+
+<p class="wp-block-paragraph">파드가 재시작되면 새롭게 발급된 임시 자격 증명을 통해 AWS 리소스에 접근할 수 있기 때문에, 파드의 재시작은 자격 증명의 안전성을 보장하는 데 중요한 역할을 합니다. 즉, 임시 자격 증명이 유효하지 않거나 손상된 경우, 파드를 재시작함으로써 새로운 자격 증명을 확보할 수 있습니다.</p>
+
+
+
+<h4 class="wp-block-heading">실무에서의 고려사항</h4>
+
+
+
+<p class="wp-block-paragraph">파드가 재시작될 때마다 새로운 임시 자격 증명을 얻어야 한다는 점은 클라우드 인프라의 안정성과 보안을 높이는 데 기여하지만, 동시에 다음과 같은 사항들을 고려해야 합니다:</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>파드 초기화 시간:</strong> 파드가 재시작되면서 새로운 자격 증명을 얻는 과정에서 약간의 지연이 발생할 수 있습니다. 이는 특히 높은 가용성을 요구하는 서비스에서 중요한 요소입니다.</li>
+
+
+
+<li><strong>애플리케이션의 유연성:</strong> 애플리케이션이 새로운 자격 증명을 즉시 인식하고 사용할 수 있도록 구현되어야 합니다. 이는 재시작 시 자격 증명 로딩이 정상적으로 이루어지도록 설계되어야 합니다.</li>
+
+
+
+<li><strong>토큰 만료 처리:</strong> 파드가 만료된 토큰을 사용하는 상황을 방지하기 위해, 애플리케이션은 주기적으로 토큰을 로드하고 이를 캐싱할 수 있는 메커니즘을 가져야 합니다.</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading">파드 재시작 시 임시 자격 증명 갱신 알고리즘</h3>
+
+
+
+<p class="wp-block-paragraph">아래는 파드 재시작 시 임시 자격 증명 갱신 과정을 표현한 알고리즘 다이어그램입니다:</p>
+
+
+
+<p class="wp-block-paragraph">┌────────────────────────┐<br />│ 1. 파드 재시작 발생 │<br />└──────────┬───────────┘<br />│<br />▼<br />┌────────────────────────┐<br />│ 2. 새로운 파드 생성 │<br />└──────────┬───────────┘<br />│<br />▼<br />┌────────────────────────┐<br />│ 3. 파드에 할당된 │<br />│ 서비스 어카운트 확인│<br />└──────────┬───────────┘<br />│<br />▼<br />┌────────────────────────┐<br />│ 4. kubelet이 AWS에 │<br />│ 임시 자격 증명 요청 │<br />└──────────┬───────────┘<br />│<br />▼<br />┌────────────────────────┐<br />│ 5. 새로운 임시 자격 증명 │<br />│ 발급 및 파드에 주입 │<br />└──────────┬───────────┘<br />│<br />▼<br />┌────────────────────────┐<br />│ 6. 파드는 임시 자격 증명 │<br />│ 사용해 AWS 리소스 접근 │<br />└────────────────────────┘</p>
+
+
+
+<h3 class="wp-block-heading">참고 자료</h3>
+
+
+
+<p class="wp-block-paragraph">파드 재시작 시 임시 자격 증명 갱신과 관련된 더욱 자세한 내용은 아래 링크에서 확인할 수 있습니다:</p>
+
+
+
+<ul class="wp-block-list">
+<li><a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/">Kubernetes에서 파드 라이프사이클 관리</a></li>
+
+
+
+<li><a href="https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html">AWS와 Kubernetes 통합: IAM Roles for Service Accounts</a></li>
+
+
+
+<li><a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/">Kubernetes에서의 서비스 어카운트 설정</a></li>
+</ul>
+
+
+
+<h3 class="wp-block-heading">결론</h3>
+
+
+
+<p class="wp-block-paragraph">파드 재시작 시 임시 자격 증명의 갱신과 새로운 자격 증명의 획득은 Kubernetes와 AWS 통합 환경에서 중요한 관리 요소입니다. 이를 통해 파드가 항상 유효한 자격 증명을 통해 안전하게 AWS 리소스에 접근할 수 있도록 보장할 수 있습니다. 실무에서는 이러한 과정이 원활하게 이루어지도록 파드 재시작 정책과 애플리케이션의 토큰 관리 방식을 신중하게 고려해야 합니다.</p>
+
+
+
+<p class="wp-block-paragraph">이러한 이해를 통해, 보다 안전하고 안정적인 클라우드 환경을 구축할 수 있을 것입니다.</p>
+
+
+
+<!--more-->
+
+
+
+<h3 class="wp-block-heading">Renewal of Temporary Credentials and Token Rotation upon Pod Restart</h3>
+
+
+
+<p class="wp-block-paragraph">In the previous sections, we discussed how IRSA enables a pod to access AWS resources by acquiring temporary credentials, and how token rotation occurs before expiration. Now, let&#8217;s delve into what happens when a pod restarts and how the related token renewal process is managed.</p>
+
+
+
+<h4 class="wp-block-heading">Scenario: Pod Restart</h4>
+
+
+
+<p class="wp-block-paragraph">In a Kubernetes environment, pods can restart for various reasons, such as application updates, failure recovery, node scaling, or manual redeployment. When a pod restarts, the existing temporary credentials are no longer valid, and new credentials need to be obtained.</p>
+
+
+
+<h4 class="wp-block-heading">Process of Acquiring Temporary Credentials upon Pod Restart</h4>
+
+
+
+<ol class="wp-block-list">
+<li><strong>Creation of a New Pod:</strong> When a pod restarts, Kubernetes creates a new pod. During this process, the service account assigned to the pod and the associated IAM role are verified.</li>
+
+
+
+<li><strong>Request for Temporary Credentials:</strong> The newly created pod requests new temporary credentials through the kubelet, which are linked to the associated AWS IAM role. The previous credentials are no longer usable.</li>
+
+
+
+<li><strong>Injection of Credentials:</strong> The new temporary credentials are injected into the pod at a specific path, allowing the pod to access AWS resources securely.</li>
+</ol>
+
+
+
+<h4 class="wp-block-heading">Importance of Token Renewal and Pod Restart</h4>
+
+
+
+<p class="wp-block-paragraph">When a pod restarts, it receives newly issued temporary credentials, ensuring continued secure access to AWS resources. Restarting the pod plays a critical role in maintaining the security of the credentials. If the temporary credentials are no longer valid or have been compromised, restarting the pod ensures that new credentials are acquired.</p>
+
+
+
+<h4 class="wp-block-heading">Considerations in Practice</h4>
+
+
+
+<p class="wp-block-paragraph">While acquiring new temporary credentials upon each pod restart enhances cloud infrastructure security and stability, there are several practical considerations:</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Pod Initialization Time:</strong> There may be a slight delay when obtaining new credentials during pod initialization, which is especially important for services requiring high availability.</li>
+
+
+
+<li><strong>Application Flexibility:</strong> The application should be designed to immediately recognize and use the new credentials. Properly handling credential loading during restarts is crucial.</li>
+
+
+
+<li><strong>Handling Token Expiration:</strong> To prevent the pod from using expired tokens, the application should periodically reload tokens and implement a caching mechanism.</li>
+</ul>
+
+
+
+<h3 class="wp-block-heading">Algorithm for Temporary Credentials Renewal upon Pod Restart</h3>
+
+
+
+<p class="wp-block-paragraph">Below is an algorithm diagram representing the process of renewing temporary credentials upon pod restart:</p>
+
+
+
+<p class="wp-block-paragraph">┌────────────────────────┐<br />│ 1. Pod Restarts │<br />└──────────┬───────────┘<br />│<br />▼<br />┌────────────────────────┐<br />│ 2. New Pod is Created │<br />└──────────┬───────────┘<br />│<br />▼<br />┌────────────────────────┐<br />│ 3. Verify Service │<br />│ Account Assigned to │<br />│ Pod │<br />└──────────┬───────────┘<br />│<br />▼<br />┌────────────────────────┐<br />│ 4. Kubelet Requests │<br />│ Temporary │<br />│ Credentials from AWS│<br />└──────────┬───────────┘<br />│<br />▼<br />┌────────────────────────┐<br />│ 5. New Temporary │<br />│ Credentials Issued │<br />│ and Injected into │<br />│ Pod │<br />└──────────┬───────────┘<br />│<br />▼<br />┌────────────────────────┐<br />│ 6. Pod Uses Temporary │<br />│ Credentials to │<br />│ Access AWS Resources│<br />└────────────────────────┘</p>
+
+
+
+<h3 class="wp-block-heading">References</h3>
+
+
+
+<p class="wp-block-paragraph">For more detailed information on the renewal of temporary credentials upon pod restart, refer to the following links:</p>
+
+
+
+<ul class="wp-block-list">
+<li><a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/">Managing Pod Lifecycle in Kubernetes</a></li>
+
+
+
+<li><a href="https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html">Integrating AWS and Kubernetes: IAM Roles for Service Accounts</a></li>
+
+
+
+<li><a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/">Configuring Service Accounts in Kubernetes</a></li>
+</ul>
+
+
+
+<h3 class="wp-block-heading">Conclusion</h3>
+
+
+
+<p class="wp-block-paragraph">Renewing temporary credentials and acquiring new credentials upon pod restart are critical management aspects in a Kubernetes and AWS integrated environment. This process ensures that pods can always access AWS resources securely with valid credentials. In practice, careful consideration of pod restart policies and application token management is essential for smooth operations.</p>
+
+
+
+<p class="wp-block-paragraph">With this understanding, you can build a more secure and stable cloud environment.</p>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>

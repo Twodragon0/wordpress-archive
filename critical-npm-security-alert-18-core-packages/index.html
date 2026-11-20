@@ -1,0 +1,327 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index, follow"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'none'; frame-src 'none'; object-src 'none'"><link rel="canonical" href="https://legacy.2twodragon.com/critical-npm-security-alert-18-core-packages/"><link rel="stylesheet" href="/archive.css"><title>Critical NPM Security Alert: 18 Core Packages Compromised | 이전 글 보관</title></head><body><header><a href="/">이전 글 보관</a> · <a href="https://2twodragon.com/">기술 블로그</a></header><main><div class="notice">이 페이지는 이전 Twodragon 사이트의 보관본입니다. 현재 기술 블로그는 <a href="https://2twodragon.com/">2twodragon.com</a>에서 운영합니다.</div><article><h1>Critical NPM Security Alert: 18 Core Packages Compromised</h1><p><time>2025-09-10</time></p><div>
+<p class="wp-block-paragraph"><strong>URGENT: On September 8, 2025, 18 essential npm packages with 2+ billion weekly downloads were compromised with malicious code. Immediate action required.</strong></p>
+
+
+
+<figure class="wp-block-image size-large"><img data-recalc-dims="1" loading="lazy" decoding="async" width="1024" height="604" data-attachment-id="2654" data-permalink="https://2twodragon.com/critical-npm-security-alert-18-core-packages/%ec%8a%a4%ed%81%ac%eb%a6%b0%ec%83%b7-2025-09-10-%ec%98%a4%ed%9b%84-6-16-39/" data-orig-file="https://legacy.2twodragon.com/wp-content/uploads/2025/09/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7-2025-09-10-%EC%98%A4%ED%9B%84-6.16.39.png?fit=1466%2C864&amp;ssl=1" data-orig-size="1466,864" data-comments-opened="1" data-image-title="스크린샷 2025-09-10 오후 6.16.39" data-image-description="" data-image-caption="" data-large-file="https://legacy.2twodragon.com/wp-content/uploads/2025/09/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7-2025-09-10-%EC%98%A4%ED%9B%84-6.16.39.png?fit=1024%2C604&amp;ssl=1" src="https://legacy.2twodragon.com/wp-content/uploads/2025/09/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7-2025-09-10-%EC%98%A4%ED%9B%84-6.16.39.png?resize=1024%2C604&#038;ssl=1" alt="" class="wp-image-2654" srcset="https://legacy.2twodragon.com/wp-content/uploads/2025/09/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7-2025-09-10-%EC%98%A4%ED%9B%84-6.16.39.png?resize=1024%2C604&amp;ssl=1 1024w, https://legacy.2twodragon.com/wp-content/uploads/2025/09/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7-2025-09-10-%EC%98%A4%ED%9B%84-6.16.39.png?resize=300%2C177&amp;ssl=1 300w, https://legacy.2twodragon.com/wp-content/uploads/2025/09/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7-2025-09-10-%EC%98%A4%ED%9B%84-6.16.39.png?resize=768%2C453&amp;ssl=1 768w, https://legacy.2twodragon.com/wp-content/uploads/2025/09/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7-2025-09-10-%EC%98%A4%ED%9B%84-6.16.39.png?resize=600%2C354&amp;ssl=1 600w, https://legacy.2twodragon.com/wp-content/uploads/2025/09/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7-2025-09-10-%EC%98%A4%ED%9B%84-6.16.39.png?w=1466&amp;ssl=1 1466w" sizes="auto, (max-width: 1000px) 100vw, 1000px" /></figure>
+
+
+
+<h2 class="wp-block-heading">Quick Detection Commands</h2>
+
+
+
+<h3 class="wp-block-heading">Check Your System Now (30 seconds)</h3>
+
+
+
+<p class="wp-block-paragraph"><strong>NPM Users &#8211; Run this immediately:</strong></p>
+
+
+
+<pre class="wp-block-code"><code>npm ls --depth=100 | grep -E 'debug@4.4.2|chalk@5.6.1|ansi-styles@6.2.2|strip-ansi@7.1.1|color-convert@3.1.1|wrap-ansi@9.0.1' || echo "✅ System Clean"</code></pre>
+
+
+
+<p class="wp-block-paragraph"><strong>Yarn Users:</strong></p>
+
+
+
+<pre class="wp-block-code"><code>yarn list --pattern '' | grep -E 'debug@4.4.2|chalk@5.6.1|ansi-styles@6.2.2' || echo "✅ System Clean"</code></pre>
+
+
+
+<h2 class="wp-block-heading">Compromised Packages</h2>
+
+
+
+<figure class="wp-block-table"><table class="has-fixed-layout"><thead><tr><th>Package</th><th>Malicious Version</th><th>Weekly Downloads</th><th>Risk Level</th></tr></thead><tbody><tr><td><strong>debug</strong></td><td>4.4.2</td><td>357.6M</td><td>CRITICAL</td></tr><tr><td><strong>chalk</strong></td><td>5.6.1</td><td>299.99M</td><td>CRITICAL</td></tr><tr><td><strong>ansi-styles</strong></td><td>6.2.2</td><td>371.41M</td><td>CRITICAL</td></tr><tr><td><strong>strip-ansi</strong></td><td>7.1.1</td><td>261.17M</td><td>CRITICAL</td></tr><tr><td><strong>color-convert</strong></td><td>3.1.1</td><td>193.5M</td><td>CRITICAL</td></tr><tr><td><em>+ 13 additional packages</em></td><td></td><td></td><td></td></tr></tbody></table></figure>
+
+
+
+<h2 class="wp-block-heading">Immediate Response Plan</h2>
+
+
+
+<h3 class="wp-block-heading">Step 1: Remove Compromised Packages</h3>
+
+
+
+<pre class="wp-block-code"><code>#!/bin/bash
+# Clear npm cache
+npm cache clean --force
+
+# Remove malicious packages
+npm uninstall debug chalk ansi-styles strip-ansi color-convert wrap-ansi
+
+# Delete node_modules and lock files
+rm -rf node_modules package-lock.json</code></pre>
+
+
+
+<h3 class="wp-block-heading">Step 2: Install Safe Versions</h3>
+
+
+
+<pre class="wp-block-code"><code>// Add to package.json
+"overrides": {
+  "debug": "4.3.4",
+  "chalk": "4.1.2",
+  "ansi-styles": "4.3.0",
+  "strip-ansi": "6.0.1",
+  "color-convert": "2.0.1"
+}</code></pre>
+
+
+
+<pre class="wp-block-code"><code># Reinstall dependencies
+npm install
+npm audit</code></pre>
+
+
+
+<h2 class="wp-block-heading">AWS Automated Response</h2>
+
+
+
+<h3 class="wp-block-heading">SSM Document for EC2 Scanning</h3>
+
+
+
+<p class="wp-block-paragraph">For AWS users, we&#8217;ve created an automated scanning solution using Systems Manager:</p>
+
+
+
+<ol class="wp-block-list">
+<li><strong>Create SSM Document:</strong> Deploy our scanning document to automatically check all EC2 instances</li>
+
+
+
+<li><strong>Run Command:</strong> Execute across your entire fleet with one command</li>
+
+
+
+<li><strong>Auto-tagging:</strong> Infected instances are automatically tagged for isolation</li>
+
+
+
+<li><strong>Reporting:</strong> Results uploaded to S3 with SNS notifications</li>
+</ol>
+
+
+
+<pre class="wp-block-code"><code># Execute scanning across all environments
+aws ssm send-command \
+  --document-name "NPM-Security-Scanner" \
+  --targets "Key=tag:Environment,Values=Production,Staging,Development" \
+  --parameters '{"S3BucketName":"security-audits"}'
+
+# Check infected instances
+aws ec2 describe-instances \
+  --filters "Name=tag:npm-scan-status,Values=INFECTED" \
+  --query 'Reservations&#91;*].Instances&#91;*].InstanceId'</code></pre>
+
+
+
+<h2 class="wp-block-heading">Attack Details</h2>
+
+
+
+<h3 class="wp-block-heading">Malicious Payload Capabilities</h3>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Credential Theft:</strong> Steals NPM_TOKEN, AWS keys, GitHub tokens</li>
+
+
+
+<li><strong>Backdoor Installation:</strong> Downloads and executes remote scripts</li>
+
+
+
+<li><strong>Cryptomining:</strong> Installs hidden cryptocurrency miners</li>
+
+
+
+<li><strong>Data Exfiltration:</strong> Sends environment variables to attacker servers</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">CI/CD Pipeline Protection</h2>
+
+
+
+<h3 class="wp-block-heading">GitHub Actions Security Check</h3>
+
+
+
+<pre class="wp-block-code"><code>name: NPM Security Check
+on: &#91;push, pull_request]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check for malicious packages
+        run: |
+          if npm ls --depth=100 | grep -E 'debug@4.4.2|chalk@5.6.1'; then
+            echo "::error::Malicious packages detected!"
+            exit 1
+          fi
+      - name: Audit
+        run: npm audit --audit-level=high
+</code></pre>
+
+
+
+<h2 class="wp-block-heading">Prevention Checklist</h2>
+
+
+
+<ul class="wp-block-list">
+<li>[ ] Implement package version pinning</li>
+
+
+
+<li>[ ] Enable npm audit in CI/CD pipelines</li>
+
+
+
+<li>[ ] Use private npm registry (Verdaccio/Artifactory)</li>
+
+
+
+<li>[ ] Regular dependency audits (weekly)</li>
+
+
+
+<li>[ ] Monitor package integrity hashes</li>
+
+
+
+<li>[ ] Implement least-privilege IAM policies</li>
+
+
+
+<li>[ ] Enable IMDSv2 on all EC2 instances</li>
+
+
+
+<li>[ ] Set up real-time security monitoring</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Complete Package List</h2>
+
+
+
+<p class="wp-block-paragraph">All 18 affected packages:</p>
+
+
+
+<ul class="wp-block-list">
+<li>debug@4.4.2 (357.6M downloads/week)</li>
+
+
+
+<li>ansi-styles@6.2.2 (371.41M)</li>
+
+
+
+<li>chalk@5.6.1 (299.99M)</li>
+
+
+
+<li>strip-ansi@7.1.1 (261.17M)</li>
+
+
+
+<li>ansi-regex@6.2.1 (243.64M)</li>
+
+
+
+<li>wrap-ansi@9.0.1 (197.99M)</li>
+
+
+
+<li>color-convert@3.1.1 (193.5M)</li>
+
+
+
+<li>supports-color@10.2.1 (287.1M)</li>
+
+
+
+<li>error-ex@1.3.3 (47.17M)</li>
+
+
+
+<li>color-name@2.0.1 (191.71M)</li>
+
+
+
+<li>is-arrayish@0.3.3 (73.8M)</li>
+
+
+
+<li>slice-ansi@7.1.1 (59.8M)</li>
+
+
+
+<li>chalk-template@1.1.1 (3.9M)</li>
+
+
+
+<li>supports-hyperlinks@4.1.1 (19.2M)</li>
+
+
+
+<li>has-ansi@6.0.1 (12.1M)</li>
+
+
+
+<li>simple-swizzle@0.2.3 (26.26M)</li>
+
+
+
+<li>color-string@2.1.1 (27.48M)</li>
+
+
+
+<li>backslash@0.2.1 (0.26M)</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Resources &amp; Support</h2>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Download SSM Document:</strong> Available on GitHub repository</li>
+
+
+
+<li><strong>NPM Security Guide:</strong> https://docs.npmjs.com/packages-and-modules/securing-your-code</li>
+
+
+
+<li><strong>Report Issues:</strong> security@npmjs.com</li>
+</ul>
+
+
+
+<hr class="wp-block-separator has-alpha-channel-opacity"/>
+
+
+
+<p class="wp-block-paragraph"><strong>Last Updated:</strong>&nbsp;September 10, 2025<br><strong>Severity:</strong>&nbsp;CRITICAL<br><strong>Impact:</strong>&nbsp;Global &#8211; All Node.js applications<br><strong>Action Required:</strong>&nbsp;Immediate</p>
+
+
+
+<p class="wp-block-paragraph"><em>Stay updated: Subscribe to security alerts and check back regularly for updates on this evolving situation. Report any suspicious activity to security@npmjs.com immediately.</em></p>
+</div></article></main><footer>이 보관본에서는 구매와 회원 기능을 제공하지 않습니다.</footer></body></html>
